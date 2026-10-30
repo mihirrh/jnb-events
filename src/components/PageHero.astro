@@ -1,0 +1,17 @@
+---
+import Sprig from './Sprig.astro';
+
+/** Compact editorial page opener used on every inner page. Renders the page's single H1. */
+interface Props { eyebrow?: string; heading: string; lead?: string; dark?: boolean }
+const { eyebrow, heading, lead, dark = false } = Astro.props;
+---
+
+<section class:list={['relative overflow-hidden pt-36 pb-14 md:pt-44 md:pb-20', dark ? 'on-dark bg-night text-cream' : 'bg-cream']}>
+  <Sprig class:list={['pointer-events-none absolute -right-4 top-20 hidden h-72 md:block lg:right-16', dark ? 'text-gold/40' : 'text-gold/45']} />
+  <div class="wrap relative">
+    {eyebrow && <p class="eyebrow hero-in">{eyebrow}</p>}
+    <h1 class="h1 hero-in mt-6 max-w-4xl" style="--d:80ms">{heading}</h1>
+    {lead && <p class="lead hero-in mt-7 max-w-2xl" style="--d:160ms">{lead}</p>}
+    <hr class="rule-gold mt-12 max-w-xs" />
+  </div>
+</section>

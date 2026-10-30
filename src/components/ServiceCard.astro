@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Img from './Img.astro';
+
+interface Props {
+  service: CollectionEntry<'services'>;
+  index: number;
+  ratio?: number;
+  sizes?: string;
+  class?: string;
+}
+const { service, index, ratio = 4 / 5, sizes = '(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw', class: className } = Astro.props;
+const n = String(index + 1).padStart(2, '0');
+---
+
+<a href={`/services/${service.id}/`} class:list={['group block no-underline', className]}>
+  <Img src={service.data.image} alt={service.data.imageAlt} ratio={ratio} sizes={sizes} class="media-zoom" reveal />
+  <div class="mt-5 flex items-baseline gap-4">
+    <span class="font-serif text-lg text-gold-deep" aria-hidden="true">{n}</span>
+    <div>
+      <h3 class="h3 transition-colors group-hover:text-gold-deep">{service.data.title}</h3>
+      <p class="mt-2 max-w-md text-[0.95rem] leading-relaxed text-muted">{service.data.summary}</p>
+    </div>
+  </div>
+</a>

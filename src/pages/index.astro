@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Img from '../components/Img.astro';
+import Sprig from '../components/Sprig.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CtaBand from '../components/CtaBand.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { getPage, getServices, getProjects, getPublishedTestimonials, getSettings } from '../lib/content';
+import { serviceList } from '../lib/schema';
+
+const { data: home } = await getPage('home', 'home');
+const settings = await getSettings();
+const services = await getServices();
+const projects = (await getProjects()).filter((p) => p.data.featured).slice(0, 5);
+const testimonials = await getPublishedTestimonials();
+const site = Astro.site!.toString();
+
+// Asymmetric placements for the featured grid (desktop). Each tuple: [grid classes, aspect ratio].
+const layout: [string, number][] = [
+  ['lg:col-span-7', 4 / 3],
+  ['lg:col-span-5 lg:mt-24', 4 / 5],
+  ['lg:col-span-4', 4 / 5],
+  ['lg:col-span-4 lg:mt-16', 1],
+  ['lg:col-span-4 lg:mt-8', 4 / 5],
+];
+
+const paragraphs = home.intro.body.split(/\n\s*\n/);
+---
+
+<BaseLayout
+  title={home.seo.title}
+  description={home.seo.description}
+  image={home.hero.image}
+  imageAlt={home.hero.imageAlt}
+  overlayHeader
+  jsonLd={[serviceList(services.map((s) => ({ name: s.data.title, url: `${site}services/${s.id}/` })))]}
+>
+  <!-- ============================== HERO ============================== -->
+  <section class="on-dark relative isolate flex min-h-[100svh] items-end overflow-hidden bg-night text-cream">
+    <div class="hero-zoom absolute inset-0 -z-10" aria-hidden="false">
+      <Img
+        src={home.hero.image}
+        alt={home.hero.imageAlt}
+        sizes="100vw"
+        priority
+        widths={[480, 768, 1100, 1600, 2400]}
+        class="!aspect-auto h-full w-full"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-night/85 via-night/35 to-night/45"></div>
+    </div>
+
+    <!-- Thin gold arch echoing the logo -->
+    <svg class="pointer-events-none absolute right-[6%] top-28 hidden h-[60%] text-gold-light/70 xl:block" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+      <path d="M2 318V100a98 98 0 0 1 196 0v218"></path>
+      <path d="M16 318V102a84 84 0 0 1 168 0v216" opacity=".5"></path>
+    </svg>
+
+    <div class="wrap w-full pb-16 pt-40 md:pb-24">
+      <p class="eyebrow hero-in" style="--d:100ms">{home.hero.eyebrow}</p>
+      <h1 class="display hero-in mt-6 max-w-[14ch] md:max-w-4xl" style="--d:220ms">{home.hero.headline}</h1>
+      <p class="lead hero-in mt-7 max-w-xl !text-cream/90" style="--d:360ms">{home.hero.subheading}</p>
+      <div class="hero-in mt-10 flex flex-col gap-4 sm:flex-row" style="--d:480ms">
+        <WhatsAppButton
+          label={home.hero.primaryCta.label}
+          message={home.hero.primaryCta.message}
+          variant="gold"
+          source="homepage hero"
+          class="w-full sm:w-auto"
+        />
+        <a href="/gallery/" class="btn btn-line w-full sm:w-auto">{home.hero.secondaryCtaLabel}</a>
+      </div>
+      <p class="hero-in mt-8 text-xs uppercase tracking-[0.22em] text-cream/70" style="--d:560ms">{settings.tagline}</p>
+    </div>
+  </section>
+
+  <!-- =========================== BRAND STATEMENT =========================== -->
+  <section class="section relative overflow-hidden bg-cream" aria-labelledby="intro-heading">
+    <Sprig class="pointer-events-none absolute -left-6 top-10 hidden h-64 text-gold/40 lg:block" />
+    <div class="wrap grid items-center gap-14 lg:grid-cols-12 lg:gap-8">
+      <div class="relative lg:col-span-5 lg:col-start-1">
+        <div class="arch frame-gold max-w-md">
+          <Img src={home.intro.image} alt={home.intro.imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 40vw, 90vw" reveal />
+        </div>
+        <div class="absolute -bottom-10 right-0 w-[46%] border-8 border-cream sm:right-[-6%] lg:-right-10">
+          <Img src={home.intro.secondImage} alt={home.intro.secondImageAlt} ratio={4 / 5} sizes="(min-width:1024px) 18vw, 40vw" reveal delay={200} />
+        </div>
+      </div>
+      <div class="mt-8 lg:col-span-6 lg:col-start-7 lg:mt-0">
+        <p class="eyebrow">{home.intro.eyebrow}</p>
+        <h2 id="intro-heading" class="h2 reveal mt-6">{home.intro.heading}</h2>
+        <div class="reveal mt-8 space-y-5 text-[1.05rem] text-ink-soft" style="--d:100ms">
+          {paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+        <a href="/about/" class="link-arrow reveal mt-10" style="--d:160ms">
+          <span>{home.intro.linkLabel}</span><span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================ SERVICES ================================ -->
+  <section class="on-dark section bg-night text-cream" aria-labelledby="services-heading">
+    <div class="wrap">
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7">
+          <p class="eyebrow">{home.services.eyebrow}</p>
+          <h2 id="services-heading" class="h2 reveal mt-6">{home.services.heading}</h2>
+        </div>
+        <p class="lead reveal lg:col-span-5">{home.services.intro}</p>
+      </div>
+
+      <div class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          services.map((s, i) => (
+            <ServiceCard
+              service={s}
+              index={i}
+              sizes="(min-width:1024px) 22vw, (min-width:640px) 45vw, 90vw"
+              class={i % 2 === 1 ? 'lg:mt-20' : ''}
+            />
+          ))
+        }
+      </div>
+
+      <!-- WhatsApp CTA directly after services -->
+      <div class="reveal mt-24 grid items-center gap-8 border-t border-gold/40 pt-12 lg:grid-cols-12">
+        <div class="lg:col-span-8">
+          <h3 class="h2 !text-[clamp(1.9rem,3vw+0.5rem,3rem)]">{home.services.ctaHeading}</h3>
+          <p class="lead mt-4 max-w-2xl">{home.services.ctaText}</p>
+        </div>
+        <div class="lg:col-span-4 lg:text-right">
+          <WhatsAppButton label="Chat on WhatsApp" message={home.services.ctaMessage} variant="gold" source="homepage services" class="w-full sm:w-auto" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================== FEATURED WORK =============================== -->
+  {
+    projects.length > 0 && (
+      <section class="section bg-cream" aria-labelledby="featured-heading">
+        <div class="wrap">
+          <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p class="eyebrow">{home.featured.eyebrow}</p>
+              <h2 id="featured-heading" class="h2 reveal mt-6">{home.featured.heading}</h2>
+              <p class="lead reveal mt-5 max-w-xl">{home.featured.intro}</p>
+            </div>
+            <a href="/gallery/" class="link-arrow self-start md:self-end">
+              <span>{home.featured.linkLabel}</span><span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+
+          <div class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-12">
+            {
+              projects.map((p, i) => {
+                const [cls, ratio] = layout[i] ?? layout[2];
+                return (
+                  <ProjectCard
+                    project={p}
+                    ratio={ratio}
+                    class={cls}
+                    delay={(i % 3) * 90}
+                    sizes={i === 0 ? '(min-width:1024px) 58vw, (min-width:640px) 50vw, 100vw' : '(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw'}
+                  />
+                );
+              })
+            }
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Testimonials items={testimonials} eyebrow={home.testimonials.eyebrow} heading={home.testimonials.heading} />
+
+  <CtaBand
+    eyebrow={home.cta.eyebrow}
+    heading={home.cta.heading}
+    text={home.cta.text}
+    image={home.cta.image}
+    imageAlt={home.cta.imageAlt}
+    label={home.cta.label}
+    message={home.cta.message}
+    source="homepage footer banner"
+  />
+</BaseLayout>

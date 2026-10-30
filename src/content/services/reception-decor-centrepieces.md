@@ -15,7 +15,7 @@ keyPoints:
 relatedCategory: Reception & Centrepieces
 whatsappMessage: "Hello JNB Events, I'm interested in reception décor and centrepieces."
 seo:
-  title: Table Centrepieces & Reception Décor Leicester | JNB Events
+  title: Table Centrepieces Leicester | Reception Décor | JNB Events
   description: Reception décor and table centrepieces for weddings and events in Leicester, Leicestershire and across the UK. Bespoke styling at competitive prices.
 ---
 

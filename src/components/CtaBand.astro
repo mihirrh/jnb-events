@@ -1,0 +1,38 @@
+---
+import type { ImageMetadata } from 'astro';
+import Img from './Img.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+
+/** Full-width WhatsApp call to action, with an optional photographic background. */
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  text: string;
+  label?: string;
+  message?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  source: string;
+}
+const { eyebrow, heading, text, label = 'Message us on WhatsApp', message, image, imageAlt = '', source } = Astro.props;
+---
+
+<section class="on-dark relative isolate overflow-hidden bg-night text-cream">
+  {
+    image && (
+      <div class="absolute inset-0 -z-10" aria-hidden="true">
+        <Img src={image} alt="" sizes="100vw" class="!aspect-auto h-full w-full" widths={[640, 1280, 1920]} />
+        <div class="absolute inset-0 bg-night/70"></div>
+      </div>
+    )
+  }
+  <div class="wrap section text-center">
+    {eyebrow && <p class="eyebrow justify-center reveal">{eyebrow}</p>}
+    <h2 class="h2 reveal mx-auto mt-6 max-w-3xl" style="--d:60ms">{heading}</h2>
+    <p class="lead reveal mx-auto mt-6 max-w-xl" style="--d:120ms">{text}</p>
+    <div class="reveal mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" style="--d:180ms">
+      <WhatsAppButton label={label} message={message} variant="gold" source={source} class="w-full sm:w-auto" />
+      <a href="/contact/" class="btn btn-line w-full sm:w-auto">Contact form</a>
+    </div>
+  </div>
+</section>

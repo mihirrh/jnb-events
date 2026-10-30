@@ -1,0 +1,31 @@
+---
+import { getSettings } from '../lib/content';
+import { whatsappUrl } from '../lib/contact';
+import Icon from './Icon.astro';
+
+/** Opens WhatsApp with a pre-filled message. The primary conversion path for the whole site. */
+interface Props {
+  label?: string;
+  message?: string;
+  variant?: 'gold' | 'ink' | 'line';
+  class?: string;
+  /** Where on the site the button sits - appended to the message so the owner knows which page led to the chat. */
+  source?: string;
+}
+const { label = 'Chat on WhatsApp', message, variant = 'ink', class: className, source } = Astro.props;
+const settings = await getSettings();
+const base = message?.trim() || settings.contact.whatsappMessage;
+const href = whatsappUrl(settings, source ? `${base} (via ${source})` : base);
+---
+
+<a
+  href={href}
+  class:list={['btn', `btn-${variant}`, className]}
+  target="_blank"
+  rel="noopener noreferrer"
+  data-whatsapp
+>
+  <Icon name="whatsapp" size={18} />
+  <span>{label}</span>
+  <span class="sr-only"> (opens WhatsApp in a new tab)</span>
+</a>

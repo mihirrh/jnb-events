@@ -1,0 +1,197 @@
+---
+import { getSettings } from '../lib/content';
+import { whatsappUrl } from '../lib/contact';
+import { NAV, isActive } from '../lib/nav';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+
+/**
+ * Fixed header. On pages with a full-bleed hero (`overlay`) it starts transparent with light text
+ * and turns solid once the visitor scrolls (see scripts at the bottom of this file).
+ */
+interface Props { overlay?: boolean }
+const { overlay = false } = Astro.props;
+const settings = await getSettings();
+const pathname = Astro.url.pathname;
+const wa = whatsappUrl(settings);
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,color] duration-500"
+  data-overlay={overlay ? 'true' : 'false'}
+>
+  <div class="wrap flex h-[4.5rem] items-center justify-between gap-4 lg:h-24">
+    <a href="/" class="inline-flex min-h-12 items-center" aria-label={`${settings.siteName} - home`}>
+      <span class="logo-dark"><Logo settings={settings} tone="dark" /></span>
+      <span class="logo-light"><Logo settings={settings} tone="light" /></span>
+    </a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-9">
+        {
+          NAV.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="nav-link inline-flex min-h-11 items-center text-[0.78rem] font-semibold uppercase tracking-[0.2em] no-underline"
+                aria-current={isActive(item.href, pathname) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={wa}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-gold hidden !min-h-11 !px-5 lg:inline-flex"
+        data-whatsapp
+      >
+        <Icon name="whatsapp" size={17} />
+        <span>WhatsApp</span>
+        <span class="sr-only"> (opens WhatsApp in a new tab)</span>
+      </a>
+      <a
+        href={wa}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="header-icon inline-flex size-12 items-center justify-center lg:hidden"
+        aria-label="Message us on WhatsApp (opens in a new tab)"
+        data-whatsapp
+      >
+        <Icon name="whatsapp" size={24} />
+      </a>
+      <button
+        type="button"
+        id="menu-toggle"
+        class="header-icon inline-flex size-12 items-center justify-center lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <Icon name="menu" size={26} class="icon-open" />
+        <Icon name="close" size={26} class="icon-close hidden" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile / tablet-portrait menu -->
+  <div id="mobile-menu" class="mobile-menu lg:hidden" hidden>
+    <nav aria-label="Mobile" class="wrap py-6">
+      <ul>
+        {
+          NAV.map((item) => (
+            <li class="border-b border-white/15 last:border-0">
+              <a
+                href={item.href}
+                class="flex min-h-16 items-center justify-between font-serif text-[2rem] leading-none no-underline"
+                aria-current={isActive(item.href, pathname) ? 'page' : undefined}
+              >
+                <span>{item.label}</span>
+                <Icon name="arrow" size={22} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="btn btn-gold mt-8 w-full" data-whatsapp>
+        <Icon name="whatsapp" size={18} />
+        <span>Chat on WhatsApp</span>
+        <span class="sr-only"> (opens WhatsApp in a new tab)</span>
+      </a>
+      <p class="mt-5 text-center text-sm text-cream/70">{settings.serviceAreaNote}</p>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Default (solid) state */
+  #site-header {
+    background: rgb(250 247 242 / 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--color-ink);
+    box-shadow: 0 1px 0 var(--color-line);
+  }
+  #site-header .logo-light { display: none; }
+  .nav-link { position: relative; color: inherit; }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0.55rem;
+    height: 1px;
+    background: var(--color-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-out-soft);
+  }
+  .nav-link:hover::after, .nav-link[aria-current='page']::after { transform: scaleX(1); }
+
+  /* Transparent over the hero until scrolled */
+  #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open) {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    color: var(--color-cream);
+  }
+  #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open) .logo-dark { display: none; }
+  #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open) .logo-light { display: inline; }
+
+  /* Open menu = dark panel */
+  #site-header.menu-open {
+    background: var(--color-night);
+    color: var(--color-cream);
+    box-shadow: none;
+  }
+  #site-header.menu-open .logo-dark { display: none; }
+  #site-header.menu-open .logo-light { display: inline; }
+  #site-header.menu-open :focus-visible { outline-color: var(--color-gold-light); }
+
+  .mobile-menu {
+    background: var(--color-night);
+    color: var(--color-cream);
+    max-height: calc(100dvh - 4.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .mobile-menu a[aria-current='page'] span:first-child { color: var(--color-gold-light); }
+  .header-icon { color: inherit; }
+</style>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const toggle = document.getElementById('menu-toggle') as HTMLButtonElement;
+  const menu = document.getElementById('mobile-menu')!;
+
+  const setOpen = (open: boolean) => {
+    menu.hidden = !open;
+    header.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    toggle.querySelector('.icon-open')!.classList.toggle('hidden', open);
+    toggle.querySelector('.icon-close')!.classList.toggle('hidden', !open);
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  };
+
+  toggle.addEventListener('click', () => setOpen(menu.hidden));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  // Close if the viewport grows past the mobile breakpoint (e.g. rotating a tablet).
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && setOpen(false));
+
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 32);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

@@ -15,7 +15,7 @@ keyPoints:
 relatedCategory: Mandaps & Stages
 whatsappMessage: "Hello JNB Events, I'm interested in a mandap or stage for my wedding."
 seo:
-  title: Mandap Hire Leicester & Leicestershire | Mandaps & Stages | JNB Events
+  title: Mandap Hire Leicestershire | Mandaps & Stages | JNB Events
   description: Bespoke mandap and stage styling for weddings in Leicester, Leicestershire and across the UK. Tailored designs at competitive prices - message JNB Events on WhatsApp.
 ---
 

@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Wedding & Event Services in Leicester | Mandaps, Décor, DJ | JNB Events
+  title: Wedding & Event Services Leicester | JNB Events
   description: Mandaps and stages, civil ceremony décor, reception centrepieces, DJ, dancefloor, lighting and special effects in Leicester, Leicestershire and across the UK.
 eyebrow: Services
 heading: Everything your celebration needs.

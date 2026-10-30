@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { items: CollectionEntry<'testimonials'>[]; eyebrow: string; heading: string }
+const { items, eyebrow, heading } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="bg-cream-deep section" aria-labelledby="testimonials-heading">
+      <div class="wrap">
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 id="testimonials-heading" class="h2 reveal mt-6 max-w-2xl">{heading}</h2>
+        <div class:list={['mt-14 grid gap-10', items.length > 1 && 'md:grid-cols-2 lg:grid-cols-3']}>
+          {items.map((t, i) => (
+            <figure class="reveal border-t border-gold pt-8" style={`--d:${i * 90}ms`}>
+              <blockquote class="font-serif text-[1.6rem] leading-snug text-ink md:text-[1.75rem]">
+                <p>&ldquo;{t.data.quote}&rdquo;</p>
+              </blockquote>
+              <figcaption class="mt-6 text-sm text-muted">
+                <span class="font-semibold text-ink">{t.data.name}</span>
+                {t.data.event && <span> · {t.data.event}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

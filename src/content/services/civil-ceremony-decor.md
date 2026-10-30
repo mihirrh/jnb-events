@@ -15,7 +15,7 @@ keyPoints:
 relatedCategory: Civil Ceremony
 whatsappMessage: "Hello JNB Events, I'd like a quote for civil ceremony décor."
 seo:
-  title: Civil Ceremony Décor Leicester | Arches & Aisle Styling | JNB Events
+  title: Civil Ceremony Décor Leicester | JNB Events
   description: Civil ceremony décor in Leicester, Leicestershire and across the UK - arches, aisle styling, florals and seating, tailored to your venue.
 ---
 

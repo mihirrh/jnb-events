@@ -1,0 +1,47 @@
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { PROJECT_CATEGORIES, type ProjectCategory } from './categories';
+
+export type Settings = CollectionEntry<'settings'>['data'];
+
+export async function getSettings(): Promise<Settings> {
+  const entry = await getEntry('settings', 'site');
+  if (!entry) throw new Error('Missing src/content/settings/site.yaml');
+  return entry.data;
+}
+
+/** Turns "Mandaps & Stages" into "mandaps-and-stages". */
+export function slugify(input: string): string {
+  return input
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+export async function getServices() {
+  const all = await getCollection('services');
+  return all.sort((a, b) => a.data.order - b.data.order);
+}
+
+export async function getProjects() {
+  const all = await getCollection('projects');
+  return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}
+
+/** Categories that currently contain at least one project, in the canonical order. */
+export function categoriesInUse(projects: CollectionEntry<'projects'>[]): ProjectCategory[] {
+  return PROJECT_CATEGORIES.filter((c) => projects.some((p) => p.data.category === c));
+}
+
+export async function getPublishedTestimonials() {
+  const all = await getCollection('testimonials');
+  return all.filter((t) => t.data.published).sort((a, b) => a.data.order - b.data.order);
+}
+
+export async function getPage<C extends 'home' | 'about' | 'contact' | 'pages'>(collection: C, id: string) {
+  const entry = await getEntry(collection, id);
+  if (!entry) throw new Error(`Missing content entry: ${collection}/${id}`);
+  return entry as NonNullable<Awaited<ReturnType<typeof getEntry<C>>>>;
+}

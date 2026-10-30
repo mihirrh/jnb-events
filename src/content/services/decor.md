@@ -15,7 +15,7 @@ keyPoints:
 relatedCategory: Décor
 whatsappMessage: "Hello JNB Events, I'd like to talk about décor for my event."
 seo:
-  title: Wedding & Event Décor Leicester | Event Décor UK | JNB Events
+  title: Wedding & Event Décor Leicester, UK-wide | JNB Events
   description: Bespoke wedding and event décor in Leicester, Leicestershire and across the UK - backdrops, florals, drapes and lighting styled around your venue and theme.
 ---
 

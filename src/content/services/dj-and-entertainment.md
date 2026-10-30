@@ -15,7 +15,7 @@ keyPoints:
 relatedCategory: DJ & Entertainment
 whatsappMessage: "Hello JNB Events, I'd like to ask about DJ availability for my event."
 seo:
-  title: Wedding DJ Leicester | DJ & Entertainment Leicestershire | JNB Events
+  title: Wedding DJ Leicester | DJ & Entertainment | JNB Events
   description: Wedding and event DJ in Leicester, Leicestershire and across the UK, with quality sound, lighting and dancefloor effects at competitive prices.
 ---
 

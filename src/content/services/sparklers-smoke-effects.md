@@ -15,7 +15,7 @@ keyPoints:
 relatedCategory: Special Effects
 whatsappMessage: "Hello JNB Events, I'd like to add sparklers or smoke effects to my event."
 seo:
-  title: Sparklers & Smoke Machine Hire Leicester | Special Effects | JNB Events
+  title: Sparklers & Smoke Machines Leicester | JNB Events
   description: Sparklers, smoke machines and special effects for weddings and events in Leicester, Leicestershire and across the UK. Dramatic entrances, first dances and exits.
 ---
 

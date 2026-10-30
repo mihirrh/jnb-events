@@ -1,0 +1,38 @@
+---
+import { getSettings } from '../lib/content';
+import { whatsappUrl } from '../lib/contact';
+import Icon from './Icon.astro';
+
+/** Persistent, thumb-reachable WhatsApp button for phones and tablets. The header carries the CTA on desktop. */
+const settings = await getSettings();
+---
+
+<a
+  href={whatsappUrl(settings)}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="float-wa fixed z-40 inline-flex items-center gap-2.5 rounded-full bg-[#1f7a4d] text-white no-underline shadow-lg shadow-black/25 lg:hidden"
+  aria-label="Message us on WhatsApp (opens in a new tab)"
+  data-whatsapp
+>
+  <Icon name="whatsapp" size={26} />
+  <span class="float-label text-sm font-semibold tracking-wide">WhatsApp us</span>
+</a>
+
+<style>
+  .float-wa {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    min-height: 3.5rem;
+    min-width: 3.5rem;
+    padding: 0 1.1rem 0 1rem;
+    transition: transform 0.3s var(--ease-out-soft), background-color 0.3s;
+  }
+  .float-wa:hover { background: #17633e; transform: translateY(-2px); }
+  .float-wa:focus-visible { outline: 3px solid var(--color-gold-light); outline-offset: 3px; border-radius: 9999px; }
+  /* Collapse to an icon-only circle on narrow phones once the page is scrolled, keeping it unobtrusive. */
+  @media (max-width: 25.99rem) {
+    .float-label { display: none; }
+    .float-wa { padding: 0; justify-content: center; width: 3.5rem; }
+  }
+</style>

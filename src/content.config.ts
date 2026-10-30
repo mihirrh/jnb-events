@@ -10,7 +10,7 @@ import { PROJECT_CATEGORIES } from './lib/categories';
  */
 
 const seo = z.object({
-  title: z.string().max(70),
+  title: z.string().max(65),
   description: z.string().max(170),
 });
 
