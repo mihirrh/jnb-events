@@ -22,3 +22,15 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# cloudflare / local tooling
+.wrangler/
+.dev.vars
+.env.*
+!.env.example
+
+# editors
+.vscode/
+
+# local screenshots / scratch
+/.scratch/

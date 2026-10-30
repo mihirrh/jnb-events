@@ -48,14 +48,9 @@ const paragraphs = home.intro.body.split(/\n\s*\n/);
         widths={[480, 768, 1100, 1600, 2400]}
         class="!aspect-auto h-full w-full"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-night/85 via-night/35 to-night/45"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-night/90 via-night/45 to-night/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-night/60 via-night/20 to-transparent"></div>
     </div>
-
-    <!-- Thin gold arch echoing the logo -->
-    <svg class="pointer-events-none absolute right-[6%] top-28 hidden h-[60%] text-gold-light/70 xl:block" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
-      <path d="M2 318V100a98 98 0 0 1 196 0v218"></path>
-      <path d="M16 318V102a84 84 0 0 1 168 0v216" opacity=".5"></path>
-    </svg>
 
     <div class="wrap w-full pb-16 pt-40 md:pb-24">
       <p class="eyebrow hero-in" style="--d:100ms">{home.hero.eyebrow}</p>
@@ -83,7 +78,7 @@ const paragraphs = home.intro.body.split(/\n\s*\n/);
         <div class="arch frame-gold max-w-md">
           <Img src={home.intro.image} alt={home.intro.imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 40vw, 90vw" reveal />
         </div>
-        <div class="absolute -bottom-10 right-0 w-[46%] border-8 border-cream sm:right-[-6%] lg:-right-10">
+        <div class="absolute -bottom-10 right-0 w-[46%] border-8 border-cream lg:-right-10">
           <Img src={home.intro.secondImage} alt={home.intro.secondImageAlt} ratio={4 / 5} sizes="(min-width:1024px) 18vw, 40vw" reveal delay={200} />
         </div>
       </div>

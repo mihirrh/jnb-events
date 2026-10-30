@@ -14,8 +14,8 @@ const year = new Date().getFullYear();
 <footer class="on-dark relative overflow-hidden bg-night text-cream">
   <Sprig class="pointer-events-none absolute -right-6 bottom-0 hidden h-80 text-gold/30 md:block" />
   <div class="wrap relative pt-20 pb-28 lg:pb-12">
-    <div class="grid gap-14 md:grid-cols-12">
-      <div class="md:col-span-5">
+    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+      <div class="sm:col-span-2 lg:col-span-4">
         <Logo settings={settings} tone="light" />
         <p class="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-cream/75">{settings.description}</p>
         <p class="mt-4 flex items-start gap-2 text-sm text-cream/75">
@@ -24,7 +24,7 @@ const year = new Date().getFullYear();
         </p>
       </div>
 
-      <nav aria-label="Footer" class="md:col-span-2">
+      <nav aria-label="Footer" class="lg:col-span-2">
         <h2 class="eyebrow !text-gold-light">Explore</h2>
         <ul class="mt-5 space-y-1">
           {NAV.map((n) => (
@@ -34,7 +34,7 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
 
-      <nav aria-label="Services" class="md:col-span-3">
+      <nav aria-label="Services" class="lg:col-span-3">
         <h2 class="eyebrow !text-gold-light">Services</h2>
         <ul class="mt-5 space-y-1">
           {services.map((s) => (
@@ -43,7 +43,7 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
 
-      <div class="md:col-span-2">
+      <div class="sm:col-span-2 lg:col-span-3">
         <h2 class="eyebrow !text-gold-light">Contact</h2>
         <ul class="mt-5 space-y-1">
           <li>

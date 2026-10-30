@@ -120,10 +120,11 @@
     gap: 0.9rem;
     font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--color-gold-deep);
   }
+  @media (min-width: 640px) { .eyebrow { letter-spacing: 0.26em; } }
   .eyebrow::before {
     content: '';
     width: 2.25rem;
@@ -132,6 +133,13 @@
     opacity: 0.8;
   }
   .on-dark .eyebrow { color: var(--color-gold-light); }
+
+  /* Light-background text colours are re-mapped on dark sections so contrast always holds (>= 4.5:1). */
+  .on-dark .text-muted { color: #cfc6b6; }
+  .on-dark .text-gold-deep { color: var(--color-gold-light); }
+  .on-dark .text-ink-soft { color: #e3dccd; }
+  .on-dark .hover\:text-gold-deep:hover,
+  .on-dark .group:hover .group-hover\:text-gold-deep { color: var(--color-gold-light); }
 
   /* ---- Fine gold rules ---- */
   .rule-gold { height: 1px; background: linear-gradient(90deg, var(--color-gold), transparent); border: 0; }

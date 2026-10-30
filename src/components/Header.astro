@@ -57,16 +57,6 @@ const wa = whatsappUrl(settings);
         <span>WhatsApp</span>
         <span class="sr-only"> (opens WhatsApp in a new tab)</span>
       </a>
-      <a
-        href={wa}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="header-icon inline-flex size-12 items-center justify-center lg:hidden"
-        aria-label="Message us on WhatsApp (opens in a new tab)"
-        data-whatsapp
-      >
-        <Icon name="whatsapp" size={24} />
-      </a>
       <button
         type="button"
         id="menu-toggle"
@@ -113,7 +103,7 @@ const wa = whatsappUrl(settings);
 <style>
   /* Default (solid) state */
   #site-header {
-    background: rgb(250 247 242 / 0.94);
+    background: rgb(250 247 242 / 0.98);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     color: var(--color-ink);
