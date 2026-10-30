@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import ProjectCard from '../../../components/ProjectCard.astro';
+import GalleryFilter from '../../../components/GalleryFilter.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { getProjects, categoriesInUse, slugify, getSettings } from '../../../lib/content';
+import { breadcrumbs } from '../../../lib/schema';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  const cats = categoriesInUse(projects);
+  return cats.map((category) => ({
+    params: { category: slugify(category) },
+    props: { category, all: cats, projects: projects.filter((p) => p.data.category === category) },
+  }));
+}
+
+const { category, all, projects } = Astro.props;
+const settings = await getSettings();
+const site = Astro.site!.toString();
+const url = `${site}gallery/category/${slugify(category)}/`;
+const ratios = [4 / 5, 1, 4 / 5, 4 / 3];
+---
+
+<BaseLayout
+  title={`${category} Gallery | ${settings.siteName} ${settings.location.locality}`}
+  description={`Browse ${category.toLowerCase()} projects by ${settings.siteName} in ${settings.location.locality}, ${settings.location.region} and across the UK.`}
+  image={projects[0].data.images[0].image}
+  imageAlt={projects[0].data.images[0].alt}
+  jsonLd={[
+    breadcrumbs([
+      { name: 'Home', url: site },
+      { name: 'Gallery', url: `${site}gallery/` },
+      { name: category, url },
+    ]),
+  ]}
+>
+  <PageHero eyebrow="Gallery" heading={category} lead={`${projects.length} ${projects.length === 1 ? 'project' : 'projects'} in this category.`} />
+
+  <section class="section-tight bg-cream" aria-label={`${category} projects`}>
+    <div class="wrap">
+      <GalleryFilter active={category} available={all} />
+      <div class="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((p, i) => <ProjectCard project={p} ratio={ratios[i % ratios.length]} delay={(i % 3) * 90} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Enquire"
+    heading="Want something similar?"
+    text="Message us on WhatsApp and tell us about your event."
+    source={`${category} gallery`}
+  />
+</BaseLayout>

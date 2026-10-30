@@ -1,0 +1,21 @@
+---
+import { PROJECT_CATEGORIES } from '../lib/categories';
+import { slugify } from '../lib/content';
+
+/**
+ * Category navigation for the gallery. Each category is a real, crawlable page
+ * (/gallery/category/...) so filtering works without JavaScript and is indexable.
+ */
+interface Props { active?: string; available: readonly string[] }
+const { active, available } = Astro.props;
+const cats = PROJECT_CATEGORIES.filter((c) => available.includes(c));
+---
+
+<nav aria-label="Filter gallery by category" class="-mx-5 overflow-x-auto px-5 sm:mx-0 sm:overflow-visible sm:px-0">
+  <ul class="flex w-max gap-2 sm:w-auto sm:flex-wrap">
+    <li><a href="/gallery/" class="chip" aria-current={!active ? 'page' : undefined}>All</a></li>
+    {cats.map((c) => (
+      <li><a href={`/gallery/category/${slugify(c)}/`} class="chip whitespace-nowrap" aria-current={active === c ? 'page' : undefined}>{c}</a></li>
+    ))}
+  </ul>
+</nav>

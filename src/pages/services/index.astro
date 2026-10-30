@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Img from '../../components/Img.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getPage, getServices } from '../../lib/content';
+import { breadcrumbs, serviceList } from '../../lib/schema';
+
+const { data: page } = await getPage('pages', 'services');
+const services = await getServices();
+const site = Astro.site!.toString();
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  image={services[0].data.image}
+  imageAlt={services[0].data.imageAlt}
+  jsonLd={[
+    breadcrumbs([{ name: 'Home', url: site }, { name: 'Services', url: `${site}services/` }]),
+    serviceList(services.map((s) => ({ name: s.data.title, url: `${site}services/${s.id}/` }))),
+  ]}
+>
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+
+  <section class="section-tight bg-cream" aria-label="All services">
+    <div class="wrap">
+      <ol class="space-y-20 md:space-y-28">
+        {
+          services.map((s, i) => {
+            const flip = i % 2 === 1;
+            return (
+              <li class="grid items-center gap-8 md:grid-cols-12 md:gap-10">
+                <a
+                  href={`/services/${s.id}/`}
+                  class:list={['group block no-underline md:col-span-7', flip ? 'md:order-2' : '']}
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <Img src={s.data.image} alt="" ratio={flip ? 4 / 3 : 3 / 2} sizes="(min-width:768px) 58vw, 100vw" class="media-zoom" reveal />
+                </a>
+                <div class:list={['md:col-span-5', flip ? 'md:order-1' : '']}>
+                  <p class="font-serif text-2xl text-gold-deep" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+                  <h2 class="h2 reveal mt-3">
+                    <a href={`/services/${s.id}/`} class="no-underline hover:text-gold-deep">{s.data.title}</a>
+                  </h2>
+                  <p class="reveal mt-5 text-[1.05rem] text-ink-soft" style="--d:80ms">{s.data.summary}</p>
+                  <ul class="reveal mt-6 space-y-2 text-sm text-muted" style="--d:140ms">
+                    {s.data.keyPoints.slice(0, 3).map((k) => (
+                      <li class="flex gap-3"><span class="mt-[0.7em] h-px w-4 shrink-0 bg-gold"></span><span>{k}</span></li>
+                    ))}
+                  </ul>
+                  <a href={`/services/${s.id}/`} class="link-arrow mt-8">
+                    <span>Explore {s.data.title}</span><span aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Bespoke packages"
+    heading="Tell us about your event."
+    text="Share your date, venue and what you have in mind on WhatsApp and we will suggest a package that suits."
+    source="services page"
+  />
+</BaseLayout>

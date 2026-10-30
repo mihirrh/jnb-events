@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import GalleryFilter from '../../components/GalleryFilter.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getPage, getProjects, categoriesInUse } from '../../lib/content';
+import { breadcrumbs } from '../../lib/schema';
+
+const { data: page } = await getPage('pages', 'gallery');
+const projects = await getProjects();
+const cats = categoriesInUse(projects);
+const site = Astro.site!.toString();
+
+// Varied aspect ratios give the grid an editorial rhythm while keeping rows tidy.
+const ratios = [4 / 5, 1, 4 / 5, 4 / 3, 4 / 5, 1];
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  image={projects[0]?.data.images[0].image}
+  imageAlt={projects[0]?.data.images[0].alt}
+  jsonLd={[breadcrumbs([{ name: 'Home', url: site }, { name: 'Gallery', url: `${site}gallery/` }])]}
+>
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+
+  <section class="section-tight bg-cream" aria-label="Projects">
+    <div class="wrap">
+      <GalleryFilter available={cats} />
+      <p class="mt-6 text-sm text-muted" aria-live="polite">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
+
+      <div class="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          projects.map((p, i) => (
+            <ProjectCard project={p} ratio={ratios[i % ratios.length]} delay={(i % 3) * 90} class={i % 3 === 1 ? 'lg:mt-14' : ''} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Like what you see?"
+    heading="Let's create yours."
+    text="Message us on WhatsApp with your date and venue and we will talk through ideas."
+    source="gallery page"
+  />
+</BaseLayout>
