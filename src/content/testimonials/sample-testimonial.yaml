@@ -1,0 +1,7 @@
+quote: This is a sample testimonial. Replace it with a real quote from a client, then tick "Published".
+name: Client name
+event: Wedding
+order: 1
+# Not published on purpose: the site only shows testimonials that are ticked as published,
+# so no invented reviews appear on the live site.
+published: false
