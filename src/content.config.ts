@@ -14,10 +14,6 @@ const seo = z.object({
   description: z.string().max(170),
 });
 
-/** An image plus its descriptive alt text. Alt text is required for accessibility and SEO. */
-const picture = (image: () => z.ZodTypeAny) =>
-  z.object({ image: image(), alt: z.string().min(3) });
-
 const cta = z.object({
   label: z.string(),
   message: z.string().optional(),
@@ -197,7 +193,8 @@ const projects = defineCollection({
       /** Featured projects appear on the homepage. */
       featured: z.boolean().default(false),
       /** First image is the cover. */
-      images: z.array(picture(image)).min(1),
+      /** Each photo needs descriptive alt text (accessibility + SEO). */
+      images: z.array(z.object({ image: image(), alt: z.string().min(3) })).min(1),
       seoDescription: z.string().max(170).optional(),
     }),
 });

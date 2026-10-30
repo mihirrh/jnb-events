@@ -7,10 +7,10 @@ import ProjectCard from '../components/ProjectCard.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CtaBand from '../components/CtaBand.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
-import { getPage, getServices, getProjects, getPublishedTestimonials, getSettings } from '../lib/content';
+import { getHome, getServices, getProjects, getPublishedTestimonials, getSettings } from '../lib/content';
 import { serviceList } from '../lib/schema';
 
-const { data: home } = await getPage('home', 'home');
+const home = await getHome();
 const settings = await getSettings();
 const services = await getServices();
 const projects = (await getProjects()).filter((p) => p.data.featured).slice(0, 5);
@@ -181,7 +181,6 @@ const paragraphs = home.intro.body.split(/\n\s*\n/);
     heading={home.cta.heading}
     text={home.cta.text}
     image={home.cta.image}
-    imageAlt={home.cta.imageAlt}
     label={home.cta.label}
     message={home.cta.message}
     source="homepage footer banner"

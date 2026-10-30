@@ -1,0 +1,187 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Icon from '../components/Icon.astro';
+import { getContact, getSettings, getServices } from '../lib/content';
+import { breadcrumbs } from '../lib/schema';
+import { telUrl, toInternational } from '../lib/contact';
+
+const page = await getContact();
+const settings = await getSettings();
+const services = await getServices();
+const site = Astro.site!.toString();
+const { email, formEndpoint } = settings.contact;
+// Three honest modes: a real form service, email-only (mailto), or WhatsApp-only.
+const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  jsonLd={[breadcrumbs([{ name: 'Home', url: site }, { name: 'Contact', url: `${site}contact/` }])]}
+>
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+
+  <section class="section-tight bg-cream">
+    <div class="wrap grid gap-14 lg:grid-cols-12">
+      <!-- WhatsApp first: the primary path -->
+      <div class="lg:col-span-5">
+        <div class="on-dark bg-night p-8 text-cream md:p-10">
+          <p class="eyebrow">WhatsApp</p>
+          <h2 class="h3 mt-5 !text-[clamp(1.8rem,2vw+1rem,2.4rem)]">{page.whatsappHeading}</h2>
+          <p class="mt-4 text-cream/80">{page.whatsappText}</p>
+          <p class="mt-6 font-serif text-4xl tracking-wide" aria-label={`Number ${settings.contact.whatsappNumber}`}>{settings.contact.whatsappNumber}</p>
+          <WhatsAppButton label="Open WhatsApp" variant="gold" source="contact page" class="mt-8 w-full" />
+          <a href={telUrl(settings)} class="btn btn-line mt-3 w-full">
+            <Icon name="phone" size={18} /> <span>Call {settings.contact.whatsappNumber}</span>
+          </a>
+        </div>
+
+        <div class="mt-10">
+          <h2 class="h3 border-t border-gold pt-6">{page.areaHeading}</h2>
+          <p class="mt-4 text-ink-soft">{page.areaText}</p>
+          <ul class="mt-5 flex flex-wrap gap-2">
+            {settings.serviceAreas.map((a) => <li class="border border-line px-4 py-2 text-sm">{a}</li>)}
+          </ul>
+        </div>
+
+        {
+          settings.contact.email && (
+            <p class="mt-10 flex items-center gap-3">
+              <Icon name="mail" size={20} class="text-gold-deep" />
+              <a href={`mailto:${settings.contact.email}`} class="break-all text-ink underline decoration-gold underline-offset-4">{settings.contact.email}</a>
+            </p>
+          )
+        }
+      </div>
+
+      <div class="lg:col-span-7">
+        <h2 class="h2">{page.formHeading}</h2>
+        <p class="mt-4 max-w-xl text-ink-soft">{page.formText}</p>
+
+        <form
+          id="enquiry-form"
+          class="mt-10 grid gap-6 sm:grid-cols-2"
+          method="post"
+          action={mode === 'endpoint' ? formEndpoint : undefined}
+          data-mode={mode}
+          data-email={email}
+          data-wa={`https://wa.me/${toInternational(settings.contact.whatsappNumber)}`}
+          novalidate
+        >
+          <!-- Honeypot: hidden from people, tempting to bots -->
+          <div class="hidden" aria-hidden="true">
+            <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone / WhatsApp</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+          </div>
+          <div class="field sm:col-span-2">
+            <label for="f-email">Email (optional)</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="f-date">Event date</label>
+            <input id="f-date" name="date" type="date" />
+          </div>
+          <div class="field">
+            <label for="f-service">I'm interested in</label>
+            <select id="f-service" name="service">
+              <option value="">Not sure yet</option>
+              {services.map((s) => <option value={s.data.title}>{s.data.title}</option>)}
+            </select>
+          </div>
+          <div class="field sm:col-span-2">
+            <label for="f-venue">Venue or area</label>
+            <input id="f-venue" name="venue" type="text" placeholder="e.g. Leicester" />
+          </div>
+          <div class="field sm:col-span-2">
+            <label for="f-message">Tell us about your event</label>
+            <textarea id="f-message" name="message" required></textarea>
+          </div>
+
+          <div class="sm:col-span-2">
+            <p id="form-status" class="mb-4 hidden text-[0.95rem]" role="status" aria-live="polite"></p>
+            <button type="submit" class="btn btn-ink w-full sm:w-auto">
+              {mode === 'whatsapp' ? 'Continue in WhatsApp' : mode === 'mailto' ? 'Send by email' : 'Send enquiry'}
+            </button>
+            <p class="mt-4 max-w-md text-sm text-muted">
+              {
+                mode === 'whatsapp'
+                  ? 'Our email address is coming soon. For now, this form opens WhatsApp with your details filled in.'
+                  : 'We use your details only to reply to your enquiry. See our '
+              }
+              {mode !== 'whatsapp' && <a href="/privacy/" class="underline">privacy notice</a>}
+              {mode !== 'whatsapp' && '.'}
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('enquiry-form') as HTMLFormElement | null;
+  if (form) {
+    const status = document.getElementById('form-status')!;
+    const show = (msg: string, ok = false) => {
+      status.textContent = msg;
+      status.className = `mb-4 text-[0.95rem] ${ok ? 'text-[#1f6b43]' : 'text-[#9a2f1f]'}`;
+    };
+
+    const summary = (d: FormData) =>
+      [
+        'Hello JNB Events, I would like to enquire.',
+        `Name: ${d.get('name') ?? ''}`,
+        d.get('phone') ? `Phone: ${d.get('phone')}` : null,
+        d.get('email') ? `Email: ${d.get('email')}` : null,
+        d.get('date') ? `Event date: ${d.get('date')}` : null,
+        d.get('service') ? `Interested in: ${d.get('service')}` : null,
+        d.get('venue') ? `Venue/area: ${d.get('venue')}` : null,
+        '',
+        `${d.get('message') ?? ''}`,
+      ]
+        .filter((l): l is string => typeof l === 'string')
+        .join('\n');
+
+    form.addEventListener('submit', async (e) => {
+      const d = new FormData(form);
+      // Spam trap filled in: pretend success, send nothing.
+      if (d.get('website')) { e.preventDefault(); show('Thank you.', true); return; }
+      if (!String(d.get('name') ?? '').trim() || !String(d.get('message') ?? '').trim()) {
+        e.preventDefault();
+        show('Please add your name and a few details about your event.');
+        (form.querySelector(!String(d.get('name') ?? '').trim() ? '#f-name' : '#f-message') as HTMLElement).focus();
+        return;
+      }
+      const mode = form.dataset.mode;
+      if (mode === 'whatsapp') {
+        e.preventDefault();
+        window.open(`${form.dataset.wa}?text=${encodeURIComponent(summary(d))}`, '_blank', 'noopener');
+        show('Opening WhatsApp with your details. Just press send.', true);
+      } else if (mode === 'mailto') {
+        e.preventDefault();
+        window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Website enquiry')}&body=${encodeURIComponent(summary(d))}`;
+        show('Opening your email app with your details.', true);
+      } else {
+        e.preventDefault();
+        try {
+          const res = await fetch(form.action, { method: 'POST', body: d, headers: { Accept: 'application/json' } });
+          if (!res.ok) throw new Error('bad status');
+          form.reset();
+          show('Thank you. We have your enquiry and will be in touch.', true);
+        } catch {
+          show('Sorry, that did not send. Please message us on WhatsApp instead.');
+        }
+      }
+    });
+  }
+</script>

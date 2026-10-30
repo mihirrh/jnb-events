@@ -4,10 +4,10 @@ import PageHero from '../../components/PageHero.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import GalleryFilter from '../../components/GalleryFilter.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { getPage, getProjects, categoriesInUse } from '../../lib/content';
+import { getSimplePage, getProjects, categoriesInUse } from '../../lib/content';
 import { breadcrumbs } from '../../lib/schema';
 
-const { data: page } = await getPage('pages', 'gallery');
+const { data: page } = await getSimplePage('gallery');
 const projects = await getProjects();
 const cats = categoriesInUse(projects);
 const site = Astro.site!.toString();

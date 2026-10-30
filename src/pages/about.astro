@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Img from '../components/Img.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { getAbout, getServices, getSettings } from '../lib/content';
+import { breadcrumbs } from '../lib/schema';
+
+const page = await getAbout();
+const services = await getServices();
+const settings = await getSettings();
+const site = Astro.site!.toString();
+---
+
+<BaseLayout
+  title={page.seo.title}
+  description={page.seo.description}
+  image={page.image}
+  imageAlt={page.imageAlt}
+  jsonLd={[breadcrumbs([{ name: 'Home', url: site }, { name: 'About', url: `${site}about/` }])]}
+>
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+
+  <section class="section-tight bg-cream">
+    <div class="wrap grid items-start gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <div class="arch frame-gold">
+          <Img src={page.image} alt={page.imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 40vw, 94vw" reveal />
+        </div>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7 lg:pt-24">
+        <p class="reveal text-[1.1rem] leading-relaxed text-ink-soft">
+          Based in {settings.location.locality} and covering {settings.location.region} and the rest of the UK, we deliver premium-quality styling and entertainment at competitive prices.
+        </p>
+        <div class="reveal mt-10 max-w-sm">
+          <Img src={page.secondImage} alt={page.secondImageAlt} ratio={4 / 3} sizes="(min-width:1024px) 28vw, 80vw" />
+        </div>
+        <h3 class="mt-12 text-xs font-semibold uppercase tracking-[0.22em] text-gold-deep">Where we work</h3>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {settings.serviceAreas.map((a) => <li class="border border-line px-4 py-2 text-sm">{a}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-dark section bg-night text-cream" aria-labelledby="highlights-heading">
+    <div class="wrap">
+      <h2 id="highlights-heading" class="h2 max-w-2xl">{page.highlightsHeading}</h2>
+      <dl class="mt-16 grid gap-x-12 gap-y-12 md:grid-cols-2">
+        {
+          page.highlights.map((h, i) => (
+            <div class="reveal border-t border-gold/60 pt-6" style={`--d:${i * 80}ms`}>
+              <dt class="font-serif text-[1.7rem] leading-tight">{h.title}</dt>
+              <dd class="mt-3 text-cream/80">{h.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section-tight bg-cream" aria-labelledby="about-services">
+    <div class="wrap">
+      <h2 id="about-services" class="eyebrow">What we offer</h2>
+      <ul class="mt-8 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          services.map((s) => (
+            <li class="border-t border-line">
+              <a href={`/services/${s.id}/`} class="flex min-h-14 items-center py-3 font-serif text-xl no-underline hover:text-gold-deep">{s.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand heading={page.ctaHeading} text={page.ctaText} source="about page" />
+</BaseLayout>

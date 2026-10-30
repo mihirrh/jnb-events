@@ -11,10 +11,9 @@ interface Props {
   label?: string;
   message?: string;
   image?: ImageMetadata;
-  imageAlt?: string;
   source: string;
 }
-const { eyebrow, heading, text, label = 'Message us on WhatsApp', message, image, imageAlt = '', source } = Astro.props;
+const { eyebrow, heading, text, label = 'Message us on WhatsApp', message, image, source } = Astro.props;
 ---
 
 <section class="on-dark relative isolate overflow-hidden bg-night text-cream">

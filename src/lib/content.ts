@@ -40,8 +40,14 @@ export async function getPublishedTestimonials() {
   return all.filter((t) => t.data.published).sort((a, b) => a.data.order - b.data.order);
 }
 
-export async function getPage<C extends 'home' | 'about' | 'contact' | 'pages'>(collection: C, id: string) {
+async function must<C extends 'home' | 'about' | 'contact' | 'pages'>(collection: C, id: string) {
   const entry = await getEntry(collection, id);
-  if (!entry) throw new Error(`Missing content entry: ${collection}/${id}`);
-  return entry as NonNullable<Awaited<ReturnType<typeof getEntry<C>>>>;
+  if (!entry) throw new Error(`Missing content entry: src/content/pages/${id}`);
+  return entry;
 }
+
+export const getHome = async () => (await must('home', 'home')).data;
+export const getAbout = async () => (await must('about', 'about')).data;
+export const getContact = async () => (await must('contact', 'contact')).data;
+/** Simple pages: 'services' | 'gallery' | 'privacy'. */
+export const getSimplePage = async (id: 'services' | 'gallery' | 'privacy') => must('pages', id);

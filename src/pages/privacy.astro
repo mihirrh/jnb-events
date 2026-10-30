@@ -1,0 +1,18 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { getSimplePage } from '../lib/content';
+
+const entry = await getSimplePage('privacy');
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.seo.title} description={entry.data.seo.description}>
+  <PageHero heading={entry.data.heading} />
+  <section class="section-tight bg-cream">
+    <div class="wrap">
+      <div class="prose-jnb text-[1.02rem] text-ink-soft"><Content /></div>
+    </div>
+  </section>
+</BaseLayout>
