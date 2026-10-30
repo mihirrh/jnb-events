@@ -5,7 +5,7 @@ seo:
 heading: Privacy
 ---
 
-This is a plain-English summary of how this website handles your information. It is a starting point and should be reviewed by the business owner (and legal advice taken if needed) before launch.
+This is a plain-English summary of how this website handles your information.
 
 ## What this website collects
 

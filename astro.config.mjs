@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // Keep in sync with the live domain. Used for canonical URLs, sitemap and JSON-LD.
-// Change it here (and in src/content/settings/site.yaml -> siteUrl) when the domain is final.
+// Change it here when the domain is final - it is the only place the domain is defined.
 const SITE = 'https://jnbevents.co.uk';
 
 export default defineConfig({

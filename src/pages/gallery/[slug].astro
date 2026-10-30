@@ -6,7 +6,7 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import WhatsAppButton from '../../components/WhatsAppButton.astro';
 import Icon from '../../components/Icon.astro';
-import { getProjects, slugify } from '../../lib/content';
+import { getProjects, getSettings, slugify } from '../../lib/content';
 import { breadcrumbs, imageGallery } from '../../lib/schema';
 import { getImage } from 'astro:assets';
 
@@ -24,6 +24,7 @@ export async function getStaticPaths() {
 const { entry, more } = Astro.props;
 const { data } = entry;
 const { Content } = await render(entry);
+const settings = await getSettings();
 const site = Astro.site!.toString();
 const url = `${site}gallery/${entry.id}/`;
 const hasBody = Boolean(entry.body?.trim());
@@ -36,7 +37,7 @@ const spans = (w: number, h: number) => (w / h > 1.2 ? 'sm:col-span-2' : '');
 ---
 
 <BaseLayout
-  title={`${data.title} | ${data.category} | JNB Events Leicester`}
+  title={`${data.title} | ${settings.siteName} ${settings.location.locality}`}
   description={data.seoDescription ?? data.summary}
   image={data.images[0].image}
   imageAlt={data.images[0].alt}

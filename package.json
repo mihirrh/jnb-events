@@ -11,7 +11,9 @@
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
-    "images:generate": "node scripts/generate-placeholders.mjs"
+    "images:generate": "node scripts/generate-placeholders.mjs",
+    "audit": "node scripts/audit-dist.mjs",
+    "verify": "astro check && astro build && node scripts/audit-dist.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
