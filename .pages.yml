@@ -1,0 +1,401 @@
+# Pages CMS configuration for JNB Events
+# Docs: https://pagescms.org/docs/
+#
+# Everything the owner edits lives in `src/content/` (text) and `src/assets/media/` (photos).
+# Saving in Pages CMS commits to GitHub, and Cloudflare Pages rebuilds the site automatically.
+
+media:
+  input: src/assets/media
+  output: /src/assets/media
+  # Image files are renamed to safe, lowercase, hyphenated names on upload.
+  rename: safe
+  extensions: [jpg, jpeg, png, webp, avif]
+  categories: [image]
+
+settings:
+  commit:
+    templates:
+      create: "content: add {path}"
+      update: "content: update {path}"
+      delete: "content: remove {path}"
+      rename: "content: rename {oldPath} to {newPath}"
+
+components:
+  # Reused by every page that has search-engine fields.
+  seo:
+    label: Search engine (Google) listing
+    type: object
+    fields:
+      - name: title
+        label: Page title
+        type: string
+        required: true
+        description: Shown in Google results and browser tabs. Aim for under 60 characters and include "Leicester" where natural.
+        options:
+          maxlength: 70
+      - name: description
+        label: Page description
+        type: text
+        required: true
+        description: Shown under the title in Google. Aim for 120-160 characters.
+        options:
+          maxlength: 170
+
+content:
+  # ---------------------------------------------------------------- Site-wide
+  - name: settings
+    label: Site settings
+    type: file
+    path: src/content/settings/site.yaml
+    format: yaml
+    fields:
+      - name: siteName
+        label: Business name
+        type: string
+        required: true
+      - name: tagline
+        label: Tagline
+        type: string
+        required: true
+      - name: description
+        label: Short description (used as the default for search and sharing)
+        type: text
+        required: true
+      - name: logo
+        label: Logo image (optional - the site shows a built-in JNB EVENTS wordmark until you upload one)
+        type: image
+        options:
+          path: src/assets/media/brand
+      - name: logoAlt
+        label: Logo description (alt text)
+        type: string
+      - name: contact
+        label: Contact details
+        type: object
+        fields:
+          - name: whatsappNumber
+            label: WhatsApp number (as shown on the site)
+            type: string
+            required: true
+            description: UK number, for example 07872 340258. The site converts it for WhatsApp links automatically.
+          - name: whatsappMessage
+            label: Default WhatsApp message
+            type: text
+            required: true
+          - name: email
+            label: Business email
+            type: string
+            description: Leave blank until you have one. While blank, the contact form sends enquiries to WhatsApp.
+          - name: formEndpoint
+            label: Form service URL (optional)
+            type: string
+            description: Paste a Formspree / Web3Forms style URL here to receive form enquiries by email.
+      - name: location
+        label: Business location
+        type: object
+        fields:
+          - name: locality
+            label: Town / city
+            type: string
+            required: true
+          - name: region
+            label: County
+            type: string
+            required: true
+          - name: country
+            label: Country code
+            type: string
+            required: true
+      - name: serviceAreas
+        label: Areas you cover
+        type: string
+        list: true
+        required: true
+      - name: serviceAreaNote
+        label: Service area sentence
+        type: string
+        required: true
+      - name: social
+        label: Social links
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - name: label
+            label: Name (e.g. Instagram)
+            type: string
+            required: true
+          - name: url
+            label: Full link (https://...)
+            type: string
+            required: true
+
+  # ------------------------------------------------------------------- Pages
+  - name: pages
+    label: Pages
+    type: group
+    items:
+      - name: home
+        label: Homepage
+        type: file
+        path: src/content/pages/home.yaml
+        format: yaml
+        fields:
+          - { name: seo, component: seo }
+          - name: hero
+            label: Hero (top of page)
+            type: object
+            fields:
+              - { name: eyebrow, label: Small line above headline, type: string, required: true }
+              - { name: headline, label: Headline, type: string, required: true }
+              - { name: subheading, label: Sub-heading, type: text, required: true }
+              - { name: image, label: Hero photo, type: image, required: true, options: { path: src/assets/media/hero } }
+              - { name: imageAlt, label: Hero photo description (alt text), type: string, required: true }
+              - name: primaryCta
+                label: WhatsApp button
+                type: object
+                fields:
+                  - { name: label, label: Button text, type: string, required: true }
+                  - { name: message, label: Pre-filled WhatsApp message, type: text }
+              - { name: secondaryCtaLabel, label: Second button text (links to gallery), type: string, required: true }
+          - name: intro
+            label: Brand statement
+            type: object
+            fields:
+              - { name: eyebrow, label: Small line, type: string, required: true }
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: body, label: Text (blank line between paragraphs), type: text, required: true }
+              - { name: image, label: Tall photo, type: image, required: true, options: { path: src/assets/media/about } }
+              - { name: imageAlt, label: Tall photo description (alt text), type: string, required: true }
+              - { name: secondImage, label: Smaller photo, type: image, required: true, options: { path: src/assets/media/about } }
+              - { name: secondImageAlt, label: Smaller photo description (alt text), type: string, required: true }
+              - { name: linkLabel, label: Link text (goes to About page), type: string, required: true }
+          - name: services
+            label: Services section
+            type: object
+            fields:
+              - { name: eyebrow, label: Small line, type: string, required: true }
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: intro, label: Intro text, type: text, required: true }
+              - { name: ctaHeading, label: WhatsApp prompt heading, type: string, required: true }
+              - { name: ctaText, label: WhatsApp prompt text, type: text, required: true }
+              - { name: ctaMessage, label: Pre-filled WhatsApp message, type: text }
+          - name: featured
+            label: Featured work section (projects ticked "Featured" appear here)
+            type: object
+            fields:
+              - { name: eyebrow, label: Small line, type: string, required: true }
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: intro, label: Intro text, type: text, required: true }
+              - { name: linkLabel, label: Link text (goes to gallery), type: string, required: true }
+          - name: testimonials
+            label: Testimonials section (only shows when a testimonial is published)
+            type: object
+            fields:
+              - { name: eyebrow, label: Small line, type: string, required: true }
+              - { name: heading, label: Heading, type: string, required: true }
+          - name: cta
+            label: Closing WhatsApp banner
+            type: object
+            fields:
+              - { name: eyebrow, label: Small line, type: string, required: true }
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: text, label: Text, type: text, required: true }
+              - { name: image, label: Background photo, type: image, required: true, options: { path: src/assets/media/home } }
+              - { name: imageAlt, label: Photo description (alt text), type: string, required: true }
+              - { name: label, label: Button text, type: string, required: true }
+              - { name: message, label: Pre-filled WhatsApp message, type: text }
+
+      - name: about
+        label: About
+        type: file
+        path: src/content/pages/about.md
+        format: yaml-frontmatter
+        fields:
+          - { name: seo, component: seo }
+          - { name: eyebrow, label: Small line, type: string, required: true }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: lead, label: Opening paragraph, type: text, required: true }
+          - { name: image, label: Tall photo, type: image, required: true, options: { path: src/assets/media/about } }
+          - { name: imageAlt, label: Tall photo description (alt text), type: string, required: true }
+          - { name: secondImage, label: Smaller photo, type: image, required: true, options: { path: src/assets/media/about } }
+          - { name: secondImageAlt, label: Smaller photo description (alt text), type: string, required: true }
+          - { name: highlightsHeading, label: Highlights heading, type: string, required: true }
+          - name: highlights
+            label: Highlights
+            type: object
+            list:
+              min: 1
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Title, type: string, required: true }
+              - { name: text, label: Text, type: text, required: true }
+          - { name: ctaHeading, label: Closing heading, type: string, required: true }
+          - { name: ctaText, label: Closing text, type: text, required: true }
+
+      - name: servicesPage
+        label: Services page (intro)
+        type: file
+        path: src/content/pages/services.md
+        format: yaml-frontmatter
+        fields:
+          - { name: seo, component: seo }
+          - { name: eyebrow, label: Small line, type: string }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: lead, label: Intro text, type: text }
+
+      - name: galleryPage
+        label: Gallery page (intro)
+        type: file
+        path: src/content/pages/gallery.md
+        format: yaml-frontmatter
+        fields:
+          - { name: seo, component: seo }
+          - { name: eyebrow, label: Small line, type: string }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: lead, label: Intro text, type: text }
+
+      - name: contact
+        label: Contact
+        type: file
+        path: src/content/pages/contact.md
+        format: yaml-frontmatter
+        fields:
+          - { name: seo, component: seo }
+          - { name: eyebrow, label: Small line, type: string, required: true }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: lead, label: Opening paragraph, type: text, required: true }
+          - { name: whatsappHeading, label: WhatsApp heading, type: string, required: true }
+          - { name: whatsappText, label: WhatsApp text, type: text, required: true }
+          - { name: areaHeading, label: Service area heading, type: string, required: true }
+          - { name: areaText, label: Service area text, type: text, required: true }
+          - { name: formHeading, label: Form heading, type: string, required: true }
+          - { name: formText, label: Form intro, type: text, required: true }
+
+      - name: privacy
+        label: Privacy
+        type: file
+        path: src/content/pages/privacy.md
+        format: yaml-frontmatter
+        fields:
+          - { name: seo, component: seo }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: body, label: Text, type: rich-text, options: { media: false } }
+
+  # ---------------------------------------------------------------- Services
+  - name: services
+    label: Services
+    type: collection
+    path: src/content/services
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      fields: [title, order]
+      sort: [order, title]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - { name: title, label: Service name, type: string, required: true }
+      - { name: order, label: Order on site (1 = first), type: number, required: true }
+      - { name: summary, label: Short summary (cards and search results), type: text, required: true, options: { maxlength: 220 } }
+      - { name: lead, label: Intro paragraph (top of the service page), type: text, required: true }
+      - { name: image, label: Main photo, type: image, required: true, options: { path: src/assets/media/services } }
+      - { name: imageAlt, label: Main photo description (alt text), type: string, required: true }
+      - { name: secondImage, label: Second photo (optional), type: image, options: { path: src/assets/media/services } }
+      - { name: secondImageAlt, label: Second photo description (alt text), type: string }
+      - name: keyPoints
+        label: Key points
+        type: string
+        list:
+          min: 1
+        required: true
+      - name: relatedCategory
+        label: Show gallery projects from this category
+        type: select
+        options:
+          values:
+            - Mandaps & Stages
+            - Civil Ceremony
+            - Reception & Centrepieces
+            - Décor
+            - DJ & Entertainment
+            - Special Effects
+            - Dance Floor & Lighting
+      - { name: whatsappMessage, label: Pre-filled WhatsApp message, type: text }
+      - { name: seo, component: seo }
+      - { name: body, label: Page text, type: rich-text, options: { media: false } }
+
+  # -------------------------------------------------------------- Portfolio
+  - name: projects
+    label: Gallery projects
+    type: collection
+    path: src/content/projects
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      fields: [title, category, featured, date]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Project title, type: string, required: true }
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values:
+            - Mandaps & Stages
+            - Civil Ceremony
+            - Reception & Centrepieces
+            - Décor
+            - DJ & Entertainment
+            - Special Effects
+            - Dance Floor & Lighting
+      - { name: summary, label: Short description, type: text, required: true, options: { maxlength: 220 } }
+      - { name: location, label: Area (optional, e.g. Leicestershire), type: string }
+      - { name: date, label: Event date (used for ordering, newest first), type: date, required: true, options: { format: yyyy-MM-dd } }
+      - { name: featured, label: Show on the homepage, type: boolean, default: false }
+      - name: images
+        label: Photos (the first is the cover)
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: "Photo {index}"
+        required: true
+        fields:
+          - { name: image, label: Photo, type: image, required: true, options: { path: src/assets/media/gallery } }
+          - { name: alt, label: Photo description (alt text), type: string, required: true, description: "Describe what is in the photo, e.g. 'Ivory and gold mandap with hanging lights'." }
+      - { name: seoDescription, label: Search description (optional), type: text, options: { maxlength: 170 } }
+      - { name: body, label: Longer description (optional), type: rich-text, options: { media: false } }
+
+  # ----------------------------------------------------------- Testimonials
+  - name: testimonials
+    label: Testimonials
+    type: collection
+    path: src/content/testimonials
+    format: yaml
+    filename: "{primary}.yaml"
+    view:
+      primary: name
+      fields: [name, event, published]
+      sort: [order, name]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - { name: quote, label: Quote (use real client words only), type: text, required: true }
+      - { name: name, label: Client name, type: string, required: true }
+      - { name: event, label: Event type (e.g. Wedding), type: string }
+      - { name: order, label: Order (1 = first), type: number, default: 100 }
+      - { name: published, label: Published (show on the website), type: boolean, default: false }

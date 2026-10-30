@@ -51,7 +51,6 @@ const settings = defineCollection({
       serviceAreas: z.array(z.string()).min(1),
       serviceAreaNote: z.string(),
       social: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
-      defaultShareImage: image().optional(),
     }),
 });
 
