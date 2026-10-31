@@ -3,13 +3,12 @@ import { getSettings, getServices } from '../lib/content';
 import { whatsappUrl, telUrl } from '../lib/contact';
 import { NAV } from '../lib/nav';
 import Logo from './Logo.astro';
-import Motif from './Motif.astro';
 
 /**
  * Footer, composed like the last page of a brochure rather than a link directory:
  *  1. an invitation and the contact details set large,
  *  2. the services as a run-in index (a single flowing line of serif text, not a list of links),
- *  3. a colophon with the wordmark, area and small print.
+ *  3. one quiet row with the wordmark and site links, then the small print.
  */
 const settings = await getSettings();
 const services = await getServices();
@@ -40,33 +39,25 @@ const small = 'inline-flex min-h-11 items-center text-[0.68rem] font-semibold up
         <a href={whatsappUrl(settings)} target="_blank" rel="noopener noreferrer" class="link-arrow mt-4" data-whatsapp>
           <span>Message on WhatsApp<span class="sr-only"> (opens in a new tab)</span></span><span aria-hidden="true">&rarr;</span>
         </a>
-        <p class="mt-5 max-w-xs text-sm leading-relaxed text-cream/70">{settings.serviceAreaNote}</p>
       </address>
     </div>
 
-    <div class="mt-12 flex items-center gap-6 md:mt-14" aria-hidden="true">
-      <div class="hairline flex-1"></div>
-      <Motif variant="line" size={44} />
-      <div class="hairline flex-1"></div>
-    </div>
+    <nav aria-label="Services" class="mt-12 border-t border-gold/25 pt-8 md:mt-14">
+      <ul class="font-serif text-[clamp(1.15rem,0.8vw+0.95rem,1.5rem)] leading-[1.75] tracking-[-0.01em]">
+        {
+          services.map((s) => (
+            <li class="inline">
+              <a href={`/services/${s.id}/`} class="runin text-cream no-underline">{s.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
 
-    <div class="grid gap-8 py-8 lg:grid-cols-12 lg:gap-8 lg:py-10">
-      <nav aria-label="Services" class="lg:col-span-8">
-        <p class="folio"><span>Services</span><i aria-hidden="true"></i></p>
-        <ul class="mt-6 font-serif text-[clamp(1.3rem,1vw+1rem,1.75rem)] leading-[1.7] tracking-[-0.01em]">
-          {
-            services.map((s) => (
-              <li class="inline">
-                <a href={`/services/${s.id}/`} class="runin text-cream no-underline">{s.data.title}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-
-      <nav aria-label="Footer" class="lg:col-span-3 lg:col-start-10">
-        <p class="folio"><span>Index</span><i aria-hidden="true"></i></p>
-        <ul class="mt-4 flex flex-wrap gap-x-8 lg:block">
+    <div class="mt-8 flex flex-col gap-6 border-t border-gold/25 pt-6 lg:flex-row lg:items-center lg:justify-between">
+      <a href="/" class="inline-flex min-h-11 items-center" aria-label={`${settings.siteName} - home`}><Logo settings={settings} tone="light" /></a>
+      <nav aria-label="Footer">
+        <ul class="flex flex-wrap gap-x-7">
           {NAV.map((n) => <li><a class={small} href={n.href}>{n.label}</a></li>)}
           {settings.social.map((s) => (
             <li><a class={small} href={s.url} target="_blank" rel="noopener noreferrer me">{s.label}<span class="sr-only"> (opens in a new tab)</span></a></li>
@@ -75,13 +66,10 @@ const small = 'inline-flex min-h-11 items-center text-[0.68rem] font-semibold up
       </nav>
     </div>
 
-    <div class="flex flex-col items-start gap-6 border-t border-gold/25 py-8 pb-28 lg:flex-row lg:items-center lg:justify-between lg:pb-8">
-      <a href="/" class="inline-flex min-h-11 items-center" aria-label={`${settings.siteName} - home`}><Logo settings={settings} tone="light" showTagline /></a>
-      <p class="text-[0.68rem] uppercase tracking-[0.22em] text-cream/65">
-        &copy; {year} {settings.siteName} &middot; {settings.location.locality}, {settings.location.region} &middot; Serving the UK
-        &nbsp;&middot;&nbsp; <a href="/privacy/" class="text-cream/80 underline decoration-gold/60 underline-offset-4 hover:text-gold-light">Privacy</a>
-      </p>
-    </div>
+    <p class="pb-28 pt-2 text-[0.68rem] uppercase tracking-[0.22em] text-cream/65 lg:pb-8">
+      &copy; {year} {settings.siteName} &middot; {settings.location.locality}, {settings.location.region}
+      &nbsp;&middot;&nbsp; <a href="/privacy/" class="inline-flex min-h-11 items-center text-cream/80 underline decoration-gold/60 underline-offset-4 hover:text-gold-light">Privacy</a>
+    </p>
   </div>
 </footer>
 
