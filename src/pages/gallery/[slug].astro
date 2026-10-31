@@ -29,7 +29,7 @@ const site = Astro.site!.toString();
 const url = `${site}gallery/${entry.id}/`;
 const hasBody = Boolean(entry.body?.trim());
 
-const full = await Promise.all(data.images.map((im) => getImage({ src: im.image, width: 2000, format: 'webp', quality: 80 })));
+const full_ = await Promise.all(data.images.map((im) => getImage({ src: im.image, width: 2000, format: 'webp', quality: 80 })));
 const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new URL((await getImage({ src: im.image, width: 1600, format: 'jpg' })).src, site).toString()));
 
 ---
@@ -77,26 +77,27 @@ const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new
        reads as a spread, not a grid. Every image still opens in the lightbox. -->
   <section class="bg-cream pb-[clamp(4rem,9vw,9rem)] pt-12 md:pt-20" aria-label="Photos">
     <div class="wrap">
-      <ul class="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-12 lg:gap-8">
+      <ul class="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:gap-8">
         {
           data.images.map((im, i) => {
-            const wide = i === 0 || im.image.width / im.image.height > 1.2;
-            const slot = i === 0 ? 'sm:col-span-2 lg:col-span-12' : wide ? 'sm:col-span-2 lg:col-span-8' + (i % 2 ? ' lg:col-start-5' : '') : 'lg:col-span-4' + (i % 2 ? ' lg:col-start-9 lg:-mt-24' : ' lg:col-start-2 lg:mt-12');
+            const rest = data.images.length - 1;
+            // First photo and (when the rest is odd) the last one run full width; the others sit two-up.
+            const full = i === 0 || (rest % 2 === 1 && i === data.images.length - 1);
             return (
-              <li class:list={[slot]}>
+              <li class:list={[full && 'sm:col-span-2']}>
                 <button
                   type="button"
                   class="lightbox-trigger group block w-full cursor-zoom-in text-left"
-                  data-full={full[i].src}
+                  data-full={full_[i].src}
                   data-alt={im.alt}
                   aria-label={`View larger: ${im.alt}`}
                 >
                   <Img
                     src={im.image}
                     alt={im.alt}
-                    sizes={i === 0 ? '(min-width:1280px) 1180px, 94vw' : wide ? '(min-width:1024px) 62vw, 94vw' : '(min-width:1024px) 32vw, (min-width:640px) 48vw, 94vw'}
-                    ratio={i === 0 ? 16 / 9 : wide ? 3 / 2 : 4 / 5}
-                    widths={i === 0 ? [640, 1100, 1600, 2000] : undefined}
+                    sizes={full ? '(min-width:1280px) 1180px, 94vw' : '(min-width:1280px) 580px, (min-width:640px) 47vw, 94vw'}
+                    ratio={i === 0 ? 16 / 9 : full ? 16 / 9 : 4 / 3}
+                    widths={full ? [640, 1100, 1600, 2000] : [480, 800, 1100]}
                     class="media-zoom"
                     priority={i === 0}
                     reveal={i > 0}
@@ -110,7 +111,7 @@ const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new
         }
       </ul>
 
-      {hasBody && <div class="prose-jnb dropcap mt-20 text-[1.08rem] text-ink-soft lg:ml-[calc(100%/12*4)]"><Content /></div>}
+      {hasBody && <div class="prose-jnb mt-16 text-[1.08rem] text-ink-soft lg:ml-[calc(100%/12*4)]"><Content /></div>}
 
       <div class="mt-20 grid items-end gap-8 border-t border-line pt-10 lg:grid-cols-12">
         <p class="font-serif text-[clamp(1.8rem,2.4vw+1rem,3rem)] leading-tight lg:col-span-8">Like this style? <em>Tell us about your event.</em></p>
@@ -127,7 +128,7 @@ const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new
         <div class="wrap">
           <h2 id="more-projects" class="h2">More <em>work</em></h2>
           <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {more.map((p, i) => <ProjectCard project={p} index={i} ratio={i === 1 ? 1 : 4 / 5} class={i === 1 ? 'lg:mt-16' : ''} delay={i * 90} />)}
+            {more.map((p, i) => <ProjectCard project={p} index={i} ratio={4 / 5} delay={i * 90} />)}
           </div>
         </div>
       </section>

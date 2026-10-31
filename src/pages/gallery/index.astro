@@ -30,10 +30,11 @@ const site = Astro.site!.toString();
       <GalleryFilter available={cats} />
       <p class="mt-5 text-xs uppercase tracking-[0.2em] text-muted" aria-live="polite">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
 
-      <div class="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-12 lg:gap-y-0">
+      <div class="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-12 lg:gap-y-14">
         {
           projects.map((p, i) => {
-            const pl = plate(i);
+            const lone = i === projects.length - 1 && i % 5 === 0 && projects.length > 1;
+            const pl = lone ? { cls: 'lg:col-span-12', ratio: 21 / 9 } : plate(i);
             return <ProjectCard project={p} index={i} ratio={pl.ratio} class={pl.cls} delay={(i % 2) * 120} sizes="(min-width:1024px) 52vw, (min-width:640px) 48vw, 94vw" />;
           })
         }

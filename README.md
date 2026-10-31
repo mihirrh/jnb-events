@@ -29,6 +29,7 @@ npm run dev        # http://localhost:4321
 | `npm run audit` | After a build: checks links, H1s, titles/descriptions, canonical/OG tags, JSON-LD, alt text, sitemap |
 | `npm run verify` | `check` + `build` + `audit` in one go (no browser needed, safe for CI) |
 | `npm run check:layout` | After a build: opens every page in headless Chromium at 390 / 768 / 1024 / 1440 px and reports failed or hidden images, horizontal overflow, small tap targets, console errors and page height. Add `--shots` to save screenshots to `.scratch/shots/`, `--page=/about/` or `--vp=mobile` to narrow it. One-time setup: `npx playwright install chromium`. |
+| `npm run check:fallbacks` | After a build: renders every page with JavaScript off and with reduced motion, and fails if any image or text is hidden. Same Playwright setup as `check:layout`. |
 | `npm run images:generate` | Re-creates the placeholder images (not needed once real photos are in) |
 
 ---

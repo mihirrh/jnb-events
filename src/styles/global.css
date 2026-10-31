@@ -204,6 +204,9 @@
   }
   .on-dark .numeral-sm { color: var(--color-gold-light); }
 
+  /* Numbers people must read or dial (phone, dates): set in the sans with lining figures. Bodoni's hairlines make digits like 4 and 7 vanish. */
+  .num { font-family: var(--font-sans); font-weight: 400; letter-spacing: 0.01em; font-variant-numeric: lining-nums tabular-nums; }
+
   /* ---- Rules ---- */
   .hairline { height: 1px; background: var(--color-line); border: 0; }
   .on-dark .hairline { background: rgb(214 179 106 / 0.28); }

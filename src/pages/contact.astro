@@ -32,7 +32,7 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
           <p class="eyebrow">WhatsApp</p>
           <h2 class="h3 mt-6 !text-[clamp(2rem,2.4vw+1rem,3rem)]" set:html={emphasis(page.whatsappHeading)} />
           <p class="mt-4 text-cream/80">{page.whatsappText}</p>
-          <p class="mt-8 font-serif text-[clamp(2.2rem,3vw+1rem,3.4rem)] leading-none tracking-tight" aria-label={`Number ${settings.contact.whatsappNumber}`}>{settings.contact.whatsappNumber}</p>
+          <p class="num mt-8 text-[clamp(2rem,2.6vw+1rem,3rem)] leading-none" aria-label={`Number ${settings.contact.whatsappNumber}`}>{settings.contact.whatsappNumber}</p>
           <WhatsAppButton label="Open WhatsApp" variant="ink" source="contact page" class="mt-8 w-full" />
           <a href={telUrl(settings)} class="btn btn-line mt-3 w-full">
             <Icon name="phone" size={18} /> <span>Call {settings.contact.whatsappNumber}</span>

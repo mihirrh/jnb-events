@@ -109,6 +109,10 @@ for (const file of pages) {
     if (tag.includes('id="lightbox-img"')) continue; // hidden dialog image, sized by CSS
     if (!/\bwidth=/.test(tag) || !/\bheight=/.test(tag)) warn(page, `<img> without width/height (layout shift risk): ${tag.slice(0, 60)}`);
   }
+  // Responsive images: any <img> with a srcset needs a `sizes` hint, otherwise browsers assume 100vw and over-download.
+  for (const m of html.matchAll(/<img\b[^>]*>/g)) {
+    if (/\bsrcset=/.test(m[0]) && !/\bsizes=/.test(m[0])) warn(page, `<img> with srcset but no sizes: ${m[0].slice(0, 70)}`);
+  }
   const eager = [...html.matchAll(/<img\b[^>]*loading="eager"/g)].length;
   if (eager > 3) warn(page, `${eager} eager images (only above-the-fold images should be eager)`);
 
