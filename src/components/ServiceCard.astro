@@ -25,10 +25,10 @@ const href = `/services/${service.id}/`;
   variant === 'feature' ? (
     <a href={href} class:list={['group block no-underline', className]}>
       <Img src={service.data.image} alt={service.data.imageAlt} ratio={ratio} sizes={sizes} class="media-zoom" reveal />
-      <div class="mt-5 grid grid-cols-[auto_1fr] gap-x-5">
-        <span class="numeral text-[3.2rem] leading-none md:text-[4.4rem]" aria-hidden="true">{n}</span>
+      <div class="mt-4 grid grid-cols-[auto_1fr] gap-x-4">
+        <span class="numeral-sm pt-1 text-2xl" aria-hidden="true">{n}</span>
         <div class="pt-1">
-          <h3 class="h3 !text-[clamp(1.8rem,2.4vw+1rem,3rem)]">{service.data.title}</h3>
+          <h3 class="h3 !text-[clamp(1.6rem,1.6vw+1rem,2.4rem)]">{service.data.title}</h3>
           <p class="mt-3 max-w-md text-[0.95rem] leading-relaxed text-muted">{service.data.summary}</p>
         </div>
       </div>
@@ -37,15 +37,15 @@ const href = `/services/${service.id}/`;
     <a
       href={href}
       class:list={[
-        'group grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-1 border-t border-gold/25 py-6 no-underline md:grid-cols-12 md:gap-x-8 md:py-8',
+        'group grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-1 border-t border-gold/25 py-5 no-underline md:grid-cols-12 md:gap-x-8 md:py-5',
         className,
       ]}
     >
-      <span class="numeral text-3xl md:col-span-1 md:text-4xl" aria-hidden="true">{n}</span>
-      <h3 class="h3 !text-[clamp(1.65rem,2.2vw+0.9rem,2.8rem)] transition-transform duration-500 group-hover:translate-x-2 md:col-span-4">{service.data.title}</h3>
+      <span class="numeral-sm text-xl md:col-span-1 md:text-2xl" aria-hidden="true">{n}</span>
+      <h3 class="h3 !text-[clamp(1.5rem,1.6vw+0.9rem,2.2rem)] transition-transform duration-500 group-hover:translate-x-2 md:col-span-4">{service.data.title}</h3>
       <p class="col-start-2 col-end-4 mt-1 max-w-md text-[0.95rem] leading-relaxed text-muted md:col-span-4 md:col-start-auto md:mt-0 md:pr-6">{service.data.summary}</p>
       <div class="hidden md:col-span-2 md:block" aria-hidden="true">
-        <Img src={service.data.image} alt="" ratio={5 / 4} sizes="200px" widths={[200, 400]} class="media-zoom" />
+        <Img src={service.data.image} alt="" ratio={3 / 2} sizes="200px" widths={[200, 400]} class="media-zoom" />
       </div>
       <Icon name="arrow" size={22} class="col-start-3 row-start-1 text-gold-light transition-transform duration-500 group-hover:translate-x-1.5 md:col-span-1 md:col-start-auto md:row-start-auto md:justify-self-end" />
     </a>

@@ -13,22 +13,21 @@ import { emphasis, plain } from '../lib/text';
 const home = await getHome();
 const settings = await getSettings();
 const services = await getServices();
-const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 5);
+const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 4);
 const [opener, ...collage] = featured;
 const testimonials = await getPublishedTestimonials();
 const site = Astro.site!.toString();
 
 // Placement of the collage below the full-bleed opener (desktop): [grid classes, aspect ratio].
 const layout: [string, number][] = [
-  ['lg:col-span-5 lg:col-start-2', 4 / 5],
-  ['lg:col-span-4 lg:col-start-8 lg:mt-44', 4 / 5],
-  ['lg:col-span-6 lg:col-start-1 lg:-mt-12', 3 / 2],
-  ['lg:col-span-4 lg:col-start-9 lg:mt-20', 1],
+  ['lg:col-span-4', 1],
+  ['lg:col-span-4 lg:mt-12', 1],
+  ['lg:col-span-4', 1],
 ];
 
 const [lead, ...rest] = home.intro.body.split(/\n\s*\n/);
-const featureServices = services.slice(0, 2);
-const rowServices = services.slice(2);
+const featureServices = services.slice(0, 3);
+const rowServices = services.slice(3);
 ---
 
 <BaseLayout
@@ -45,9 +44,9 @@ const rowServices = services.slice(2);
   <section class="on-dark relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-night text-cream">
     <div class="hero-zoom absolute inset-0 -z-10">
       <Img src={home.hero.image} alt={home.hero.imageAlt} sizes="100vw" priority widths={[480, 768, 1100, 1600, 2400]} class="!aspect-auto h-full w-full" />
-      <div class="absolute inset-0 bg-gradient-to-t from-night via-night/60 via-50% to-night/25"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-night/65 via-night/20 via-55% to-transparent"></div>
-      <div class="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-night/70 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-night via-night/35 via-55% to-night/5"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-night/55 via-night/10 via-50% to-transparent"></div>
+      <div class="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-night/55 to-transparent"></div>
     </div>
 
     <div class="wrap relative mt-auto w-full pb-24 pt-32 md:pb-14 md:pt-36">
@@ -97,36 +96,36 @@ const rowServices = services.slice(2);
   <section class="on-dark section bg-night text-cream" aria-labelledby="services-heading">
     <div class="wrap">
       <div class="folio"><b>02</b><span>{home.services.eyebrow}</span><i aria-hidden="true"></i></div>
-      <div class="mt-10 grid gap-8 lg:grid-cols-12 lg:items-end">
+      <div class="mt-8 grid gap-6 lg:grid-cols-12 lg:items-end">
         <h2 id="services-heading" class="h2 reveal lg:col-span-8" aria-label={plain(home.services.heading)} set:html={emphasis(home.services.heading)} />
         <p class="lead reveal lg:col-span-3 lg:col-start-10">{home.services.intro}</p>
       </div>
 
-      <div class="mt-16 grid gap-16 lg:mt-24 lg:grid-cols-12 lg:gap-8">
+      <div class="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-5 lg:mt-16 lg:grid-cols-12 lg:gap-8">
         {
           featureServices.map((s, i) => (
             <ServiceCard
               service={s}
               index={i}
               variant="feature"
-              ratio={i === 0 ? 4 / 5 : 1}
-              sizes="(min-width:1024px) 42vw, 92vw"
-              class={i === 0 ? 'lg:col-span-6' : 'lg:col-span-5 lg:col-start-8 lg:mt-48'}
+              ratio={4 / 3}
+              sizes="(min-width:1024px) 31vw, (min-width:640px) 30vw, 92vw"
+              class="lg:col-span-4"
             />
           ))
         }
       </div>
 
-      <div class="mt-24 lg:mt-36">
-        {rowServices.map((s, i) => <ServiceCard service={s} index={i + 2} variant="row" />)}
+      <div class="mt-12 lg:mt-16">
+        {rowServices.map((s, i) => <ServiceCard service={s} index={i + featureServices.length} variant="row" />)}
         <div class="border-t border-gold/25"></div>
       </div>
 
       <!-- WhatsApp CTA directly after services -->
-      <div class="reveal mt-20 grid items-end gap-8 lg:mt-28 lg:grid-cols-12">
+      <div class="reveal mt-10 grid items-center gap-6 lg:mt-14 lg:grid-cols-12">
         <div class="lg:col-span-8">
-          <h3 class="h2 !text-[clamp(2.1rem,4vw+0.5rem,4.2rem)]" set:html={emphasis(home.services.ctaHeading)} />
-          <p class="lead mt-5 max-w-xl">{home.services.ctaText}</p>
+          <h3 class="font-serif text-[clamp(1.6rem,2vw+0.8rem,2.6rem)] leading-tight tracking-[-0.02em]" set:html={emphasis(home.services.ctaHeading)} />
+          <p class="mt-2 max-w-xl text-cream/80">{home.services.ctaText}</p>
         </div>
         <div class="lg:col-span-4 lg:text-right">
           <WhatsAppButton label="Chat on WhatsApp" message={home.services.ctaMessage} variant="ink" source="homepage services" class="w-full sm:w-auto" />
@@ -139,7 +138,7 @@ const rowServices = services.slice(2);
        Opens with one full-bleed photograph, then a collage of overlapping / offset plates. -->
   {
     opener && (
-      <section class="bg-cream pb-[clamp(5rem,11vw,11rem)]" aria-labelledby="featured-heading">
+      <section class="bg-cream pb-[clamp(4rem,8vw,8rem)]" aria-labelledby="featured-heading">
         <a href={`/gallery/${opener.id}/`} class="group relative block no-underline" aria-label={`${opener.data.title} - ${opener.data.category}`}>
           <Img
             src={opener.data.images[0].image}
@@ -147,13 +146,13 @@ const rowServices = services.slice(2);
             ratio={3 / 2}
             sizes="100vw"
             widths={[640, 1100, 1600, 2400]}
-            class="media-zoom !aspect-[4/5] sm:!aspect-[16/9] lg:!aspect-[21/9]"
+            class="media-zoom !aspect-[4/3] sm:!aspect-[16/9] lg:!aspect-[3/1]"
             reveal
           />
           <span class="cap">{opener.data.category} &mdash; {opener.data.title}</span>
         </a>
 
-        <div class="wrap mt-20 md:mt-28">
+        <div class="wrap mt-14 md:mt-20">
           <div class="folio"><b>03</b><span>{home.featured.eyebrow}</span><i aria-hidden="true"></i></div>
           <div class="mt-10 grid gap-8 lg:grid-cols-12 lg:items-end">
             <h2 id="featured-heading" class="h2 reveal lg:col-span-7" aria-label={plain(home.featured.heading)} set:html={emphasis(home.featured.heading)} />
@@ -166,7 +165,7 @@ const rowServices = services.slice(2);
           </div>
 
           {collage.length > 0 && (
-            <div class="mt-16 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:mt-24 lg:grid-cols-12 lg:gap-y-0">
+            <div class="mt-12 grid gap-x-5 gap-y-12 sm:grid-cols-3 lg:mt-16 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-0">
               {collage.map((p, i) => {
                 const [cls, ratio] = layout[i] ?? layout[0];
                 return (
@@ -176,7 +175,7 @@ const rowServices = services.slice(2);
                     ratio={ratio}
                     class={cls}
                     delay={(i % 2) * 120}
-                    sizes="(min-width:1024px) 40vw, (min-width:640px) 48vw, 94vw"
+                    sizes="(min-width:1024px) 31vw, (min-width:640px) 30vw, 94vw"
                   />
                 );
               })}
@@ -188,24 +187,13 @@ const rowServices = services.slice(2);
   }
 
   <!-- ============================= WHERE WE WORK =============================
-       Local SEO in plain sight: genuine service areas, typographic and static. -->
-  <section class="relative overflow-hidden bg-cream-deep section-tight" aria-labelledby="areas-heading">
-    <div class="wrap py-6 md:py-12">
-      <div class="grid items-end gap-8 lg:grid-cols-12">
-        <div class="lg:col-span-4">
-          <div class="folio"><b>04</b><span>Where we work</span></div>
-          <p class="mt-6 max-w-xs text-[0.98rem] text-ink-soft">{settings.serviceAreaNote}</p>
-        </div>
-        <h2 id="areas-heading" class="h2 lg:col-span-8" aria-label={settings.serviceAreas.join(', ')}>
-          {
-            settings.serviceAreas.map((a, i) => (
-              <>
-                <span class="block">{i === settings.serviceAreas.length - 1 && settings.serviceAreas.length > 1 ? <em>&amp; </em> : null}{a}{i < settings.serviceAreas.length - 2 ? ',' : ''}</span>
-              </>
-            ))
-          }
-        </h2>
-      </div>
+       Local SEO in plain sight, kept to a single ruled strip. -->
+  <section class="bg-cream-deep section-tight" aria-labelledby="areas-heading">
+    <div class="wrap grid items-baseline gap-4 lg:grid-cols-12 lg:gap-8">
+      <div class="folio lg:col-span-3"><b>04</b><span id="areas-heading">Where we work</span></div>
+      <p class="font-serif text-[clamp(1.6rem,2.4vw+0.8rem,3rem)] leading-tight tracking-[-0.02em] lg:col-span-9">
+        {settings.serviceAreas.join(' · ')}
+      </p>
     </div>
   </section>
 

@@ -13,7 +13,8 @@
     "astro": "astro",
     "images:generate": "node scripts/generate-placeholders.mjs",
     "audit": "node scripts/audit-dist.mjs",
-    "verify": "astro check && astro build && node scripts/audit-dist.mjs"
+    "verify": "astro check && astro build && node scripts/audit-dist.mjs",
+    "check:layout": "node scripts/check-layout.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -26,8 +27,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "playwright": "^1.64.1",
     "typescript": "^6.0.3"
   },
-  "description": "Website for JNB Events - wedding and event décor, DJ and mandaps in Leicester",
+  "description": "Website for JNB Events - wedding and event d\u00e9cor, DJ and mandaps in Leicester",
   "private": true
 }

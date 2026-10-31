@@ -18,11 +18,11 @@ const small = 'inline-flex min-h-11 items-center text-[0.68rem] font-semibold up
 ---
 
 <footer class="on-dark relative bg-night text-cream" aria-label="Site footer">
-  <div class="wrap pt-20 md:pt-32">
+  <div class="wrap pt-14 md:pt-20">
     <div class="grid gap-14 lg:grid-cols-12 lg:gap-8">
       <div class="lg:col-span-7">
         <p class="eyebrow">Enquiries</p>
-        <p class="mt-8 font-serif text-[clamp(2.4rem,4.8vw+0.4rem,5rem)] leading-[1.02] tracking-[-0.025em]">
+        <p class="mt-6 font-serif text-[clamp(2.1rem,3.6vw+0.4rem,3.9rem)] leading-[1.04] tracking-[-0.025em]">
           Your date, your venue &mdash; <em>our attention to detail.</em>
         </p>
       </div>
@@ -30,27 +30,27 @@ const small = 'inline-flex min-h-11 items-center text-[0.68rem] font-semibold up
       <address class="not-italic lg:col-span-4 lg:col-start-9 lg:self-end">
         <a
           href={telUrl(settings)}
-          class="block font-serif text-[clamp(1.9rem,2.2vw+1rem,2.8rem)] leading-none tracking-tight no-underline transition-colors hover:text-gold-light"
+          class="block py-2 font-serif text-[clamp(1.9rem,2.2vw+1rem,2.8rem)] leading-none tracking-tight no-underline transition-colors hover:text-gold-light"
         >{settings.contact.whatsappNumber}</a>
         {
           settings.contact.email && (
             <a href={`mailto:${settings.contact.email}`} class="mt-4 block break-all text-[0.98rem] text-cream/80 no-underline hover:text-gold-light">{settings.contact.email}</a>
           )
         }
-        <a href={whatsappUrl(settings)} target="_blank" rel="noopener noreferrer" class="link-arrow mt-8" data-whatsapp>
+        <a href={whatsappUrl(settings)} target="_blank" rel="noopener noreferrer" class="link-arrow mt-4" data-whatsapp>
           <span>Message on WhatsApp<span class="sr-only"> (opens in a new tab)</span></span><span aria-hidden="true">&rarr;</span>
         </a>
-        <p class="mt-8 max-w-xs text-sm leading-relaxed text-cream/70">{settings.serviceAreaNote}</p>
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-cream/70">{settings.serviceAreaNote}</p>
       </address>
     </div>
 
-    <div class="mt-20 flex items-center gap-6 md:mt-28" aria-hidden="true">
+    <div class="mt-12 flex items-center gap-6 md:mt-14" aria-hidden="true">
       <div class="hairline flex-1"></div>
       <Motif variant="line" size={44} />
       <div class="hairline flex-1"></div>
     </div>
 
-    <div class="grid gap-12 py-12 lg:grid-cols-12 lg:gap-8 lg:py-16">
+    <div class="grid gap-8 py-8 lg:grid-cols-12 lg:gap-8 lg:py-10">
       <nav aria-label="Services" class="lg:col-span-8">
         <p class="folio"><span>Services</span><i aria-hidden="true"></i></p>
         <ul class="mt-6 font-serif text-[clamp(1.3rem,1vw+1rem,1.75rem)] leading-[1.7] tracking-[-0.01em]">

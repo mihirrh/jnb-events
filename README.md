@@ -27,7 +27,8 @@ npm run dev        # http://localhost:4321
 | `npm run preview` | Serves `dist/` locally |
 | `npm run check` | Type-checks Astro, TypeScript and content |
 | `npm run audit` | After a build: checks links, H1s, titles/descriptions, canonical/OG tags, JSON-LD, alt text, sitemap |
-| `npm run verify` | `check` + `build` + `audit` in one go |
+| `npm run verify` | `check` + `build` + `audit` in one go (no browser needed, safe for CI) |
+| `npm run check:layout` | After a build: opens every page in headless Chromium at 390 / 768 / 1024 / 1440 px and reports failed or hidden images, horizontal overflow, small tap targets, console errors and page height. Add `--shots` to save screenshots to `.scratch/shots/`, `--page=/about/` or `--vp=mobile` to narrow it. One-time setup: `npx playwright install chromium`. |
 | `npm run images:generate` | Re-creates the placeholder images (not needed once real photos are in) |
 
 ---
@@ -169,3 +170,13 @@ src/
 - Final domain name (see section 2)
 - Real testimonials (only if genuine and permitted)
 - A read-through of the Privacy page wording
+
+---
+
+## Design notes (phase 3)
+
+- **Gold is an accent.** Buttons are ink (cream on dark); gold is used for the "JNB" wordmark, hairlines, small running numbers and hover sweeps. Large numerals are a tint of the text colour.
+- **Brand motif:** `src/components/Motif.astro` draws a mandap arch in three variants (`line`, `floral`, `monogram`). It is used sparingly: the footer divider, the 404 page and the favicon. Don't add it to photographs or headings.
+- **Photographs never hide.** Reveals use opacity, not `clip-path` (a clipped element has no area, so the observer never fires and the photo stays blank).
+- **Page length budgets** are enforced by `check:layout`: homepage 8.5 viewport heights, inner pages 6, project pages 7 (phones get 1.6x). Nothing is collapsed or hidden behind a click; pages are shortened by composition (three-across features, ruled lists, fewer plates).
+- Photos are generated placeholders until real photography is supplied through the CMS.

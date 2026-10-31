@@ -56,6 +56,8 @@
     line-height: 1.04;
     letter-spacing: -0.02em;
     font-optical-sizing: auto;
+    font-kerning: normal;
+    font-feature-settings: 'kern' 1, 'liga' 1;
     text-wrap: balance;
   }
   /* Editorial emphasis: *word* in any CMS heading becomes a set-apart italic. */
@@ -90,7 +92,7 @@
   @media (min-width: 640px) { .wrap { padding-inline: 2rem; } }
   @media (min-width: 1024px) { .wrap { padding-inline: 3.5rem; } }
 
-  .section { padding-block: clamp(4.5rem, 9vw, 9rem); }
+  .section { padding-block: clamp(3.5rem, 8vw, 8rem); }
   .section-tight { padding-block: clamp(3rem, 5vw, 5rem); }
 
   /* ---- Type scale (fluid) ----
@@ -104,6 +106,8 @@
     line-height: 0.96;
     letter-spacing: -0.03em;
   }
+  /* Bodoni's W has a wide right side-bearing and no W-e kern pair in this subset: pull the next letter in. */
+  .display::first-letter, .h1::first-letter { letter-spacing: -0.07em; }
   .h1 {
     font-size: clamp(2.75rem, 6.2vw + 0.3rem, 6.25rem);
     line-height: 0.98;
@@ -359,9 +363,12 @@
   }
   .js .reveal.is-visible { opacity: 1; transform: none; }
 
-  /* Photographs unveil upward, like a page being drawn back. */
-  .js .reveal-img { clip-path: inset(0 0 100% 0); transition: clip-path 1.5s var(--ease-out-soft); transition-delay: var(--d, 0ms); }
-  .js .reveal-img.is-visible { clip-path: inset(0 0 0 0); }
+  /* Photographs fade and settle into place. Deliberately NOT a clip-path: an element clipped to nothing has no
+     visible area, so IntersectionObserver never reports it and the photo stays blank. Opacity is observable. */
+  .js .reveal-img img { transform: scale(1.04); transition: transform 1.4s var(--ease-out-soft); transition-delay: var(--d, 0ms); }
+  .js .reveal-img { opacity: 0; transition: opacity 0.8s var(--ease-out-soft); transition-delay: var(--d, 0ms); }
+  .js .reveal-img.is-visible { opacity: 1; }
+  .js .reveal-img.is-visible img { transform: none; }
 
   @keyframes hero-in { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
   .hero-in { animation: hero-in 1.1s var(--ease-out-soft) both; animation-delay: var(--d, 0ms); }
