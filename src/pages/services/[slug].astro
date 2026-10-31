@@ -71,7 +71,7 @@ const ogImg = await getImage({ src: data.image, width: 1200, height: 630, format
           </div>
           <p class="mt-8 max-w-sm text-sm text-muted">{settings.serviceAreaNote}</p>
         </div>
-        <div class="relative lg:col-span-5 lg:-mr-14 xl:-mr-[max(3.5rem,calc((100vw-88rem)/2+3.5rem))]">
+        <div class="relative lg:col-span-5 lg:-mr-14 xl:-mr-[min(9rem,max(3.5rem,calc((100vw-88rem)/2+3.5rem)))]">
           <Img src={data.image} alt={data.imageAlt} ratio={4 / 5} sizes="(min-width:1024px) 40vw, 94vw" priority widths={[480, 800, 1100, 1600]} class="hero-zoom" />
         </div>
       </div>

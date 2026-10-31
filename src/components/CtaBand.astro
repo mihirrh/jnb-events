@@ -36,7 +36,7 @@ const { eyebrow, heading, text, label = 'Message us on WhatsApp', message, image
     </div>
     {
       image && (
-        <div class="lg:col-span-5 lg:col-start-8 lg:-mr-[max(3.5rem,calc((100vw-88rem)/2+3.5rem))]">
+        <div class="lg:col-span-5 lg:col-start-8 lg:-mr-[min(9rem,max(3.5rem,calc((100vw-88rem)/2+3.5rem)))]">
           <Img src={image} alt={imageAlt} ratio={1} sizes="(min-width:1024px) 38vw, 90vw" widths={[480, 800, 1100]} reveal />
         </div>
       )
