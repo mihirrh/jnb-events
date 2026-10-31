@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Motif from '../components/Motif.astro';
 ---
 
 <BaseLayout title="Page not found | JNB Events" description="The page you were looking for could not be found. Return to the JNB Events homepage, browse our services or message us on WhatsApp." noindex>
   <section class="on-dark relative min-h-[88svh] overflow-hidden bg-moss pt-40 pb-24 text-cream">
+    <Motif variant="floral" size={120} class="pointer-events-none absolute bottom-16 right-[10%] hidden opacity-70 md:block" />
     <div class="wrap relative">
       <div class="folio"><b>404</b><span>Page not found</span><i aria-hidden="true"></i></div>
       <h1 class="h1 mt-12 max-w-[12ch]">We can't find <em>that page.</em></h1>
