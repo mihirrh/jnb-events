@@ -5,13 +5,14 @@ import Sprig from '../components/Sprig.astro';
 ---
 
 <BaseLayout title="Page not found | JNB Events" description="The page you were looking for could not be found. Return to the JNB Events homepage, browse our services or message us on WhatsApp." noindex>
-  <section class="relative overflow-hidden bg-cream pt-44 pb-28">
-    <Sprig class="pointer-events-none absolute right-6 top-28 hidden h-72 text-gold/45 md:block" />
-    <div class="wrap">
-      <p class="eyebrow">Error 404</p>
-      <h1 class="h1 mt-6 max-w-3xl">We can't find that page.</h1>
-      <p class="lead mt-7 max-w-xl">It may have moved. Head back to the homepage, browse our work, or message us directly.</p>
-      <div class="mt-10 flex flex-col gap-4 sm:flex-row">
+  <section class="on-dark relative min-h-[88svh] overflow-hidden bg-moss pt-40 pb-24 text-cream">
+    <div class="arch-line right-[8%] top-28 hidden h-[75%] w-[min(30vw,26rem)] opacity-60 md:block" aria-hidden="true"></div>
+    <Sprig class="pointer-events-none absolute bottom-0 right-[14%] hidden h-72 text-gold/50 md:block" />
+    <div class="wrap relative">
+      <div class="folio"><b>404</b><span>Page not found</span><i aria-hidden="true"></i></div>
+      <h1 class="h1 mt-12 max-w-[12ch]">We can't find <em>that page.</em></h1>
+      <p class="lead mt-8 max-w-md">It may have moved. Head back to the homepage, browse our work, or message us directly.</p>
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
         <a href="/" class="btn btn-ink">Back to home</a>
         <a href="/gallery/" class="btn btn-line">View gallery</a>
         <WhatsAppButton variant="gold" source="404 page" />

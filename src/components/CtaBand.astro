@@ -2,8 +2,12 @@
 import type { ImageMetadata } from 'astro';
 import Img from './Img.astro';
 import WhatsAppButton from './WhatsAppButton.astro';
+import { emphasis, plain } from '../lib/text';
 
-/** Full-width WhatsApp call to action, with an optional photographic background. */
+/**
+ * Closing WhatsApp call to action. Left-aligned and oversized, with an optional photograph held in an arch
+ * on the right (it never sits behind the text, so contrast is never in question).
+ */
 interface Props {
   eyebrow?: string;
   heading: string;
@@ -11,27 +15,34 @@ interface Props {
   label?: string;
   message?: string;
   image?: ImageMetadata;
+  imageAlt?: string;
   source: string;
 }
-const { eyebrow, heading, text, label = 'Message us on WhatsApp', message, image, source } = Astro.props;
+const { eyebrow, heading, text, label = 'Message us on WhatsApp', message, image, imageAlt = '', source } = Astro.props;
 ---
 
-<section class="on-dark relative isolate overflow-hidden bg-night text-cream">
-  {
-    image && (
-      <div class="absolute inset-0 -z-10" aria-hidden="true">
-        <Img src={image} alt="" sizes="100vw" class="!aspect-auto h-full w-full" widths={[640, 1280, 1920]} />
-        <div class="absolute inset-0 bg-night/70"></div>
+<section class="on-dark relative isolate overflow-hidden bg-moss text-cream">
+  <div class="wrap section relative grid items-end gap-14 lg:grid-cols-12 lg:gap-10">
+    <div class:list={[image ? 'lg:col-span-7' : 'lg:col-span-9']}>
+      {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+      <h2 class="h2 reveal mt-8 max-w-[14ch] !text-[clamp(2.7rem,6.4vw+0.4rem,6.6rem)]" style="--d:60ms" aria-label={plain(heading)} set:html={emphasis(heading)} />
+      <div class="reveal mt-10 grid gap-10 md:grid-cols-12" style="--d:120ms">
+        <p class="lead md:col-span-7">{text}</p>
       </div>
-    )
-  }
-  <div class="wrap section text-center">
-    {eyebrow && <p class="eyebrow justify-center reveal">{eyebrow}</p>}
-    <h2 class="h2 reveal mx-auto mt-6 max-w-3xl" style="--d:60ms">{heading}</h2>
-    <p class="lead reveal mx-auto mt-6 max-w-xl" style="--d:120ms">{text}</p>
-    <div class="reveal mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" style="--d:180ms">
-      <WhatsAppButton label={label} message={message} variant="gold" source={source} class="w-full sm:w-auto" />
-      <a href="/contact/" class="btn btn-line w-full sm:w-auto">Contact form</a>
+      <div class="reveal mt-10 flex flex-col gap-4 sm:flex-row" style="--d:180ms">
+        <WhatsAppButton label={label} message={message} variant="gold" source={source} class="w-full sm:w-auto" />
+        <a href="/contact/" class="btn btn-line w-full sm:w-auto">Send an enquiry</a>
+      </div>
     </div>
+    {
+      image && (
+        <div class="relative lg:col-span-4 lg:col-start-9">
+          <div class="arch-line -left-5 -top-5 hidden h-full w-full opacity-70 lg:block" aria-hidden="true"></div>
+          <div class="arch">
+            <Img src={image} alt={imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 30vw, 70vw" widths={[480, 800, 1100]} reveal />
+          </div>
+        </div>
+      )
+    }
   </div>
 </section>

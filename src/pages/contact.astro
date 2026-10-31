@@ -5,6 +5,7 @@ import WhatsAppButton from '../components/WhatsAppButton.astro';
 import Icon from '../components/Icon.astro';
 import { getContact, getSettings, getServices } from '../lib/content';
 import { breadcrumbs } from '../lib/schema';
+import { emphasis } from '../lib/text';
 import { telUrl, toInternational } from '../lib/contact';
 
 const page = await getContact();
@@ -21,28 +22,29 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
   description={page.seo.description}
   jsonLd={[breadcrumbs([{ name: 'Home', url: site }, { name: 'Contact', url: `${site}contact/` }])]}
 >
-  <PageHero eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+  <PageHero folio="05" eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
 
-  <section class="section-tight bg-cream">
-    <div class="wrap grid gap-14 lg:grid-cols-12">
-      <!-- WhatsApp first: the primary path -->
-      <div class="lg:col-span-5">
-        <div class="on-dark bg-night p-8 text-cream md:p-10">
+  <section class="bg-cream pb-[clamp(4rem,9vw,9rem)]">
+    <div class="wrap grid gap-16 lg:grid-cols-12 lg:gap-8">
+      <!-- WhatsApp first: the primary path. Dark panel lifts up over the hero's bottom edge on desktop. -->
+      <div class="lg:col-span-5 lg:-mt-24">
+        <div class="on-dark relative bg-night p-8 text-cream md:p-12">
+          <div class="arch-line -right-3 -top-3 hidden h-24 w-24 md:block" aria-hidden="true"></div>
           <p class="eyebrow">WhatsApp</p>
-          <h2 class="h3 mt-5 !text-[clamp(1.8rem,2vw+1rem,2.4rem)]">{page.whatsappHeading}</h2>
+          <h2 class="h3 mt-6 !text-[clamp(2rem,2.4vw+1rem,3rem)]" set:html={emphasis(page.whatsappHeading)} />
           <p class="mt-4 text-cream/80">{page.whatsappText}</p>
-          <p class="mt-6 font-serif text-4xl tracking-wide" aria-label={`Number ${settings.contact.whatsappNumber}`}>{settings.contact.whatsappNumber}</p>
+          <p class="mt-8 font-serif text-[clamp(2.2rem,3vw+1rem,3.4rem)] leading-none tracking-tight" aria-label={`Number ${settings.contact.whatsappNumber}`}>{settings.contact.whatsappNumber}</p>
           <WhatsAppButton label="Open WhatsApp" variant="gold" source="contact page" class="mt-8 w-full" />
           <a href={telUrl(settings)} class="btn btn-line mt-3 w-full">
             <Icon name="phone" size={18} /> <span>Call {settings.contact.whatsappNumber}</span>
           </a>
         </div>
 
-        <div class="mt-10">
-          <h2 class="h3 border-t border-gold pt-6">{page.areaHeading}</h2>
-          <p class="mt-4 text-ink-soft">{page.areaText}</p>
-          <ul class="mt-5 flex flex-wrap gap-2">
-            {settings.serviceAreas.map((a) => <li class="border border-line px-4 py-2 text-sm">{a}</li>)}
+        <div class="mt-14">
+          <div class="folio"><span>{page.areaHeading}</span><i aria-hidden="true"></i></div>
+          <p class="mt-5 text-ink-soft">{page.areaText}</p>
+          <ul class="mt-6 flex flex-wrap gap-x-8 gap-y-1 font-serif text-2xl">
+            {settings.serviceAreas.map((a) => <li class="flex items-center gap-8 after:h-4 after:w-px after:bg-gold last:after:hidden">{a}</li>)}
           </ul>
         </div>
 
@@ -56,13 +58,14 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
         }
       </div>
 
-      <div class="lg:col-span-7">
-        <h2 class="h2">{page.formHeading}</h2>
-        <p class="mt-4 max-w-xl text-ink-soft">{page.formText}</p>
+      <div class="lg:col-span-6 lg:col-start-7 lg:pt-4">
+        <div class="folio"><span>Enquiry form</span><i aria-hidden="true"></i></div>
+        <h2 class="h2 mt-8 !text-[clamp(2.2rem,3.6vw+0.5rem,4rem)]" set:html={emphasis(page.formHeading)} />
+        <p class="mt-5 max-w-md text-ink-soft">{page.formText}</p>
 
         <form
           id="enquiry-form"
-          class="mt-10 grid gap-6 sm:grid-cols-2"
+          class="mt-12 grid gap-x-8 gap-y-7 sm:grid-cols-2"
           method="post"
           action={mode === 'endpoint' ? formEndpoint : undefined}
           data-mode={mode}
@@ -112,7 +115,7 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
             <button type="submit" class="btn btn-ink w-full sm:w-auto">
               {mode === 'whatsapp' ? 'Continue in WhatsApp' : mode === 'mailto' ? 'Send by email' : 'Send enquiry'}
             </button>
-            <p class="mt-4 max-w-md text-sm text-muted">
+            <p class="mt-5 max-w-md text-sm text-muted">
               {
                 mode === 'whatsapp'
                   ? 'Our email address is coming soon. For now, this form opens WhatsApp with your details filled in.'

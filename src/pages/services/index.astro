@@ -9,6 +9,14 @@ import { breadcrumbs, serviceList } from '../../lib/schema';
 const { data: page } = await getSimplePage('services');
 const services = await getServices();
 const site = Astro.site!.toString();
+
+// Each entry gets its own composition so the page never settles into a repeating pattern.
+const compositions = [
+  { img: 'lg:col-span-8 lg:col-start-1', txt: 'lg:col-span-4 lg:col-start-9 lg:self-end', ratio: 3 / 2 },
+  { img: 'lg:col-span-5 lg:col-start-8 lg:row-start-1', txt: 'lg:col-span-5 lg:col-start-2 lg:row-start-1 lg:self-center', ratio: 4 / 5 },
+  { img: 'lg:col-span-6 lg:col-start-2', txt: 'lg:col-span-4 lg:col-start-9 lg:self-start lg:pt-16', ratio: 1 },
+  { img: 'lg:col-span-7 lg:col-start-6 lg:row-start-1', txt: 'lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:self-end', ratio: 4 / 3 },
+];
 ---
 
 <BaseLayout
@@ -21,37 +29,33 @@ const site = Astro.site!.toString();
     serviceList(services.map((s) => ({ name: s.data.title, url: `${site}services/${s.id}/` }))),
   ]}
 >
-  <PageHero eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
+  <PageHero folio="02" eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
 
-  <section class="section-tight bg-cream" aria-label="All services">
+  <section class="bg-cream pb-[clamp(4rem,9vw,9rem)]" aria-label="All services">
     <div class="wrap">
-      <ol class="space-y-20 md:space-y-28">
+      <ol class="space-y-24 md:space-y-36">
         {
           services.map((s, i) => {
-            const flip = i % 2 === 1;
+            const c = compositions[i % compositions.length];
+            const n = String(i + 1).padStart(2, '0');
             return (
-              <li class="grid items-center gap-8 md:grid-cols-12 md:gap-10">
-                <a
-                  href={`/services/${s.id}/`}
-                  class:list={['group block no-underline md:col-span-7', flip ? 'md:order-2' : '']}
-                  tabindex="-1"
-                  aria-hidden="true"
-                >
-                  <Img src={s.data.image} alt="" ratio={flip ? 4 / 3 : 3 / 2} sizes="(min-width:768px) 58vw, 100vw" class="media-zoom" reveal />
+              <li class="grid gap-8 lg:grid-cols-12 lg:gap-x-8">
+                <a href={`/services/${s.id}/`} class:list={['group relative block no-underline', c.img]} tabindex="-1" aria-hidden="true">
+                  <Img src={s.data.image} alt="" ratio={c.ratio} sizes="(min-width:1024px) 56vw, 94vw" class="media-zoom" reveal />
                 </a>
-                <div class:list={['md:col-span-5', flip ? 'md:order-1' : '']}>
-                  <p class="font-serif text-2xl text-gold-deep" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
-                  <h2 class="h2 reveal mt-3">
-                    <a href={`/services/${s.id}/`} class="no-underline hover:text-gold-deep">{s.data.title}</a>
+                <div class:list={[c.txt]}>
+                  <p class="numeral text-[clamp(4.5rem,9vw,8rem)]" aria-hidden="true">{n}</p>
+                  <h2 class="h2 reveal mt-4 !text-[clamp(2.1rem,3.4vw+0.6rem,4rem)]">
+                    <a href={`/services/${s.id}/`} class="no-underline">{s.data.title}</a>
                   </h2>
-                  <p class="reveal mt-5 text-[1.05rem] text-ink-soft" style="--d:80ms">{s.data.summary}</p>
-                  <ul class="reveal mt-6 space-y-2 text-sm text-muted" style="--d:140ms">
+                  <p class="reveal mt-5 max-w-md text-[1.02rem] text-ink-soft" style="--d:80ms">{s.data.summary}</p>
+                  <ul class="reveal mt-6 max-w-md space-y-2 border-t border-line pt-5 text-sm text-muted" style="--d:140ms">
                     {s.data.keyPoints.slice(0, 3).map((k) => (
-                      <li class="flex gap-3"><span class="mt-[0.7em] h-px w-4 shrink-0 bg-gold"></span><span>{k}</span></li>
+                      <li class="flex gap-3"><span class="mt-[0.75em] h-px w-4 shrink-0 bg-gold"></span><span>{k}</span></li>
                     ))}
                   </ul>
                   <a href={`/services/${s.id}/`} class="link-arrow mt-8">
-                    <span>Explore {s.data.title}</span><span aria-hidden="true">&rarr;</span>
+                    <span>Explore<span class="sr-only"> {s.data.title}</span></span><span aria-hidden="true">&rarr;</span>
                   </a>
                 </div>
               </li>
@@ -64,7 +68,7 @@ const site = Astro.site!.toString();
 
   <CtaBand
     eyebrow="Bespoke packages"
-    heading="Tell us about your event."
+    heading="Tell us about *your event.*"
     text="Share your date, venue and what you have in mind on WhatsApp and we will suggest a package that suits."
     source="services page"
   />

@@ -11,12 +11,12 @@ const settings = await getSettings();
   href={whatsappUrl(settings)}
   target="_blank"
   rel="noopener noreferrer"
-  class="float-wa fixed z-40 inline-flex items-center gap-2.5 rounded-full bg-[#1f7a4d] text-white no-underline shadow-lg shadow-black/25 lg:hidden"
+  class="float-wa fixed z-40 inline-flex items-center gap-3 bg-ink text-cream no-underline lg:hidden"
   aria-label="Message us on WhatsApp (opens in a new tab)"
   data-whatsapp
 >
-  <Icon name="whatsapp" size={26} />
-  <span class="float-label text-sm font-semibold tracking-wide">WhatsApp us</span>
+  <Icon name="whatsapp" size={24} class="text-gold-light" />
+  <span class="float-label text-[0.7rem] font-semibold uppercase tracking-[0.22em]">WhatsApp</span>
 </a>
 
 <style>
@@ -25,12 +25,14 @@ const settings = await getSettings();
     bottom: max(1rem, env(safe-area-inset-bottom));
     min-height: 3.5rem;
     min-width: 3.5rem;
-    padding: 0 1.1rem 0 1rem;
-    transition: transform 0.3s var(--ease-out-soft), background-color 0.3s;
+    padding: 0 1.25rem 0 1.1rem;
+    border: 1px solid var(--color-gold);
+    box-shadow: 0 10px 30px -10px rgb(20 17 14 / 0.55);
+    transition: transform 0.4s var(--ease-out-soft), background-color 0.3s;
   }
-  .float-wa:hover { background: #17633e; transform: translateY(-2px); }
-  .float-wa:focus-visible { outline: 3px solid var(--color-gold-light); outline-offset: 3px; border-radius: 9999px; }
-  /* Collapse to an icon-only circle on narrow phones once the page is scrolled, keeping it unobtrusive. */
+  .float-wa:hover { background: var(--color-night); transform: translateY(-2px); }
+  .float-wa:focus-visible { outline: 3px solid var(--color-gold-light); outline-offset: 3px; border-radius: 0; }
+  /* Collapse to an icon-only square on narrow phones, keeping it unobtrusive. */
   @media (max-width: 25.99rem) {
     .float-label { display: none; }
     .float-wa { padding: 0; justify-content: center; width: 3.5rem; }

@@ -1,29 +1,52 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { emphasis, plain } from '../lib/text';
 
+/** Pull-quote treatment: one oversized quotation set like a magazine feature, any others as a quiet row beneath. */
 interface Props { items: CollectionEntry<'testimonials'>[]; eyebrow: string; heading: string }
 const { items, eyebrow, heading } = Astro.props;
+const [lead, ...rest] = items;
 ---
 
 {
-  items.length > 0 && (
-    <section class="bg-cream-deep section" aria-labelledby="testimonials-heading">
-      <div class="wrap">
-        <p class="eyebrow">{eyebrow}</p>
-        <h2 id="testimonials-heading" class="h2 reveal mt-6 max-w-2xl">{heading}</h2>
-        <div class:list={['mt-14 grid gap-10', items.length > 1 && 'md:grid-cols-2 lg:grid-cols-3']}>
-          {items.map((t, i) => (
-            <figure class="reveal border-t border-gold pt-8" style={`--d:${i * 90}ms`}>
-              <blockquote class="font-serif text-[1.6rem] leading-snug text-ink md:text-[1.75rem]">
-                <p>&ldquo;{t.data.quote}&rdquo;</p>
-              </blockquote>
-              <figcaption class="mt-6 text-sm text-muted">
-                <span class="font-semibold text-ink">{t.data.name}</span>
-                {t.data.event && <span> · {t.data.event}</span>}
-              </figcaption>
-            </figure>
-          ))}
+  lead && (
+    <section class="relative overflow-hidden bg-cream-deep section" aria-labelledby="testimonials-heading">
+      <span class="numeral pointer-events-none absolute -top-8 left-2 select-none text-[22rem] leading-none opacity-[0.16] md:left-10 md:text-[34rem]" aria-hidden="true">&ldquo;</span>
+      <div class="wrap relative">
+        <div class="folio">
+          <span>{eyebrow}</span><i aria-hidden="true"></i>
         </div>
+        <h2 id="testimonials-heading" class="sr-only" set:html={emphasis(heading)} aria-label={plain(heading)} />
+        <figure class="reveal mt-12 grid gap-10 lg:grid-cols-12 lg:gap-8">
+          <blockquote class="lg:col-span-9 lg:col-start-2">
+            <p class="font-serif text-[clamp(1.9rem,3.6vw+0.6rem,4rem)] leading-[1.12] tracking-[-0.02em]">{lead.data.quote}</p>
+          </blockquote>
+          <figcaption class="flex items-center gap-5 text-sm lg:col-span-9 lg:col-start-2">
+            <span class="h-px w-12 bg-gold" aria-hidden="true"></span>
+            <span>
+              <span class="font-semibold uppercase tracking-[0.2em]">{lead.data.name}</span>
+              {lead.data.event && <span class="text-muted"> &nbsp;/&nbsp; {lead.data.event}</span>}
+            </span>
+          </figcaption>
+        </figure>
+
+        {
+          rest.length > 0 && (
+            <div class="mt-20 grid gap-x-10 gap-y-12 border-t border-gold/40 pt-12 md:grid-cols-2 lg:grid-cols-3">
+              {rest.map((t, i) => (
+                <figure class="reveal" style={`--d:${i * 90}ms`}>
+                  <blockquote class="font-serif text-[1.45rem] leading-snug">
+                    <p>&ldquo;{t.data.quote}&rdquo;</p>
+                  </blockquote>
+                  <figcaption class="mt-5 text-sm text-muted">
+                    <span class="font-semibold uppercase tracking-[0.2em] text-ink">{t.data.name}</span>
+                    {t.data.event && <span> / {t.data.event}</span>}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          )
+        }
       </div>
     </section>
   )

@@ -11,8 +11,8 @@ const { active, available } = Astro.props;
 const cats = PROJECT_CATEGORIES.filter((c) => available.includes(c));
 ---
 
-<nav aria-label="Filter gallery by category" class="-mx-5 overflow-x-auto px-5 sm:mx-0 sm:overflow-visible sm:px-0">
-  <ul class="flex w-max gap-2 sm:w-auto sm:flex-wrap">
+<nav aria-label="Filter gallery by category" class="-mx-5 overflow-x-auto border-y border-line px-5 sm:mx-0 sm:px-0">
+  <ul class="flex w-max gap-8 py-1 sm:w-auto sm:flex-wrap sm:gap-x-10">
     <li><a href="/gallery/" class="chip" aria-current={!active ? 'page' : undefined}>All</a></li>
     {cats.map((c) => (
       <li><a href={`/gallery/category/${slugify(c)}/`} class="chip whitespace-nowrap" aria-current={active === c ? 'page' : undefined}>{c}</a></li>

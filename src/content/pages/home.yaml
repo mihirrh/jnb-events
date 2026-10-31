@@ -3,7 +3,7 @@ seo:
   description: JNB Events creates bespoke wedding and event styling in Leicester - mandaps, civil ceremony décor, centrepieces, DJ and dancefloor. Covering Leicestershire and the UK.
 hero:
   eyebrow: Leicester · Leicestershire · UK-wide
-  headline: Weddings & events, styled with intent.
+  headline: Weddings & events, *styled with intent.*
   subheading: Bespoke mandaps, ceremony and reception décor, DJ and dancefloor effects - designed around your day and delivered with care.
   image: /src/assets/media/hero/placeholder-hero.jpg
   imageAlt: Placeholder image - an ivory and gold floral mandap with hanging lights
@@ -13,7 +13,7 @@ hero:
   secondaryCtaLabel: View our work
 intro:
   eyebrow: About JNB Events
-  heading: Bespoke packages for the way you celebrate.
+  heading: Bespoke packages for the way you *celebrate.*
   body: |-
     We offer our clients a wide range of services for weddings and events. We create bespoke packages for mandaps, civil ceremony décor, table centrepieces, DJ, dancefloor, sparklers, smoke machines and more.
 
@@ -25,14 +25,14 @@ intro:
   linkLabel: More about us
 services:
   eyebrow: What we do
-  heading: One team, the whole celebration.
+  heading: One team, *the whole celebration.*
   intro: From the ceremony backdrop to the last song on the dancefloor, choose a single service or let us put together a bespoke package.
-  ctaHeading: Not sure what you need?
+  ctaHeading: Not sure what *you need?*
   ctaText: Tell us about your date and venue on WhatsApp and we will suggest a package that suits.
   ctaMessage: "Hello JNB Events, could you help me choose the right package for my event?"
 featured:
   eyebrow: Selected work
-  heading: Recent projects
+  heading: Recent *projects*
   intro: A look at the styling, staging and entertainment we create.
   linkLabel: See the full gallery
 testimonials:
@@ -40,7 +40,7 @@ testimonials:
   heading: What clients say
 cta:
   eyebrow: Start planning
-  heading: Let's talk about your day.
+  heading: Let's talk about *your day.*
   text: The quickest way to reach us is WhatsApp. Send a message with your date, venue and what you have in mind.
   image: /src/assets/media/home/placeholder-cta.jpg
   imageAlt: Placeholder image - warm evening lighting

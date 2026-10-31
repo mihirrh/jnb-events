@@ -4,75 +4,79 @@ import { whatsappUrl, telUrl } from '../lib/contact';
 import { NAV } from '../lib/nav';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import Sprig from './Sprig.astro';
 
 const settings = await getSettings();
 const services = await getServices();
 const year = new Date().getFullYear();
+const link = 'inline-flex min-h-11 items-center text-cream/80 no-underline transition-colors hover:text-gold-light';
 ---
 
 <footer class="on-dark relative overflow-hidden bg-night text-cream">
-  <Sprig class="pointer-events-none absolute -right-6 bottom-0 hidden h-80 text-gold/30 md:block" />
-  <div class="wrap relative pt-20 pb-28 lg:pb-12">
-    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+  <div class="wrap relative pt-20 md:pt-28">
+    <!-- Sign-off: large line, then the practical details in a ruled grid -->
+    <div class="grid gap-10 lg:grid-cols-12">
+      <p class="font-serif text-[clamp(2.4rem,5.4vw+0.4rem,5.6rem)] leading-[0.98] tracking-[-0.03em] lg:col-span-8">
+        Weddings &amp; events, <em>styled with intent.</em>
+      </p>
+      <div class="lg:col-span-3 lg:col-start-10 lg:self-end">
+        <a href={whatsappUrl(settings)} target="_blank" rel="noopener noreferrer" class="btn btn-gold w-full" data-whatsapp>
+          <Icon name="whatsapp" size={18} /> <span>WhatsApp us</span><span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hairline mt-16 md:mt-24"></div>
+
+    <div class="grid gap-12 pt-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
       <div class="sm:col-span-2 lg:col-span-4">
         <Logo settings={settings} tone="light" />
         <p class="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-cream/75">{settings.description}</p>
-        <p class="mt-4 flex items-start gap-2 text-sm text-cream/75">
+        <p class="mt-5 flex items-start gap-2 text-sm text-cream/75">
           <Icon name="pin" size={18} class="mt-0.5 shrink-0 text-gold-light" />
           <span>{settings.serviceAreaNote}</span>
         </p>
       </div>
 
-      <nav aria-label="Footer" class="lg:col-span-2">
-        <h2 class="eyebrow !text-gold-light">Explore</h2>
-        <ul class="mt-5 space-y-1">
-          {NAV.map((n) => (
-            <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href={n.href}>{n.label}</a></li>
-          ))}
-          <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href="/privacy/">Privacy</a></li>
+      <nav aria-label="Footer" class="lg:col-span-2 lg:col-start-6">
+        <h2 class="folio !font-sans"><span>Explore</span></h2>
+        <ul class="mt-4 space-y-0.5">
+          {NAV.map((n) => <li><a class={link} href={n.href}>{n.label}</a></li>)}
+          <li><a class={link} href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
 
       <nav aria-label="Services" class="lg:col-span-3">
-        <h2 class="eyebrow !text-gold-light">Services</h2>
-        <ul class="mt-5 space-y-1">
-          {services.map((s) => (
-            <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href={`/services/${s.id}/`}>{s.data.title}</a></li>
-          ))}
+        <h2 class="folio !font-sans"><span>Services</span></h2>
+        <ul class="mt-4 space-y-0.5">
+          {services.map((s) => <li><a class={link} href={`/services/${s.id}/`}>{s.data.title}</a></li>)}
         </ul>
       </nav>
 
-      <div class="sm:col-span-2 lg:col-span-3">
-        <h2 class="eyebrow !text-gold-light">Contact</h2>
-        <ul class="mt-5 space-y-1">
+      <div class="lg:col-span-2">
+        <h2 class="folio !font-sans"><span>Contact</span></h2>
+        <ul class="mt-4 space-y-0.5">
           <li>
-            <a class="inline-flex min-h-11 items-center gap-2 text-cream/85 no-underline hover:text-gold-light" href={whatsappUrl(settings)} target="_blank" rel="noopener noreferrer">
-              <Icon name="whatsapp" size={18} /> WhatsApp<span class="sr-only"> (opens in a new tab)</span>
-            </a>
-          </li>
-          <li>
-            <a class="inline-flex min-h-11 items-center gap-2 text-cream/85 no-underline hover:text-gold-light" href={telUrl(settings)}>
-              <Icon name="phone" size={18} /> {settings.contact.whatsappNumber}
+            <a class={`${link} gap-2`} href={telUrl(settings)}>
+              <Icon name="phone" size={17} /> {settings.contact.whatsappNumber}
             </a>
           </li>
           {settings.contact.email && (
             <li>
-              <a class="inline-flex min-h-11 items-center gap-2 break-all text-cream/85 no-underline hover:text-gold-light" href={`mailto:${settings.contact.email}`}>
-                <Icon name="mail" size={18} /> {settings.contact.email}
+              <a class={`${link} gap-2 break-all`} href={`mailto:${settings.contact.email}`}>
+                <Icon name="mail" size={17} /> {settings.contact.email}
               </a>
             </li>
           )}
           {settings.social.map((s) => (
-            <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href={s.url} target="_blank" rel="noopener noreferrer me">{s.label}<span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a class={link} href={s.url} target="_blank" rel="noopener noreferrer me">{s.label}<span class="sr-only"> (opens in a new tab)</span></a></li>
           ))}
         </ul>
       </div>
     </div>
 
-    <div class="mt-16 flex flex-col gap-2 border-t border-gold/30 pt-6 text-sm text-cream/60 sm:flex-row sm:justify-between">
-      <p>&copy; {year} {settings.siteName}. All rights reserved.</p>
-      <p>{settings.location.locality}, {settings.location.region} · Covering the UK</p>
+    <div class="mt-16 flex flex-col gap-2 border-t border-gold/25 py-6 pb-28 text-xs uppercase tracking-[0.18em] text-cream/60 sm:flex-row sm:justify-between lg:pb-6">
+      <p>&copy; {year} {settings.siteName}</p>
+      <p>{settings.location.locality}, {settings.location.region} &middot; Covering the UK</p>
     </div>
   </div>
 </footer>
