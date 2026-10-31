@@ -5,8 +5,8 @@ import WhatsAppButton from './WhatsAppButton.astro';
 import { emphasis, plain } from '../lib/text';
 
 /**
- * Closing WhatsApp call to action. Left-aligned and oversized, with an optional photograph held in an arch
- * on the right (it never sits behind the text, so contrast is never in question).
+ * Closing WhatsApp call to action. Left-aligned and oversized, with an optional photograph set beside
+ * it, bleeding off the right edge of the page (it never sits behind the text, so contrast is never in question).
  */
 interface Props {
   eyebrow?: string;
@@ -30,17 +30,14 @@ const { eyebrow, heading, text, label = 'Message us on WhatsApp', message, image
         <p class="lead md:col-span-7">{text}</p>
       </div>
       <div class="reveal mt-10 flex flex-col gap-4 sm:flex-row" style="--d:180ms">
-        <WhatsAppButton label={label} message={message} variant="gold" source={source} class="w-full sm:w-auto" />
+        <WhatsAppButton label={label} message={message} variant="ink" source={source} class="w-full sm:w-auto" />
         <a href="/contact/" class="btn btn-line w-full sm:w-auto">Send an enquiry</a>
       </div>
     </div>
     {
       image && (
-        <div class="relative lg:col-span-4 lg:col-start-9">
-          <div class="arch-line -left-5 -top-5 hidden h-full w-full opacity-70 lg:block" aria-hidden="true"></div>
-          <div class="arch">
-            <Img src={image} alt={imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 30vw, 70vw" widths={[480, 800, 1100]} reveal />
-          </div>
+        <div class="lg:col-span-5 lg:col-start-8 lg:-mr-[max(3.5rem,calc((100vw-88rem)/2+3.5rem))]">
+          <Img src={image} alt={imageAlt} ratio={4 / 5} sizes="(min-width:1024px) 38vw, 90vw" widths={[480, 800, 1100]} reveal />
         </div>
       )
     }

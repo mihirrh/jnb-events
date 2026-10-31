@@ -54,6 +54,17 @@ for (const file of pages) {
   const h1s = [...html.matchAll(/<h1[\s>]/g)].length;
   if (h1s !== 1) err(page, `expected exactly 1 <h1>, found ${h1s}`);
 
+  // Heading levels must not skip downwards (h1 -> h3 etc.)
+  let prevLevel = 0;
+  for (const m of html.matchAll(/<h([1-6])[\s>]/g)) {
+    const level = Number(m[1]);
+    if (prevLevel && level > prevLevel + 1) {
+      err(page, `heading level skips from h${prevLevel} to h${level}`);
+      break;
+    }
+    prevLevel = level;
+  }
+
   const title = get(/<title>([^<]*)<\/title>/);
   const desc = get(/<meta name="description" content="([^"]*)"/);
   if (!title) err(page, 'missing <title>');

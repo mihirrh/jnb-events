@@ -42,8 +42,8 @@
   }
   body {
     font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.7;
+    font-size: 1.0625rem;
+    line-height: 1.72;
     color: var(--color-ink);
     background: var(--color-cream);
     overflow-x: clip; /* guard against accidental horizontal scroll */
@@ -90,31 +90,29 @@
   @media (min-width: 640px) { .wrap { padding-inline: 2rem; } }
   @media (min-width: 1024px) { .wrap { padding-inline: 3.5rem; } }
 
-  /* Wider than .wrap's text measure: lets a photograph bleed to the viewport edge on one side. */
-  .bleed-r { margin-right: calc(50% - 50vw); }
-  .bleed-l { margin-left: calc(50% - 50vw); }
+  .section { padding-block: clamp(4.5rem, 9vw, 9rem); }
+  .section-tight { padding-block: clamp(3rem, 5vw, 5rem); }
 
-  .section { padding-block: clamp(5rem, 11vw, 11rem); }
-  .section-tight { padding-block: clamp(3rem, 6vw, 6rem); }
-
-  /* ---- Type scale (fluid) ---- */
+  /* ---- Type scale (fluid) ----
+     Bodoni's hairlines need a little air at display sizes: line-height ~0.95-1.0 and gentle tracking,
+     rather than the tight, heavy stack that reads as "template". */
   .display {
     font-family: var(--font-serif);
     font-weight: 400;
     /* Scales with viewport height too, so the whole hero (headline + CTAs) fits a short laptop screen. */
-    font-size: clamp(3.25rem, min(9.6vw + 0.2rem, 12.5svh + 0.5rem), 9rem);
-    line-height: 0.9;
-    letter-spacing: -0.04em;
+    font-size: clamp(3.1rem, min(8.6vw + 0.2rem, 11.5svh + 0.5rem), 8rem);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
   }
   .h1 {
-    font-size: clamp(2.85rem, 7.2vw + 0.3rem, 7rem);
-    line-height: 0.94;
-    letter-spacing: -0.035em;
-  }
-  .h2 {
-    font-size: clamp(2.3rem, 4.6vw + 0.4rem, 4.75rem);
+    font-size: clamp(2.75rem, 6.2vw + 0.3rem, 6.25rem);
     line-height: 0.98;
     letter-spacing: -0.03em;
+  }
+  .h2 {
+    font-size: clamp(2.2rem, 4vw + 0.4rem, 4.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
   }
   .h3 { font-size: clamp(1.55rem, 1.5vw + 1rem, 2.2rem); line-height: 1.08; }
   .lead {
@@ -133,7 +131,6 @@
   }
   .on-dark .lead { color: #d9d0c1; }
   .on-dark .standfirst { color: var(--color-cream); }
-  .italic-serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
 
   /* Small caps label, optionally prefixed with a folio number via .folio */
   .eyebrow {
@@ -182,53 +179,35 @@
   .on-dark .folio i { background: rgb(214 179 106 / 0.28); }
   .on-dark .eyebrow { color: var(--color-gold-light); }
 
-  /* Large decorative numerals behind or beside a heading. */
+  /* Large numerals: tone-on-tone (a tint of the surrounding text colour), never gold. They are
+     structure, not decoration, so they stay quiet. */
   .numeral {
     font-family: var(--font-serif);
     font-style: italic;
     font-weight: 400;
     line-height: 0.8;
     letter-spacing: -0.05em;
-    color: var(--color-gold);
+    color: color-mix(in srgb, currentColor 24%, transparent);
   }
-
-  /* Reading vertically along a margin, as printed editorial does. */
-  .vertical {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
+  /* Small running numbers: the one place gold appears as type. */
+  .numeral-sm {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--color-gold-deep);
   }
+  .on-dark .numeral-sm { color: var(--color-gold-light); }
 
-  /* ---- Fine gold rules ---- */
-  .rule-gold { height: 1px; background: linear-gradient(90deg, var(--color-gold), transparent); border: 0; }
+  /* ---- Rules ---- */
   .hairline { height: 1px; background: var(--color-line); border: 0; }
   .on-dark .hairline { background: rgb(214 179 106 / 0.28); }
-  .frame-gold { position: relative; }
-  .frame-gold::after {
-    content: '';
-    position: absolute;
-    inset: 0.9rem;
-    border: 1px solid rgb(184 149 74 / 0.75);
-    pointer-events: none;
-  }
-
-  /* Arch: echoes the soft arch in the JNB logo. */
-  .arch { border-top-left-radius: 999px; border-top-right-radius: 999px; overflow: hidden; }
-  /* A fine outline arch, offset behind or beside a photograph. */
-  .arch-line {
-    position: absolute;
-    pointer-events: none;
-    border: 1px solid rgb(184 149 74 / 0.7);
-    border-bottom: 0;
-    border-top-left-radius: 999px;
-    border-top-right-radius: 999px;
-  }
 
   /* ---- Buttons (min 52px tap target) ----
-     Square-cornered, with a colour that sweeps in from the left on hover instead of a plain fade. */
+     Square-cornered, with a colour that sweeps in from the left on hover instead of a plain fade.
+     Gold is NOT a button fill: the primary action is solid ink (or cream on dark) and gold appears
+     only as the colour of the sweep. */
   .btn {
     --sweep: var(--color-ink);
     --hover-text: var(--color-cream);
@@ -237,10 +216,10 @@
     justify-content: center;
     gap: 0.8rem;
     min-height: 3.25rem;
-    padding: 0.9rem 1.9rem;
-    font-size: 0.72rem;
+    padding: 0.9rem 1.8rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     text-decoration: none;
     border: 1px solid transparent;
@@ -255,11 +234,10 @@
     text-align: center;
   }
   .btn:hover { background-size: 100% 100%; color: var(--hover-text); }
-  .btn-gold { background-color: var(--color-gold); color: var(--color-ink); --sweep: var(--color-cream); --hover-text: var(--color-ink); }
   .btn-ink { background-color: var(--color-ink); color: var(--color-cream); --sweep: var(--color-gold); --hover-text: var(--color-ink); }
   .btn-line { border-color: currentColor; color: var(--color-ink); --sweep: var(--color-ink); --hover-text: var(--color-cream); }
   .on-dark .btn-line { color: var(--color-cream); --sweep: var(--color-cream); --hover-text: var(--color-ink); }
-  .on-dark .btn-ink { background-color: var(--color-cream); color: var(--color-ink); --sweep: var(--color-gold); }
+  .on-dark .btn-ink { background-color: var(--color-cream); color: var(--color-ink); --sweep: var(--color-gold-light); --hover-text: var(--color-ink); }
 
   /* Text link with a gold hairline that lengthens, and an arrow that travels. */
   .link-arrow {

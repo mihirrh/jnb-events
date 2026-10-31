@@ -3,11 +3,13 @@ import { Image } from 'astro:assets';
 import type { Settings } from '../lib/content';
 
 /**
- * Brand mark. Uses the logo uploaded in the CMS if there is one; otherwise a typographic
- * wordmark with the logo's arch motif so the site always looks finished.
+ * Brand mark. Uses the logo uploaded in the CMS if there is one; otherwise a typographic wordmark:
+ * "JNB" in tracked Didone capitals with "Events" in italic beside it - no icon, no strapline in the
+ * lock-up, so it reads as a name rather than a template logo. The strapline is offered separately
+ * (`showTagline`) for the places that have room for it.
  */
-interface Props { settings: Settings; tone?: 'dark' | 'light'; compact?: boolean }
-const { settings, tone = 'dark', compact = false } = Astro.props;
+interface Props { settings: Settings; tone?: 'dark' | 'light'; compact?: boolean; showTagline?: boolean; class?: string }
+const { settings, tone = 'dark', compact = false, showTagline = false, class: className } = Astro.props;
 const light = tone === 'light';
 ---
 
@@ -17,22 +19,31 @@ const light = tone === 'light';
       src={settings.logo}
       alt={settings.logoAlt ?? settings.siteName}
       height={compact ? 44 : 64}
-      class="h-auto w-auto max-h-12 sm:max-h-14"
+      class:list={['h-auto w-auto max-h-12 sm:max-h-14', className]}
       loading="eager"
     />
   ) : (
-    <span class="inline-flex items-center gap-2.5 whitespace-nowrap sm:gap-3" role="img" aria-label={`${settings.siteName} - ${settings.tagline}`}>
-      <svg viewBox="0 0 40 48" width="30" height="36" fill="none" stroke="#b8954a" stroke-width="1.2" aria-hidden="true" class="shrink-0">
-        <path d="M4 46V22a16 16 0 0 1 32 0v24"></path>
-        <path d="M10 46V23a10 10 0 0 1 20 0v23" opacity=".55"></path>
-        <path d="M20 46V30m0 6c-4-1-6-4-6-7 4 0 6 3 6 7Zm0-3c3-1 5-3 5-6-3 0-5 2-5 6Z"></path>
-      </svg>
-      <span class="flex flex-col leading-none" aria-hidden="true">
-        <span class:list={['font-serif text-[1.4rem] tracking-[0.15em] sm:text-[1.55rem] sm:tracking-[0.16em]', light ? 'text-cream' : 'text-ink']}>JNB EVENTS</span>
-        <span class:list={['mt-1.5 text-[0.54rem] font-semibold tracking-[0.3em] sm:text-[0.56rem] sm:tracking-[0.34em]', light ? 'text-gold-light' : 'text-gold-deep']}>
-          DECOR · DJ · MANDAPS
-        </span>
+    <span class:list={['logo-mark inline-flex flex-col items-center leading-none whitespace-nowrap', className]} role="img" aria-label={`${settings.siteName} - ${settings.tagline}`}>
+      <span class:list={['logo-word flex items-baseline gap-[0.45em] font-serif', light ? 'text-cream' : 'text-ink']} aria-hidden="true">
+        <span class="logo-jnb">JNB</span>
+        <em class="logo-events">Events</em>
       </span>
+      {
+        showTagline && (
+          <span class:list={['mt-2 text-[0.55rem] font-semibold uppercase tracking-[0.42em]', light ? 'text-gold-light' : 'text-gold-deep']} aria-hidden="true">
+            {settings.tagline}
+          </span>
+        )
+      }
     </span>
   )
 }
+
+<style>
+  .logo-jnb { font-size: 1.7rem; letter-spacing: 0.2em; margin-right: -0.2em; }
+  .logo-events { font-size: 1.45rem; letter-spacing: -0.01em; font-weight: 400; }
+  @media (min-width: 640px) {
+    .logo-jnb { font-size: 1.95rem; }
+    .logo-events { font-size: 1.65rem; }
+  }
+</style>

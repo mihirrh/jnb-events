@@ -6,73 +6,73 @@ import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 
 /**
- * Fixed header. On pages with a full-bleed hero (`overlay`) it starts transparent with light text
- * and turns solid once the visitor scrolls (see scripts at the bottom of this file).
+ * Header. Three zones on desktop - nav, centred wordmark, nav + enquiry - like a masthead.
+ * It is tall and (on pages with a full-bleed hero, `overlay`) transparent at the top of the page,
+ * condenses once scrolled, slides away while reading down and returns on the first scroll up.
+ * Home is reached through the wordmark, so it is not repeated in the desktop nav.
  */
 interface Props { overlay?: boolean }
 const { overlay = false } = Astro.props;
 const settings = await getSettings();
 const pathname = Astro.url.pathname;
 const wa = whatsappUrl(settings);
+const left = NAV.filter((n) => n.label === 'Services' || n.label === 'Gallery');
+const right = NAV.filter((n) => n.label === 'About' || n.label === 'Contact');
+const linkClass = 'nav-link inline-flex min-h-11 items-center text-[0.68rem] font-semibold uppercase tracking-[0.24em] no-underline xl:tracking-[0.28em]';
 ---
 
-<header
-  id="site-header"
-  class="fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,color] duration-500"
-  data-overlay={overlay ? 'true' : 'false'}
->
-  <div class="wrap flex h-[4.5rem] items-center justify-between gap-4 lg:h-[5.5rem]">
-    <a href="/" class="inline-flex min-h-12 items-center" aria-label={`${settings.siteName} - home`}>
-      <span class="logo-dark"><Logo settings={settings} tone="dark" /></span>
-      <span class="logo-light"><Logo settings={settings} tone="light" /></span>
-    </a>
-
+<header id="site-header" class="fixed inset-x-0 top-0 z-50" data-overlay={overlay ? 'true' : 'false'}>
+  <div class="wrap header-bar grid grid-cols-[1fr_auto] items-center lg:grid-cols-[1fr_auto_1fr]">
     <nav aria-label="Main" class="hidden lg:block">
-      <ul class="flex items-center gap-10 xl:gap-12">
+      <ul class="flex items-center gap-8 xl:gap-14">
         {
-          NAV.map((item) => (
+          left.map((item) => (
             <li>
-              <a
-                href={item.href}
-                class="nav-link inline-flex min-h-11 items-center text-[0.7rem] font-semibold uppercase tracking-[0.26em] no-underline"
-                aria-current={isActive(item.href, pathname) ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
+              <a href={item.href} class={linkClass} aria-current={isActive(item.href, pathname) ? 'page' : undefined}>{item.label}</a>
             </li>
           ))
         }
       </ul>
     </nav>
 
-    <div class="flex items-center gap-2">
-      <a
-        href={wa}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="wa-pill hidden lg:inline-flex"
-        data-whatsapp
-      >
-        <Icon name="whatsapp" size={16} />
-        <span>WhatsApp</span>
-        <span class="sr-only"> (opens WhatsApp in a new tab)</span>
+    <a href="/" class="logo-link inline-flex min-h-12 items-center justify-self-start lg:justify-self-center" aria-label={`${settings.siteName} - home`}>
+      <span class="logo-dark"><Logo settings={settings} tone="dark" /></span>
+      <span class="logo-light"><Logo settings={settings} tone="light" /></span>
+    </a>
+
+    <div class="flex items-center justify-self-end lg:gap-8 xl:gap-16">
+      <nav aria-label="Main (continued)" class="hidden lg:block">
+        <ul class="flex items-center gap-8 xl:gap-14">
+          {
+            right.map((item) => (
+              <li>
+                <a href={item.href} class={linkClass} aria-current={isActive(item.href, pathname) ? 'page' : undefined}>{item.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="enquire hidden lg:inline-flex" data-whatsapp>
+        <Icon name="whatsapp" size={15} />
+        <span>Enquire</span>
+        <span class="sr-only"> on WhatsApp (opens in a new tab)</span>
       </a>
       <button
         type="button"
         id="menu-toggle"
-        class="header-icon inline-flex size-12 items-center justify-center lg:hidden"
+        class="menu-btn inline-flex min-h-12 items-center gap-3 lg:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Open menu"
       >
-        <Icon name="menu" size={26} class="icon-open" />
-        <Icon name="close" size={26} class="icon-close hidden" />
+        <span class="menu-label text-[0.68rem] font-semibold uppercase tracking-[0.28em]" aria-hidden="true">Menu</span>
+        <span class="menu-lines" aria-hidden="true"><i></i><i></i></span>
       </button>
     </div>
   </div>
 
   <!-- Mobile / tablet-portrait menu: a full-height editorial index -->
-  <div id="mobile-menu" class="mobile-menu lg:hidden" hidden>
+  <div id="mobile-menu" class="mobile-menu on-dark lg:hidden" hidden>
     <nav aria-label="Mobile" class="wrap flex min-h-full flex-col py-6">
       <ul class="flex-1">
         {
@@ -83,7 +83,7 @@ const wa = whatsappUrl(settings);
                 class="menu-link flex min-h-[4.25rem] items-baseline gap-5 py-3 font-serif text-[2.4rem] leading-none tracking-tight no-underline xs:text-[2.8rem]"
                 aria-current={isActive(item.href, pathname) ? 'page' : undefined}
               >
-                <span class="w-8 shrink-0 font-sans text-[0.7rem] font-semibold tracking-[0.2em] text-gold-light" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="numeral-sm w-8 shrink-0 text-base" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span>{item.label}</span>
               </a>
             </li>
@@ -91,7 +91,7 @@ const wa = whatsappUrl(settings);
         }
       </ul>
       <div class="mt-8">
-        <a href={wa} target="_blank" rel="noopener noreferrer" class="btn btn-gold w-full" data-whatsapp>
+        <a href={wa} target="_blank" rel="noopener noreferrer" class="btn btn-ink w-full" data-whatsapp>
           <Icon name="whatsapp" size={18} />
           <span>Chat on WhatsApp</span>
           <span class="sr-only"> (opens WhatsApp in a new tab)</span>
@@ -103,18 +103,35 @@ const wa = whatsappUrl(settings);
 </header>
 
 <style>
-  /* Default (solid) state */
   #site-header {
     background: var(--color-cream);
     color: var(--color-ink);
-    box-shadow: 0 1px 0 var(--color-line);
+    transition: transform 0.55s var(--ease-out-soft), background-color 0.4s, color 0.4s;
   }
+  /* Hairline under the bar, drawn as a pseudo-element so it can fade rather than snap. */
+  #site-header::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 1px;
+    background: var(--color-line);
+    transition: opacity 0.4s;
+  }
+  .header-bar { height: 4.5rem; transition: height 0.5s var(--ease-out-soft); }
+  @media (min-width: 1024px) {
+    .header-bar { height: 6.5rem; }
+    #site-header.is-scrolled .header-bar { height: 4.5rem; }
+  }
+  #site-header.is-hidden:not(.menu-open) { transform: translateY(-101%); }
+
   #site-header .logo-light { display: none; }
+
+  /* Nav links: a short gold rule grows in beneath the active / hovered item. */
   .nav-link { position: relative; color: inherit; }
   .nav-link::after {
     content: '';
     position: absolute;
-    left: 0; right: 0; bottom: 0.6rem;
+    left: 0; right: 0; bottom: 0.55rem;
     height: 1px;
     background: var(--color-gold);
     transform: scaleX(0);
@@ -123,44 +140,48 @@ const wa = whatsappUrl(settings);
   }
   .nav-link:hover::after, .nav-link[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
 
-  /* WhatsApp pill: a quiet outlined control; the fill is reserved for the page's main CTA. */
-  .wa-pill {
+  /* Enquire: text with a hairline, not a pill. */
+  .enquire {
     align-items: center;
     gap: 0.6rem;
     min-height: 2.75rem;
-    padding: 0 1.25rem;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.24em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     text-decoration: none;
     color: inherit;
-    border: 1px solid currentColor;
-    background-image: linear-gradient(var(--color-gold), var(--color-gold));
-    background-repeat: no-repeat;
-    background-size: 0% 100%;
-    transition: background-size 0.5s var(--ease-out-soft), color 0.3s, border-color 0.3s;
+    padding-block: 0.25rem;
+    background: linear-gradient(var(--color-gold), var(--color-gold)) left bottom / 100% 1px no-repeat;
+    transition: background-size 0.5s var(--ease-out-soft);
   }
-  .wa-pill:hover { background-size: 100% 100%; color: var(--color-ink); border-color: var(--color-gold); }
+  .enquire:hover { background-size: 0% 1px; background-position: right bottom; }
 
-  /* Transparent over the hero until scrolled */
-  #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open) {
-    background: transparent;
-    box-shadow: none;
-    color: var(--color-cream);
+  /* Menu button: the word plus two fine lines that cross when open. */
+  .menu-btn { color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .menu-lines { position: relative; width: 1.6rem; height: 0.7rem; display: inline-block; }
+  .menu-lines i {
+    position: absolute; left: 0; right: 0; height: 1px; background: currentColor;
+    transition: transform 0.45s var(--ease-out-soft), top 0.45s var(--ease-out-soft);
   }
+  .menu-lines i:first-child { top: 0; }
+  .menu-lines i:last-child { top: 100%; }
+  .menu-open .menu-lines i:first-child { top: 50%; transform: rotate(45deg); }
+  .menu-open .menu-lines i:last-child { top: 50%; transform: rotate(-45deg); }
+
+  /* Transparent over a full-bleed hero until scrolled */
+  #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open) { background: transparent; color: var(--color-cream); }
+  #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open)::after { opacity: 0; }
   #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open) .logo-dark { display: none; }
   #site-header[data-overlay='true']:not(.is-scrolled):not(.menu-open) .logo-light { display: inline; }
 
   /* Open menu = dark panel */
-  #site-header.menu-open {
-    background: var(--color-night);
-    color: var(--color-cream);
-    box-shadow: none;
-  }
+  #site-header.menu-open { background: var(--color-night); color: var(--color-cream); }
+  #site-header.menu-open::after { opacity: 0; }
   #site-header.menu-open .logo-dark { display: none; }
   #site-header.menu-open .logo-light { display: inline; }
   #site-header.menu-open :focus-visible { outline-color: var(--color-gold-light); }
+  #site-header[data-overlay='true']:not(.is-scrolled) :focus-visible { outline-color: var(--color-gold-light); }
 
   .mobile-menu {
     background: var(--color-night);
@@ -172,7 +193,10 @@ const wa = whatsappUrl(settings);
   .menu-link { transition: color 0.3s, padding-left 0.5s var(--ease-out-soft); }
   .menu-link:hover { padding-left: 0.75rem; }
   .menu-link[aria-current='page'] { color: var(--color-gold-light); font-style: italic; }
-  .header-icon { color: inherit; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #site-header, .header-bar { transition: none; }
+  }
 </style>
 
 <script>
@@ -185,8 +209,7 @@ const wa = whatsappUrl(settings);
     header.classList.toggle('menu-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    toggle.querySelector('.icon-open')!.classList.toggle('hidden', open);
-    toggle.querySelector('.icon-close')!.classList.toggle('hidden', !open);
+    toggle.querySelector('.menu-label')!.textContent = open ? 'Close' : 'Menu';
     document.documentElement.style.overflow = open ? 'hidden' : '';
   };
 
@@ -201,7 +224,28 @@ const wa = whatsappUrl(settings);
   // Close if the viewport grows past the mobile breakpoint (e.g. rotating a tablet).
   window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && setOpen(false));
 
-  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 32);
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  // Condense after a little scroll; hide while reading down, return on any scroll up.
+  let lastY = window.scrollY;
+  let ticking = false;
+  const update = () => {
+    const y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 48);
+    if (y > 320 && y > lastY + 4) header.classList.add('is-hidden');
+    else if (y < lastY - 4 || y <= 320) header.classList.remove('is-hidden');
+    lastY = y;
+    ticking = false;
+  };
+  update();
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  // Keyboard users tabbing into the header while it is hidden must see it.
+  header.addEventListener('focusin', () => header.classList.remove('is-hidden'));
 </script>

@@ -22,14 +22,11 @@ const site = Astro.site!.toString();
 >
   <PageHero folio="04" eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
 
-  <!-- Portrait photograph bleeding off the left edge; text and a small inset image at the right -->
+  <!-- Portrait photograph at the left; text and a smaller inset image breaking out of the column at the right -->
   <section class="bg-cream pb-[clamp(5rem,10vw,10rem)]">
     <div class="wrap grid gap-16 lg:grid-cols-12 lg:gap-8">
       <div class="relative lg:col-span-6">
-        <div class="arch-line -right-5 top-8 hidden h-[70%] w-[70%] lg:block" aria-hidden="true"></div>
-        <div class="arch">
-          <Img src={page.image} alt={page.imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 46vw, 94vw" class="parallax" reveal />
-        </div>
+        <Img src={page.image} alt={page.imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 46vw, 94vw" class="parallax" reveal />
       </div>
       <div class="lg:col-span-5 lg:col-start-8 lg:pt-32">
         <p class="standfirst reveal">

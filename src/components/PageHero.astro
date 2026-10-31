@@ -3,31 +3,35 @@ import { emphasis, plain } from '../lib/text';
 
 /**
  * Editorial page opener for inner pages. Renders the page's single H1.
- * A folio line ("No. 02 — Services"), a very large headline, and a narrow standfirst set off to the side.
+ * Composition: a folio line, the headline set large on the left, and the standfirst dropped to the
+ * baseline of the headline on the right, closed by a hairline. No ornament - the type does the work.
  * `heading` may wrap a word in *asterisks* to set it in italic.
  */
 interface Props { eyebrow?: string; heading: string; lead?: string; dark?: boolean; folio?: string }
 const { eyebrow, heading, lead, dark = false, folio } = Astro.props;
 ---
 
-<section class:list={['relative overflow-hidden pt-32 pb-16 md:pt-44 md:pb-24', dark ? 'on-dark bg-night text-cream' : 'bg-cream']}>
-  <!-- Logo-arch motif, drawn as a single fine line and cropped by the edge of the page -->
-  <div class="arch-line hidden md:block" style="right:2%;top:7rem;width:min(26rem,34vw);height:min(34rem,44vw)" aria-hidden="true"></div>
-  <div class="arch-line hidden opacity-50 md:block" style="right:calc(2% - 1.6rem);top:5.4rem;width:min(26rem,34vw);height:min(34rem,44vw)" aria-hidden="true"></div>
-
+<section class:list={['relative overflow-hidden pt-32 md:pt-48', dark ? 'on-dark bg-night text-cream' : 'bg-cream']}>
   <div class="wrap relative">
     <div class="folio hero-in">
       {folio && <b>{folio}</b>}
       {eyebrow && <span>{eyebrow}</span>}
       <i aria-hidden="true"></i>
     </div>
-    <h1 class="h1 hero-in mt-10 max-w-[13ch] md:mt-14 md:max-w-[14ch] lg:max-w-[15ch]" style="--d:80ms" aria-label={plain(heading)} set:html={emphasis(heading)} />
-    {
-      lead && (
-        <div class="mt-10 grid md:mt-14 md:grid-cols-12">
-          <p class="lead hero-in md:col-span-6 md:col-start-5 lg:col-span-4 lg:col-start-5" style="--d:180ms">{lead}</p>
-        </div>
-      )
-    }
+    <div class="mt-10 grid gap-10 pb-14 md:mt-16 md:pb-20 lg:grid-cols-12 lg:items-end lg:gap-8">
+      <h1
+        class:list={['h1 hero-in', lead ? 'lg:col-span-8' : 'lg:col-span-10']}
+        style="--d:80ms"
+        aria-label={plain(heading)}
+        set:html={emphasis(heading)}
+      />
+      {
+        lead && (
+          <p class="lead hero-in max-w-sm lg:col-span-3 lg:col-start-10 lg:pb-3" style="--d:180ms">{lead}</p>
+        )
+      }
+    </div>
+    <div class="hairline"></div>
   </div>
+  <div class="h-12 md:h-20"></div>
 </section>

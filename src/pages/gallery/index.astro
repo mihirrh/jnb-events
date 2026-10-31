@@ -26,6 +26,7 @@ const site = Astro.site!.toString();
 
   <section class="bg-cream pb-[clamp(4rem,9vw,9rem)]" aria-label="Projects">
     <div class="wrap">
+      <h2 class="sr-only">Projects</h2>
       <GalleryFilter available={cats} />
       <p class="mt-5 text-xs uppercase tracking-[0.2em] text-muted" aria-live="polite">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
 
