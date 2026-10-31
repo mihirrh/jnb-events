@@ -22,7 +22,7 @@ const plate = index === undefined ? undefined : String(index + 1).padStart(2, '0
 
 <a href={`/gallery/${project.id}/`} class:list={['group block no-underline', className]}>
   <Img src={cover.image} alt={cover.alt} ratio={ratio} sizes={sizes} class="media-zoom" reveal delay={delay} />
-  <div class="mt-4 flex items-baseline justify-between gap-4 border-b border-line pb-4">
+  <div class="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 border-b border-line pb-4">
     <div>
       <p class="text-[0.66rem] font-semibold uppercase tracking-[0.24em] text-gold-deep">
         {plate && <span class="mr-3 font-serif text-base normal-case italic tracking-normal">{plate}</span>}{project.data.category}

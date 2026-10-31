@@ -101,7 +101,7 @@ const rowServices = services.slice(3);
         <p class="lead reveal lg:col-span-3 lg:col-start-10">{home.services.intro}</p>
       </div>
 
-      <div class="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-5 lg:mt-16 lg:grid-cols-12 lg:gap-8">
+      <div class="mt-10 grid gap-8 sm:mt-12 sm:grid-cols-3 sm:gap-5 lg:mt-16 lg:grid-cols-12 lg:gap-8">
         {
           featureServices.map((s, i) => (
             <ServiceCard
@@ -109,7 +109,7 @@ const rowServices = services.slice(3);
               index={i}
               variant="feature"
               ratio={4 / 3}
-              sizes="(min-width:1024px) 31vw, (min-width:640px) 30vw, 92vw"
+              sizes="(min-width:1024px) 31vw, (min-width:640px) 30vw, 40vw"
               class="lg:col-span-4"
             />
           ))
@@ -165,7 +165,7 @@ const rowServices = services.slice(3);
           </div>
 
           {collage.length > 0 && (
-            <div class="mt-12 grid gap-x-5 gap-y-12 sm:grid-cols-3 lg:mt-16 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-0">
+            <div class="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-5 sm:gap-y-12 lg:mt-16 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-0">
               {collage.map((p, i) => {
                 const [cls, ratio] = layout[i] ?? layout[0];
                 return (
@@ -173,7 +173,7 @@ const rowServices = services.slice(3);
                     project={p}
                     index={i + 1}
                     ratio={ratio}
-                    class={cls}
+                    class={`${cls} max-sm:[&:last-child:nth-child(odd)]:col-span-2`}
                     delay={(i % 2) * 120}
                     sizes="(min-width:1024px) 31vw, (min-width:640px) 30vw, 94vw"
                   />
