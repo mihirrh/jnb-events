@@ -1,16 +1,26 @@
 ---
 import { Image } from 'astro:assets';
+import wordmarkSvg from '../assets/brand/jnb-wordmark.svg?raw';
+import lockupSvg from '../assets/brand/jnb-lockup.svg?raw';
 import type { Settings } from '../lib/content';
 
 /**
- * Brand mark. Uses the logo uploaded in the CMS if there is one; otherwise a typographic wordmark:
- * "JNB" in tracked Didone capitals with "Events" in italic beside it - no icon, no strapline in the
- * lock-up, so it reads as a name rather than a template logo. The strapline is offered separately
- * (`showTagline`) for the places that have room for it.
+ * Brand mark. Uses the logo uploaded in the CMS if there is one; otherwise the JNB Events wordmark from
+ * brand/jnb_logo.svg, inlined as vector so it takes its colour from CSS:
+ *   - tone="dark"  the logo's own deep gold, for cream backgrounds
+ *   - tone="light" light gold, for night backgrounds and photographs
+ *   - tone="auto"  inherits `color` from the parent (the header recolours it as it changes state)
+ * `showTagline` switches to the lock-up with "Decor . DJ . Mandaps" underneath, for places with room.
+ * Regenerate the SVGs with `npm run build:brand`.
  */
-interface Props { settings: Settings; tone?: 'dark' | 'light'; compact?: boolean; showTagline?: boolean; class?: string }
-const { settings, tone = 'dark', compact = false, showTagline = false, class: className } = Astro.props;
-const light = tone === 'light';
+interface Props { settings: Settings; tone?: 'dark' | 'light' | 'auto'; showTagline?: boolean; class?: string }
+const { settings, tone = 'dark', showTagline = false, class: className } = Astro.props;
+
+const raw = showTagline ? lockupSvg : wordmarkSvg;
+const [, vw, vh] = raw.match(/viewBox="[-\d.]+ [-\d.]+ ([\d.]+) ([\d.]+)"/) ?? [];
+const aspect = `${vw} / ${vh}`;
+const svg = raw.replace('<svg ', '<svg focusable="false" ').trim();
+const label = showTagline ? `${settings.siteName} - ${settings.tagline}` : settings.siteName;
 ---
 
 {
@@ -18,33 +28,23 @@ const light = tone === 'light';
     <Image
       src={settings.logo}
       alt={settings.logoAlt ?? settings.siteName}
-      height={compact ? 44 : 64}
+      height={64}
       class:list={['h-auto w-auto max-h-12 sm:max-h-14', className]}
       loading="eager"
     />
   ) : (
-    <span class:list={['logo-mark inline-flex flex-col items-center leading-none whitespace-nowrap', light && 'is-light', className]} role="img" aria-label={`${settings.siteName} - ${settings.tagline}`}>
-      <span class:list={['logo-word flex items-baseline gap-[0.45em] font-serif', light ? 'text-cream' : 'text-ink']} aria-hidden="true">
-        <span class="logo-jnb">JNB</span>
-        <em class="logo-events">Events</em>
-      </span>
-      {
-        showTagline && (
-          <span class:list={['mt-2 text-[0.55rem] font-semibold uppercase tracking-[0.42em]', light ? 'text-gold-light' : 'text-gold-deep']} aria-hidden="true">
-            {settings.tagline}
-          </span>
-        )
-      }
-    </span>
+    <span class:list={['logo-mark', `tone-${tone}`, showTagline && 'has-tagline', className]} style={`aspect-ratio:${aspect}`} role="img" aria-label={label} set:html={svg.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"')} />
   )
 }
 
-<style>
-  .logo-jnb { font-size: 1.7rem; letter-spacing: 0.2em; margin-right: -0.2em; color: var(--color-gold); }
-  .logo-mark.is-light .logo-jnb { color: var(--color-gold-light); }
-  .logo-events { font-size: 1.45rem; letter-spacing: -0.01em; font-weight: 400; }
-  @media (min-width: 640px) {
-    .logo-jnb { font-size: 1.95rem; }
-    .logo-events { font-size: 1.65rem; }
+<style is:global>
+  .logo-mark { display: inline-block; height: 1.7rem; line-height: 0; vertical-align: middle; }
+  .logo-mark svg { display: block; width: 100%; height: 100%; }
+  .logo-mark.has-tagline { height: 3.4rem; }
+  .logo-mark.tone-dark { color: var(--color-logo-gold); }
+  .logo-mark.tone-light { color: var(--color-gold-light); }
+  @media (min-width: 1024px) {
+    .logo-mark { height: 2.15rem; }
+    .logo-mark.has-tagline { height: 4rem; }
   }
 </style>

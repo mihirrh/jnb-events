@@ -34,6 +34,7 @@ export function localBusiness(
     telephone: `+${toInternational(settings.contact.whatsappNumber)}`,
     ...(settings.contact.email ? { email: settings.contact.email } : {}),
     ...(imageUrl ? { image: imageUrl } : {}),
+    logo: `${siteUrl}logo.png`,
     address: {
       '@type': 'PostalAddress',
       addressLocality: settings.location.locality,

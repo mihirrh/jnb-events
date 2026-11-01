@@ -12,6 +12,8 @@
  *    The password itself is the signing key, so changing the password signs everyone out.
  *  - Wrong guesses are slowed down; add a Cloudflare rate-limiting rule on /quote/* for real brute-force protection.
  */
+import { BRAND_WORDMARK } from '../../src/lib/brand-paths';
+
 
 interface Env {
   QUOTE_PASSWORD?: string;
@@ -75,7 +77,7 @@ function page(title: string, body: string, status: number): Response {
 *{box-sizing:border-box}html{background:#faf7f2}
 body{margin:0;min-height:100svh;display:grid;place-items:center;padding:24px;font:17px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#1f1b16}
 main{width:100%;max-width:420px}
-.mark{font:400 34px/1 "Bodoni 72",Didot,Georgia,serif;letter-spacing:.02em;color:#b8954a}.mark i{color:#1f1b16;font-style:italic}
+.mark{display:block;width:190px;height:auto;color:#9d6c0c}
 h1{font:400 30px/1.1 "Bodoni 72",Didot,Georgia,serif;margin:40px 0 8px}
 p{margin:0 0 24px;color:#5f574c}
 label{display:block;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#5f574c}
@@ -88,10 +90,12 @@ button:hover{background:#7f6428}button:focus-visible{outline:2px solid #7f6428;o
   return new Response(html, { status, headers: { ...baseHeaders, 'Content-Type': 'text/html; charset=utf-8' } });
 }
 
+const WORDMARK = `<svg class="mark" role="img" aria-label="JNB Events" viewBox="${BRAND_WORDMARK.box.x} ${BRAND_WORDMARK.box.y} ${BRAND_WORDMARK.box.w} ${BRAND_WORDMARK.box.h}" fill="currentColor"><path d="${BRAND_WORDMARK.d}"/></svg>`;
+
 const loginPage = (error?: string) =>
   page(
     'Sign in | JNB Events',
-    `<div class="mark">JNB <i>Events</i></div>
+    `${WORDMARK}
 <h1>Quote builder</h1><p>This area is private. Please enter the password.</p>
 <form method="post" autocomplete="off">
 ${error ? `<p class="err" role="alert">${error}</p>` : ''}

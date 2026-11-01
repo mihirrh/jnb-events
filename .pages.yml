@@ -62,7 +62,7 @@ content:
         type: text
         required: true
       - name: logo
-        label: Logo image (optional - the site shows a built-in JNB EVENTS wordmark until you upload one)
+        label: Logo image override (leave empty - the site already uses the official JNB EVENTS logo)
         type: image
         options:
           path: src/assets/media/brand

@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "build:brand": "node scripts/build-brand.mjs",
     "astro": "astro",
     "images:generate": "node scripts/generate-placeholders.mjs",
     "audit": "node scripts/audit-dist.mjs",

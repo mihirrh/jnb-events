@@ -147,6 +147,21 @@ If they ever disagree, `npm run build` stops with a clear error naming the file 
 
 ---
 
+## Brand assets
+
+The official logo lives in `brand/` (`jnb_logo.svg` and `jnb_logo.png`, the Canva exports). They are kept as the
+source of truth but are **not** served: the SVG is ~670 kB of metadata and embedded watermark art. Instead:
+
+```bash
+npm run build:brand
+```
+
+reads the vector wordmark and tagline outlines from `brand/jnb_logo.svg` and writes
+`src/assets/brand/jnb-wordmark.svg` and `jnb-lockup.svg` (inlined by `Logo.astro`, so they can be recoloured),
+`src/lib/brand-paths.ts` (the same outlines for the quote PDF and sign-in page), and `public/favicon.svg`,
+`apple-touch-icon.png` and `logo.png` (used in structured data). Run it again if the logo is ever replaced,
+and commit the results.
+
 ## 5. Project structure
 
 ```
@@ -188,7 +203,7 @@ src/
 
 ## 6. Things the owner still needs to supply
 
-- Real photography (replace every "PLACEHOLDER IMAGE") and a logo file (optional: *Site settings -> Logo image*)
+- Real photography (replace every "PLACEHOLDER IMAGE") (the logo is already in)
 - Business email address
 - Final domain name (see section 2)
 - Real testimonials (only if genuine and permitted)

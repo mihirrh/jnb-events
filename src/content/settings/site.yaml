@@ -1,7 +1,7 @@
 siteName: JNB Events
 tagline: Décor · DJ · Mandaps
 description: Wedding and event décor, mandaps, DJ and entertainment based in Leicester, covering Leicestershire and the UK.
-# Optional: upload a logo in the CMS. Until then the site uses a typographic "JNB EVENTS" wordmark.
+# Leave `logo` unset: the site draws the official wordmark from brand/jnb_logo.svg (see README, "Brand assets").
 logoAlt: JNB Events - Décor, DJ, Mandaps
 contact:
   whatsappNumber: 07872 340258

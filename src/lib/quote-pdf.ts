@@ -4,10 +4,10 @@
  *
  * The drawing code is environment-neutral: the caller creates the document with `PDF_OPTIONS`, hands in the
  * font bytes, and collects the output (the browser uses `toBlob`, the review harness uses `toBytes`).
- * The brand mandap-arch motif is drawn from the same geometry as the website (`motif.ts`).
+ * The JNB Events wordmark is drawn as vector outlines from `brand-paths.ts` (generated from brand/jnb_logo.svg).
  */
 import type { PDFDocument } from 'pdfkit';
-import { MOTIF } from './motif';
+import { BRAND_WORDMARK } from './brand-paths';
 import { calculate, formatDate, formatPence, formatPercent, type QuoteItem, type QuoteSwitches } from './quote';
 
 export const PDF_OPTIONS = { size: 'A4', margin: 0, font: null, autoFirstPage: false } as const;
@@ -47,6 +47,7 @@ const C = {
   inkSoft: '#3a342c',
   muted: '#5f574c',
   gold: '#b8954a',
+  logo: '#9d6c0c', // the gold in the supplied logo
   goldDeep: '#7f6428',
   line: '#ddd3c2',
 } as const;
@@ -173,30 +174,14 @@ function folio(doc: PDFDocument, label: string, x: number, y: number, width: num
 
 /* ------------------------------------------------------------------ brand drawing */
 
-/** The mandap-arch motif. `height` in points; stroke widths are in points and never scale with the motif. */
-function drawMotif(doc: PDFDocument, cx: number, top: number, height: number, variant: 'line' | 'floral', o: { stroke?: number; tint?: boolean } = {}) {
-  const s = height / MOTIF.height;
-  const lw = (o.stroke ?? 0.9) / s;
-  doc.save().translate(cx - (MOTIF.width * s) / 2, top).scale(s);
-  doc.lineCap('round').lineJoin('round').lineWidth(lw);
-  if (o.tint) doc.path(`${MOTIF.outer}Z`).fill(C.creamDeep);
-  doc.strokeColor(C.gold).strokeOpacity(1);
-  doc.path(MOTIF.base).stroke();
-  doc.path(MOTIF.outer).stroke();
-  doc.strokeOpacity(0.55).path(MOTIF.inner).stroke().strokeOpacity(1);
-  if (variant === 'line') {
-    doc.path(MOTIF.finial.stem).stroke();
-    doc.circle(MOTIF.finial.cx, MOTIF.finial.cy, MOTIF.finial.r).stroke();
-  } else {
-    for (const a of [0, -MOTIF.lotus.angle, MOTIF.lotus.angle]) {
-      doc.save();
-      if (a) doc.rotate(a, { origin: [MOTIF.lotus.pivot[0], MOTIF.lotus.pivot[1]] });
-      doc.path(MOTIF.lotus.petal).stroke();
-      doc.restore();
-    }
-    for (const b of MOTIF.buds) doc.circle(b.cx, b.cy, b.r).stroke();
-  }
+/** The JNB Events wordmark as vector outlines, centred on `cx`, `width` points wide. Returns its height. */
+function drawWordmark(doc: PDFDocument, cx: number, top: number, width: number, color: string): number {
+  const { x, y, w, h } = BRAND_WORDMARK.box;
+  const s = width / w;
+  doc.save().translate(cx - width / 2, top).scale(s).translate(-x, -y);
+  doc.path(BRAND_WORDMARK.d).fill(color);
   doc.restore();
+  return h * s;
 }
 
 /**
@@ -239,10 +224,8 @@ function cover(doc: PDFDocument, d: QuotePdfData) {
   cornerFlow(doc, 'tr', 1, 0.8);
   cornerFlow(doc, 'bl', 1, 0.8);
 
-  drawMotif(doc, W / 2, 170, 128, 'floral', { stroke: 1, tint: true });
-
-  caps(doc, 'JNB Events', 0, 334, { f: F.serif, size: 50, color: C.gold, spacing: 7, align: 'center', width: W });
-  caps(doc, d.wording.tagline.replace(/[\u00B7\u2022]/g, ' \u00B7 '), 0, 400, { size: 9.5, color: C.goldDeep, spacing: 4.2, align: 'center', width: W });
+  const markH = drawWordmark(doc, W / 2, 262, 430, C.logo);
+  caps(doc, d.wording.tagline.replace(/[\u00B7\u2022]/g, ' \u00B7 '), 0, 262 + markH + 26, { size: 9.5, color: C.logo, spacing: 7, align: 'center', width: W });
   hairline(doc, W / 2 - 24, 436, W / 2 + 24, C.gold, 0.7);
 
   // Prepared for / Date / Venue: labels right-aligned to a shared colon, values flowing right of it.
@@ -408,7 +391,7 @@ function notice(doc: PDFDocument, d: QuotePdfData, pageNo: number) {
 
   // Sign-off sits under the contact lines, but never closer than 80pt to the page footer.
   const closeY = Math.min(y + 26, H - 80 - 22 - 12 - 46);
-  drawMotif(doc, W / 2, closeY, 46, 'line', { stroke: 0.8 });
+  drawWordmark(doc, W / 2, closeY + 12, 132, C.logo);
   font(doc, F.serifItalic, 18, C.ink);
   doc.text(clean(d.wording.thanks), M, closeY + 62, { width: CW, align: 'center', lineBreak: false });
   footer(doc, pageNo);
