@@ -1,0 +1,47 @@
+seo:
+  title: Quote builder | JNB Events
+  description: Internal tool for JNB Events to build a branded decor quotation and download it as a PDF.
+heading: Quote *builder*
+lead: Fill in the client details, adjust the line items, then download a branded four-page PDF quotation. Everything stays in your browser.
+items:
+  - description: Curved shape stage setup with LED lighting
+    price: 1250
+    free: false
+  - description: Walkway carpet and flowers
+    price: 0
+    free: true
+  - description: 40 mix-and-match centrepieces
+    price: 1000
+    free: false
+  - description: Low fog – dancing on the clouds effect
+    price: 150
+    free: false
+  - description: Sparkler effects
+    price: 150
+    free: false
+  - description: Gold mirror entrance feature with vinyl
+    price: 75
+    free: false
+discount:
+  enabled: true
+  percent: 10
+vat:
+  enabled: false
+  rate: 20
+pdf:
+  tagline: Decor · DJ · Mandaps
+  aboutHeading: Crafting Meaningful Moments with Modern Elegance
+  aboutBody: |-
+    At JNB Events, we believe every wedding should feel as unique as the couple at its heart.
+
+    From stunning mandaps to thoughtfully curated décor, we specialise in transforming spaces into unforgettable experiences. Our team blends creativity with precision, ensuring every detail is beautifully aligned with your vision.
+
+    Whether you dream of a traditional setting or a modern twist, we bring passion, artistry, and dedication to every celebration.
+  quoteHeading: Event Details
+  quoteSubheading: Event decoration & special effects quotation
+  packageLabel: Package details
+  noticeHeading: Important Notice
+  offerText: Enjoy an exclusive {percent}% discount on your complete event decoration package.
+  bookingNote: This quotation is offered on a first come, first serve basis. The booking will only be confirmed once the required deposit is received and the date is secured.
+  invitation: If you have any questions, or would like to adjust anything, we would love to hear from you.
+  thanks: Thank you for considering JNB Events.

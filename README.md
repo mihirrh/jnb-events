@@ -30,6 +30,7 @@ npm run dev        # http://localhost:4321
 | `npm run verify` | `check` + `build` + `audit` in one go (no browser needed, safe for CI) |
 | `npm run check:layout` | After a build: opens every page in headless Chromium at 390 / 768 / 1024 / 1440 px and reports failed or hidden images, horizontal overflow, small tap targets, console errors and page height. Add `--shots` to save screenshots to `.scratch/shots/`, `--page=/about/` or `--vp=mobile` to narrow it. One-time setup: `npx playwright install chromium`. |
 | `npm run check:fallbacks` | After a build: renders every page with JavaScript off and with reduced motion, and fails if any image or text is hidden. Same Playwright setup as `check:layout`. |
+| `npm run check:quote` | After a build: drives the quote builder in headless Chromium (totals, discount and VAT switches, add/remove, a real PDF download checked for 4 pages) on a phone and a desktop viewport. |
 | `npm run images:generate` | Re-creates the placeholder images (not needed once real photos are in) |
 
 ---
@@ -101,6 +102,19 @@ Uploaded images go to `src/assets/media/` (subfolder per type: `hero`, `gallery`
 3. Choose **Show gallery projects from this category** to display matching projects on that service page.
 4. Optionally write extra page text in **Page text**.
 5. Services appear automatically on the homepage, the Services page, the footer and in structured data.
+
+### Make a customer quotation (PDF)
+
+The owner-only quote builder lives at `/quote/`. It is not linked from the menu, not in the sitemap and marked `noindex`, so only people who know the address find it. Bookmark it on the phone you use for meetings.
+
+1. Type the client name, event date and venue.
+2. Edit the line items (description and price). Tick **Free** to print FREE instead of a price. **Add line item** and **Remove** change the list.
+3. Switch the discount on or off and set its percentage; switch VAT (20%) on or off. The summary updates instantly: Subtotal, then discount, then VAT, then Final total. VAT is worked out on the price after discount.
+4. Press **Download PDF**. The four-page quotation (cover, about, event details, important notice) is made in the browser. Nothing is uploaded or stored, and a long list simply continues onto extra pages.
+
+To change the starting line items, the default discount and VAT, or any of the wording printed in the PDF, edit **Quote builder defaults** in Pages CMS (`src/content/pages/quote.yaml`). The client details are typed in each time and are never saved.
+
+How it is built: `src/lib/quote.ts` does all money maths in whole pence (no rounding drift); `src/lib/quote-pdf.ts` draws the PDF with [PDFKit](https://pdfkit.org) and the same brand mandap-arch geometry as the website (`src/lib/motif.ts`). The PDF engine and fonts (about 530 kB) are fetched only when **Download PDF** is pressed, so the page itself loads about 6 kB of script and the rest of the site still ships no JavaScript.
 
 ### Change the WhatsApp number or message
 

@@ -130,8 +130,13 @@ for (const file of pages) {
     if (!/rel="[^"]*noopener/.test(m[0])) err(page, `target=_blank without rel=noopener: ${m[0].slice(0, 60)}`);
   }
 
-  // Sitemap coverage (404 excluded on purpose)
-  if (page !== '/404.html' && !sitemapUrls.has(page)) err(page, 'not listed in sitemap');
+  // No page ships a script file except the quote tool (everything else is static HTML + inline CSS).
+  if (page !== '/quote/' && /<script[^>]*\ssrc=/.test(html)) err(page, 'loads a JavaScript file (only /quote/ may)');
+
+  // Sitemap coverage. Pages marked noindex (404, the internal quote tool) must NOT be listed; all others must be.
+  const noindex = /<meta name="robots" content="noindex/.test(html);
+  if (noindex && sitemapUrls.has(page)) err(page, 'noindex page is listed in sitemap');
+  if (!noindex && page !== '/404.html' && !sitemapUrls.has(page)) err(page, 'not listed in sitemap');
 
   // Weight of HTML itself
   const kb = statSync(file).size / 1024;
@@ -145,13 +150,15 @@ if (!/Sitemap: https:\/\//.test(robots)) err('/robots.txt', 'missing Sitemap lin
 // JS payload
 const js = files.filter((f) => f.endsWith('.js'));
 const jsKb = js.reduce((n, f) => n + statSync(f).size, 0) / 1024;
+// The quote tool's PDF engine is a lazy chunk fetched only on "Download PDF"; the page itself loads the small entry script.
+const entryKb = js.filter((f) => /quote\.astro_astro_type_script/.test(f)).reduce((n, f) => n + statSync(f).size, 0) / 1024;
 
 // Images
 const imgs = files.filter((f) => /\.(avif|webp|jpe?g|png)$/i.test(f));
 const biggest = imgs.map((f) => [statSync(f).size / 1024, relative(DIST, f)]).sort((a, b) => b[0] - a[0]).slice(0, 3);
 
 console.log(`Pages audited: ${pages.length}   Sitemap URLs: ${sitemapUrls.size}`);
-console.log(`Client JS total: ${jsKb.toFixed(1)} kB across ${js.length} file(s)`);
+console.log(`Client JS total: ${jsKb.toFixed(1)} kB across ${js.length} file(s), of which /quote/ loads ${entryKb.toFixed(1)} kB on view (rest is fetched on Download PDF)`);
 console.log('Largest images:', biggest.map(([k, f]) => `${f.split('/').pop()} ${k.toFixed(0)}kB`).join(', '));
 if (warnings.length) console.log('\nWarnings:\n - ' + warnings.join('\n - '));
 if (errors.length) {

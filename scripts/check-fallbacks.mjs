@@ -17,7 +17,7 @@ const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); return
 const pages = walk(DIST).filter((f) => f.endsWith('index.html')).map((f) => '/' + relative(DIST, f).replace(/index\.html$/, '')).sort();
 
 // Tiny static server for dist/, bound to loopback only.
-const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.avif': 'image/avif', '.woff2': 'font/woff2' };
+const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.avif': 'image/avif', '.woff2': 'font/woff2', '.woff': 'font/woff' };
 const server = createServer((req, res) => {
   let file = normalize(join(DIST, decodeURIComponent(new URL(req.url, BASE).pathname)));
   if (!file.startsWith(DIST)) { res.writeHead(403).end(); return; }

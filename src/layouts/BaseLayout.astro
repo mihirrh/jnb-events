@@ -20,10 +20,12 @@ interface Props {
   /** True for pages that open with a full-bleed photo (transparent header). */
   overlayHeader?: boolean;
   noindex?: boolean;
+  /** The floating WhatsApp button is hidden on internal tool pages where it could cover controls. */
+  floatingWhatsApp?: boolean;
   jsonLd?: object[];
   type?: 'website' | 'article';
 }
-const { title, description, image: pageImage, imageAlt: pageImageAlt, overlayHeader = false, noindex = false, jsonLd = [], type } = Astro.props;
+const { title, description, image: pageImage, imageAlt: pageImageAlt, overlayHeader = false, noindex = false, floatingWhatsApp = true, jsonLd = [], type } = Astro.props;
 const settings = await getSettings();
 const siteUrl = new URL('/', Astro.site!).toString();
 
@@ -62,7 +64,7 @@ const baseLd = [
       <slot />
     </main>
     <Footer />
-    <FloatingWhatsApp />
+    {floatingWhatsApp && <FloatingWhatsApp />}
 
     <script>
       // Gentle scroll reveals. Elements are visible by default if IntersectionObserver is missing.

@@ -153,6 +153,42 @@ const pages = defineCollection({
   }),
 });
 
+/* ----------------------------------- Quote builder ---------------------------------- */
+// Defaults for the unlisted /quote/ tool: starting line items, discount/VAT switches and the fixed
+// wording of the quotation PDF. Client name, date and venue are typed in the tool each time.
+const quote = defineCollection({
+  loader: glob({ pattern: 'quote.yaml', base: './src/content/pages' }),
+  schema: z.object({
+    seo,
+    heading: z.string(),
+    lead: z.string(),
+    items: z
+      .array(
+        z.object({
+          description: z.string().max(140),
+          price: z.number().min(0).default(0),
+          free: z.boolean().default(false),
+        }),
+      )
+      .default([]),
+    discount: z.object({ enabled: z.boolean(), percent: z.number().min(0).max(100) }),
+    vat: z.object({ enabled: z.boolean(), rate: z.number().min(0).max(100) }),
+    pdf: z.object({
+      tagline: z.string(),
+      aboutHeading: z.string(),
+      aboutBody: z.string(),
+      quoteHeading: z.string(),
+      quoteSubheading: z.string(),
+      packageLabel: z.string(),
+      noticeHeading: z.string(),
+      offerText: z.string(),
+      bookingNote: z.string(),
+      invitation: z.string(),
+      thanks: z.string(),
+    }),
+  }),
+});
+
 /* ------------------------------------- Services ------------------------------------- */
 const services = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/services' }),
@@ -213,4 +249,4 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { settings, home, about, contact, pages, services, projects, testimonials };
+export const collections = { settings, home, about, contact, pages, quote, services, projects, testimonials };
