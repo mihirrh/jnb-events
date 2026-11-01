@@ -105,12 +105,20 @@ Uploaded images go to `src/assets/media/` (subfolder per type: `hero`, `gallery`
 
 ### Make a customer quotation (PDF)
 
-The owner-only quote builder lives at `/quote/`. It is not linked from the menu, not in the sitemap and marked `noindex`, so only people who know the address find it. Bookmark it on the phone you use for meetings.
+The owner-only quote builder lives at `/quote/`. It is not linked from the menu, not in the sitemap, marked `noindex` and behind a password (see below). Bookmark it on the phone you use for meetings.
 
 1. Type the client name, event date and venue.
 2. Edit the line items (description and price). Tick **Free** to print FREE instead of a price. **Add line item** and **Remove** change the list.
 3. Switch the discount on or off and set its percentage; switch VAT (20%) on or off. The summary updates instantly: Subtotal, then discount, then VAT, then Final total. VAT is worked out on the price after discount.
 4. Press **Download PDF**. The four-page quotation (cover, about, event details, important notice) is made in the browser. Nothing is uploaded or stored, and a long list simply continues onto extra pages.
+
+**Password.** `/quote/` is protected by a sign-in page that runs on Cloudflare (`functions/quote/[[path]].ts`), so the builder is never sent to anyone who has not entered the password. The password is **not** in this repository. To set or change it:
+
+1. Cloudflare dashboard -> **Workers & Pages** -> the project -> **Settings -> Variables and Secrets** -> **Add**.
+2. Type: **Secret**. Name: `QUOTE_PASSWORD`. Value: the password. Add it for **Production** (and **Preview** if you want to test branches). Save, then redeploy (or push any commit).
+3. Changing the password signs everyone out. Until a password is set, the page shows "not available" (it fails closed).
+
+Sign-in lasts 12 hours on that browser. Use a long password (a few random words is best) and, for brute-force protection, add a Cloudflare **Security -> WAF -> Rate limiting rule** on the path `/quote/*` (for example 10 requests per minute per IP). To test locally, put `QUOTE_PASSWORD=something` in a git-ignored `.dev.vars` file and run `npm run build && npx wrangler pages dev dist --ip 127.0.0.1`.
 
 To change the starting line items, the default discount and VAT, or any of the wording printed in the PDF, edit **Quote builder defaults** in Pages CMS (`src/content/pages/quote.yaml`). The client details are typed in each time and are never saved.
 
