@@ -32,6 +32,7 @@ declare module 'pdfkit' {
     y: number;
     addPage(options?: DocumentOptions): this;
     registerFont(name: string, src: Uint8Array | ArrayBuffer, family?: string): this;
+    image(src: Uint8Array | ArrayBuffer, x: number, y: number, options?: { width?: number; height?: number }): this;
     font(name: string, size?: number): this;
     fontSize(size: number): this;
     fillColor(color: Color, opacity?: number): this;

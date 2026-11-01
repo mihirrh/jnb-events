@@ -12,3 +12,6 @@ export const BRAND_TAGLINE = {
 } as const;
 
 export const BRAND_LOCKUP_BOX = {"x":53.31,"y":667.67,"w":1355.48,"h":252.69} as const;
+
+/** Pixel size of src/assets/brand/jnb-logo-full*.png (the full logo with arch and lotus). */
+export const BRAND_FULL = { width: 1600, height: 998 } as const;

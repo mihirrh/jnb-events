@@ -5,6 +5,7 @@
 //   src/assets/brand/jnb-wordmark.svg   wordmark only
 //   src/assets/brand/jnb-lockup.svg     wordmark + tagline
 //   src/lib/brand-paths.ts              the same paths for the PDF engine
+//   src/assets/brand/jnb-logo-full(.light).png   full logo incl. arch and lotus artwork
 //   public/favicon.svg, apple-touch-icon.png, logo.png
 //
 // Run with: npm run build:brand
@@ -152,5 +153,29 @@ await sharp({ create: { width: 600, height: 600, channels: 3, background: '#FAF7
   .composite([{ input: lockupPng, gravity: 'centre' }])
   .png({ compressionLevel: 9 })
   .toFile('public/logo.png');
+
+// Full logo (wordmark, tagline and the faint mandap arch / lotus / leaves) as trimmed transparent PNGs,
+// recoloured per background. The artwork is raster in the original, so it is not vectorised.
+const { data: px, info } = await sharp('brand/jnb_logo.png').ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+// Two stray specks of artwork sit in the empty lower half of the original; erase them.
+for (const [bx, by] of [[728, 2090], [2165, 2107]]) {
+  for (let y = by - 60; y < by + 60; y++) for (let x = bx - 60; x < bx + 60; x++) px[(y * info.width + x) * 4 + 3] = 0;
+}
+const CROP = { left: 100, top: 590, width: 2790, height: 1740 };
+const FULL_W = 1600;
+const FULL_H = Math.round((FULL_W * CROP.height) / CROP.width);
+const recolour = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const out = Buffer.from(px);
+  for (let i = 0; i < out.length; i += 4) { out[i] = r; out[i + 1] = g; out[i + 2] = b; }
+  return sharp(out, { raw: { width: info.width, height: info.height, channels: 4 } });
+};
+for (const [name, hex] of [['jnb-logo-full', '#9d6c0c'], ['jnb-logo-full-light', '#d6b36a']]) {
+  await recolour(hex).extract(CROP).resize({ width: FULL_W }).png({ compressionLevel: 9, palette: true, quality: 92, colours: 128 }).toFile(`src/assets/brand/${name}.png`);
+}
+writeFileSync(
+  'src/lib/brand-paths.ts',
+  readFileSync('src/lib/brand-paths.ts', 'utf8') + `\n/** Pixel size of src/assets/brand/jnb-logo-full*.png (the full logo with arch and lotus). */\nexport const BRAND_FULL = { width: ${FULL_W}, height: ${FULL_H} } as const;\n`,
+);
 
 console.log('wordmark box', wbox, 'lockup box', lbox);

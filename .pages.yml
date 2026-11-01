@@ -207,7 +207,6 @@ content:
         label: Wording in the PDF
         type: object
         fields:
-          - { name: tagline, label: Cover subtitle, type: string, required: true }
           - { name: aboutHeading, label: Page 2 heading, type: string, required: true }
           - { name: aboutBody, label: Page 2 text (blank line between paragraphs), type: text, required: true }
           - { name: quoteHeading, label: Page 3 heading, type: string, required: true }

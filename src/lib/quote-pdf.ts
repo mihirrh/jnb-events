@@ -7,13 +7,12 @@
  * The JNB Events wordmark is drawn as vector outlines from `brand-paths.ts` (generated from brand/jnb_logo.svg).
  */
 import type { PDFDocument } from 'pdfkit';
-import { BRAND_WORDMARK } from './brand-paths';
+import { BRAND_FULL, BRAND_WORDMARK } from './brand-paths';
 import { calculate, formatDate, formatPence, formatPercent, type QuoteItem, type QuoteSwitches } from './quote';
 
 export const PDF_OPTIONS = { size: 'A4', margin: 0, font: null, autoFirstPage: false } as const;
 
 export interface PdfWording {
-  tagline: string;
   aboutHeading: string;
   aboutBody: string;
   quoteHeading: string;
@@ -37,6 +36,8 @@ export interface QuotePdfData {
   wording: PdfWording;
   contact: { phone: string; email: string; website: string };
   fonts: { serif: Uint8Array; serifItalic: Uint8Array; sans: Uint8Array; sansBold: Uint8Array };
+  /** PNG of the full logo (arch, lotus and wordmark) for the cover. */
+  logo: Uint8Array;
 }
 
 /* ------------------------------------------------------------------ palette (same tokens as the site) */
@@ -224,8 +225,9 @@ function cover(doc: PDFDocument, d: QuotePdfData) {
   cornerFlow(doc, 'tr', 1, 0.8);
   cornerFlow(doc, 'bl', 1, 0.8);
 
-  const markH = drawWordmark(doc, W / 2, 262, 430, C.logo);
-  caps(doc, d.wording.tagline.replace(/[\u00B7\u2022]/g, ' \u00B7 '), 0, 262 + markH + 26, { size: 9.5, color: C.logo, spacing: 7, align: 'center', width: W });
+  // The full logo (arch, lotus, wordmark and its own tagline), centred in the upper half.
+  const logoW = 360;
+  doc.image(d.logo, (W - logoW) / 2, 372 - (logoW * BRAND_FULL.height) / BRAND_FULL.width, { width: logoW });
   hairline(doc, W / 2 - 24, 436, W / 2 + 24, C.gold, 0.7);
 
   // Prepared for / Date / Venue: labels right-aligned to a shared colon, values flowing right of it.

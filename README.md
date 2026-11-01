@@ -157,7 +157,7 @@ npm run build:brand
 ```
 
 reads the vector wordmark and tagline outlines from `brand/jnb_logo.svg` and writes
-`src/assets/brand/jnb-wordmark.svg` and `jnb-lockup.svg` (inlined by `Logo.astro`, so they can be recoloured),
+`src/assets/brand/jnb-wordmark.svg` and `jnb-lockup.svg` (inlined by `Logo.astro`, so they can be recoloured), `jnb-logo-full.png` / `jnb-logo-full-light.png` (the complete logo with its arch, lotus and leaves, used in the footer and on the quote cover),
 `src/lib/brand-paths.ts` (the same outlines for the quote PDF and sign-in page), and `public/favicon.svg`,
 `apple-touch-icon.png` and `logo.png` (used in structured data). Run it again if the logo is ever replaced,
 and commit the results.

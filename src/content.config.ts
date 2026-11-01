@@ -174,7 +174,6 @@ const quote = defineCollection({
     discount: z.object({ enabled: z.boolean(), percent: z.number().min(0).max(100) }),
     vat: z.object({ enabled: z.boolean(), rate: z.number().min(0).max(100) }),
     pdf: z.object({
-      tagline: z.string(),
       aboutHeading: z.string(),
       aboutBody: z.string(),
       quoteHeading: z.string(),

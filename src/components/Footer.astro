@@ -55,7 +55,7 @@ const small = 'inline-flex min-h-11 items-center text-[0.68rem] font-semibold up
     </nav>
 
     <div class="mt-8 flex flex-col gap-6 border-t border-gold/25 pt-6 lg:flex-row lg:items-center lg:justify-between">
-      <a href="/" class="inline-flex min-h-11 items-center" aria-label={`${settings.siteName} - home`}><Logo settings={settings} tone="light" /></a>
+      <a href="/" class="inline-flex items-center" aria-label={`${settings.siteName} - home`}><Logo settings={settings} tone="light" full class="w-[15rem] sm:w-[19rem]" /></a>
       <nav aria-label="Footer">
         <ul class="flex flex-wrap gap-x-7">
           {NAV.map((n) => <li><a class={small} href={n.href}>{n.label}</a></li>)}

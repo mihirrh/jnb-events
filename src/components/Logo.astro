@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import wordmarkSvg from '../assets/brand/jnb-wordmark.svg?raw';
 import lockupSvg from '../assets/brand/jnb-lockup.svg?raw';
+import fullDark from '../assets/brand/jnb-logo-full.png';
+import fullLight from '../assets/brand/jnb-logo-full-light.png';
 import type { Settings } from '../lib/content';
 
 /**
@@ -11,10 +13,12 @@ import type { Settings } from '../lib/content';
  *   - tone="light" light gold, for night backgrounds and photographs
  *   - tone="auto"  inherits `color` from the parent (the header recolours it as it changes state)
  * `showTagline` switches to the lock-up with "Decor . DJ . Mandaps" underneath, for places with room.
+ * `full` shows the complete logo with its mandap arch, lotus and leaves (a raster, since that artwork is raster
+ * in the original); size it with `class`.
  * Regenerate the SVGs with `npm run build:brand`.
  */
-interface Props { settings: Settings; tone?: 'dark' | 'light' | 'auto'; showTagline?: boolean; class?: string }
-const { settings, tone = 'dark', showTagline = false, class: className } = Astro.props;
+interface Props { settings: Settings; tone?: 'dark' | 'light' | 'auto'; showTagline?: boolean; full?: boolean; class?: string }
+const { settings, tone = 'dark', showTagline = false, full = false, class: className } = Astro.props;
 
 const raw = showTagline ? lockupSvg : wordmarkSvg;
 const [, vw, vh] = raw.match(/viewBox="[-\d.]+ [-\d.]+ ([\d.]+) ([\d.]+)"/) ?? [];
@@ -24,7 +28,9 @@ const label = showTagline ? `${settings.siteName} - ${settings.tagline}` : setti
 ---
 
 {
-  settings.logo ? (
+  full ? (
+    <Image src={tone === 'light' ? fullLight : fullDark} alt={settings.logoAlt ?? settings.siteName} widths={[320, 480, 640]} sizes="(min-width: 640px) 320px, 240px" class:list={['h-auto', className]} loading="lazy" />
+  ) : settings.logo ? (
     <Image
       src={settings.logo}
       alt={settings.logoAlt ?? settings.siteName}
@@ -38,13 +44,13 @@ const label = showTagline ? `${settings.siteName} - ${settings.tagline}` : setti
 }
 
 <style is:global>
-  .logo-mark { display: inline-block; height: 1.7rem; line-height: 0; vertical-align: middle; }
+  .logo-mark { display: inline-block; height: 2.05rem; line-height: 0; vertical-align: middle; }
   .logo-mark svg { display: block; width: 100%; height: 100%; }
   .logo-mark.has-tagline { height: 3.4rem; }
   .logo-mark.tone-dark { color: var(--color-logo-gold); }
   .logo-mark.tone-light { color: var(--color-gold-light); }
   @media (min-width: 1024px) {
-    .logo-mark { height: 2.15rem; }
-    .logo-mark.has-tagline { height: 4rem; }
+    .logo-mark { height: 2.9rem; }
+    .logo-mark.has-tagline { height: 4.4rem; }
   }
 </style>

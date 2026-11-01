@@ -134,6 +134,7 @@ const vatRate = formatPercent(q.vat.rate);
   import serifItalicUrl from '@fontsource/bodoni-moda/files/bodoni-moda-latin-400-italic.woff?url';
   import sansUrl from '@fontsource/instrument-sans/files/instrument-sans-latin-400-normal.woff?url';
   import sansBoldUrl from '@fontsource/instrument-sans/files/instrument-sans-latin-600-normal.woff?url';
+  import logoUrl from '../assets/brand/jnb-logo-full.png?url';
 
   const form = document.getElementById('quote-form') as HTMLFormElement | null;
   if (form) {
@@ -256,7 +257,7 @@ const vatRate = formatPercent(q.vat.rate);
       button.disabled = true;
       status.textContent = 'Creating your PDF\u2026';
       try {
-        const [{ default: PDFDocument }, { toBlob }, pdf, serif, serifItalic, sans, sansBold] = await Promise.all([
+        const [{ default: PDFDocument }, { toBlob }, pdf, serif, serifItalic, sans, sansBold, logo] = await Promise.all([
           import('pdfkit'),
           import('pdfkit/output'),
           import('../lib/quote-pdf'),
@@ -264,6 +265,7 @@ const vatRate = formatPercent(q.vat.rate);
           fetchBytes(serifItalicUrl),
           fetchBytes(sansUrl),
           fetchBytes(sansBoldUrl),
+          fetchBytes(logoUrl),
         ]);
         const data = {
           clientName: $<HTMLInputElement>('q-client').value,
@@ -274,6 +276,7 @@ const vatRate = formatPercent(q.vat.rate);
           wording: cfg.wording,
           contact: cfg.contact,
           fonts: { serif, serifItalic, sans, sansBold },
+          logo,
         };
         const doc = new PDFDocument({
           ...pdf.PDF_OPTIONS,
