@@ -1,26 +1,25 @@
 ---
 /**
- * JNB brand motif: a mandap arch (outer and inner arch on two pillars, standing on a base line).
- * Three variants share one geometry so they read as a family:
- *   line     - the arch alone. The default, and the only one that should be used at tiny sizes.
- *   floral   - the arch crowned with a small lotus bloom at the apex.
- *   monogram - the arch holding the letters JNB. For one or two prominent places only.
+ * JNB brand motif: the ogee mandap arch from the logo, drawn as a hairline.
+ *   line   - the arch alone.
+ *   floral - the arch with its lotus and dotted drop line, as in the logo.
  *
- * Drawing rules: 1px hairline that never thickens when scaled (`vector-effect`), no fills, round caps.
- * Colour comes from `currentColor`: antique gold on light, light gold on `.on-dark` sections.
+ * Drawing rules: 1px hairline that never thickens when scaled (`vector-effect`), round caps, only the
+ * tiny dots filled. Colour comes from `currentColor`: antique gold on light, light gold on `.on-dark`.
  * Decorative by default (aria-hidden); pass `label` if it ever carries meaning.
+ * Use sparingly - the logo itself is the brand mark; this only echoes it.
  */
 import { MOTIF as M } from '../lib/motif';
 
 interface Props {
-  variant?: 'line' | 'floral' | 'monogram';
-  /** Height in px; width follows the 4:5 viewBox. */
+  variant?: 'line' | 'floral';
+  /** Height in px; width follows the 120:66 viewBox. */
   size?: number;
   class?: string;
   label?: string;
 }
 const { variant = 'line', size = 56, class: className, label } = Astro.props;
-const width = Math.round(size * 0.8);
+const width = Math.round((size * M.width) / M.height);
 ---
 
 <svg
@@ -39,56 +38,19 @@ const width = Math.round(size * 0.8);
   focusable="false"
 >
   {label && <title>{label}</title>}
-  <g>
-    <!-- base -->
-    <path d={M.base} vector-effect="non-scaling-stroke"></path>
-    <!-- outer arch on two pillars -->
-    <path d={M.outer} vector-effect="non-scaling-stroke"></path>
-    <!-- inner arch, the canopy -->
-    <path d={M.inner} opacity="0.55" vector-effect="non-scaling-stroke"></path>
-
-    {
-      variant === 'line' && (
-        <>
-          <!-- finial -->
-          <path d={M.finial.stem} vector-effect="non-scaling-stroke" />
-          <circle cx={M.finial.cx} cy={M.finial.cy} r={M.finial.r} vector-effect="non-scaling-stroke" />
-        </>
-      )
-    }
-
-    {
-      variant === 'floral' && (
-        <>
-          <!-- lotus: one upright petal and two fanned out from the apex of the arch -->
-          <path d={M.lotus.petal} vector-effect="non-scaling-stroke" />
-          <path d={M.lotus.petal} transform={`rotate(${-M.lotus.angle} ${M.lotus.pivot[0]} ${M.lotus.pivot[1]})`} vector-effect="non-scaling-stroke" />
-          <path d={M.lotus.petal} transform={`rotate(${M.lotus.angle} ${M.lotus.pivot[0]} ${M.lotus.pivot[1]})`} vector-effect="non-scaling-stroke" />
-          <!-- two small buds on the pillars' capitals -->
-          {M.buds.map((b) => <circle cx={b.cx} cy={b.cy} r={b.r} vector-effect="non-scaling-stroke" />)}
-        </>
-      )
-    }
-
-    {
-      variant === 'monogram' && (
-        <>
-          <path d={M.finial.stem} vector-effect="non-scaling-stroke" />
-          <circle cx={M.finial.cx} cy={M.finial.cy} r={M.finial.r} vector-effect="non-scaling-stroke" />
-          <text
-            x="40"
-            y="73"
-            text-anchor="middle"
-            font-family="'Bodoni Moda Variable','Bodoni 72',Didot,Georgia,serif"
-            font-size="10.5"
-            letter-spacing="1"
-            fill="currentColor"
-            stroke="none"
-          >JNB</text>
-        </>
-      )
-    }
-  </g>
+  <path d={M.arch} vector-effect="non-scaling-stroke"></path>
+  {
+    variant === 'floral' && (
+      <>
+        {M.lotus.angles.map((a) => (
+          <path d={M.lotus.petal} transform={a ? `rotate(${a} ${M.lotus.pivot[0]} ${M.lotus.pivot[1]})` : undefined} vector-effect="non-scaling-stroke" />
+        ))}
+        {M.dots.map((d) => <circle cx={d.cx} cy={d.cy} r={d.r} fill="currentColor" stroke="none" />)}
+        <path d={M.diamond} vector-effect="non-scaling-stroke" />
+        <path d={M.drop} vector-effect="non-scaling-stroke" />
+      </>
+    )
+  }
 </svg>
 
 <style>

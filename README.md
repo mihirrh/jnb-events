@@ -122,7 +122,7 @@ Sign-in lasts 12 hours on that browser. Use a long password (a few random words 
 
 To change the starting line items, the default discount and VAT, or any of the wording printed in the PDF, edit **Quote builder defaults** in Pages CMS (`src/content/pages/quote.yaml`). The client details are typed in each time and are never saved.
 
-How it is built: `src/lib/quote.ts` does all money maths in whole pence (no rounding drift); `src/lib/quote-pdf.ts` draws the PDF with [PDFKit](https://pdfkit.org) and the same brand mandap-arch geometry as the website (`src/lib/motif.ts`). The PDF engine and fonts (about 530 kB) are fetched only when **Download PDF** is pressed, so the page itself loads about 6 kB of script and the rest of the site still ships no JavaScript.
+How it is built: `src/lib/quote.ts` does all money maths in whole pence (no rounding drift); `src/lib/quote-pdf.ts` draws the PDF with [PDFKit](https://pdfkit.org), using the logo's vector wordmark (`src/lib/brand-paths.ts`). The PDF engine and fonts (about 530 kB) are fetched only when **Download PDF** is pressed, so the page itself loads about 6 kB of script and the rest of the site still ships no JavaScript.
 
 ### Change the WhatsApp number or message
 
@@ -214,7 +214,7 @@ src/
 ## Design notes (phase 3)
 
 - **Gold is an accent.** Buttons are ink (cream on dark); gold is used for the "JNB" wordmark, hairlines, small running numbers and hover sweeps. Large numerals are a tint of the text colour.
-- **Brand motif:** `src/components/Motif.astro` draws a mandap arch in three variants (`line`, `floral`, `monogram`). It is used sparingly: the footer divider, the 404 page and the favicon. Don't add it to photographs or headings.
+- **Brand motif:** `src/components/Motif.astro` redraws the logo's ogee mandap arch (and its lotus, in the `floral` variant) as a hairline. It is only a quiet echo of the logo and is used sparingly - currently the 404 page. Don't add it to photographs or headings.
 - **Photographs never hide.** Reveals use opacity, not `clip-path` (a clipped element has no area, so the observer never fires and the photo stays blank).
 - **Page length budgets** are enforced by `check:layout`: homepage 8.5 viewport heights, inner pages 6, project pages 7 (phones get 1.6x). Nothing is collapsed or hidden behind a click; pages are shortened by composition (three-across features, ruled lists, fewer plates).
 - Photos are generated placeholders until real photography is supplied through the CMS.
