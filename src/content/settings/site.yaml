@@ -15,8 +15,11 @@ location:
   region: Leicestershire
   country: GB
 serviceAreas:
-  - Leicester
-  - Leicestershire
-  - United Kingdom
-serviceAreaNote: Based in Leicester, covering Leicestershire and the rest of the UK.
+  - East Midlands
+  - West Midlands
+  - London
+  - Yorkshire
+  - North West
+  - Nationwide
+serviceAreaNote: Based in Leicester, covering the Midlands, London, and the rest of the UK.
 social: []

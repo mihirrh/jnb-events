@@ -19,7 +19,7 @@ Tapping a WhatsApp button opens WhatsApp on your device with a pre-written messa
 
 ## Hosting
 
-The website is hosted on Cloudflare Pages. Like most hosts, Cloudflare may process technical information such as IP address and browser type to deliver and secure the site.
+This website is hosted on a third-party infrastructure provider. Like most hosts, they may process technical information such as IP address and browser type to deliver and secure the site.
 
 ## Your rights
 
