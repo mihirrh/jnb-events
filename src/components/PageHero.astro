@@ -1,5 +1,6 @@
 ---
 import { emphasis, plain } from '../lib/text';
+import Motif from './Motif.astro';
 
 /**
  * Editorial page opener for inner pages. Renders the page's single H1.
@@ -32,6 +33,10 @@ const { eyebrow, heading, lead, dark = false, folio } = Astro.props;
       }
     </div>
     <div class="hairline"></div>
+    <!-- Motif mark centred below the rule: a quiet brand accent on every inner page -->
+    <div class="flex justify-center pt-6" aria-hidden="true">
+      <Motif variant="floral" size={40} class="opacity-40" />
+    </div>
   </div>
-  <div class="h-12 md:h-20"></div>
+  <div class="h-6 md:h-12"></div>
 </section>

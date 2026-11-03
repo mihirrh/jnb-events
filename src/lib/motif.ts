@@ -23,4 +23,21 @@ export const MOTIF = {
   ],
   diamond: 'M60 34l1.6 2.5L60 39l-1.6-2.5Z',
   drop: 'M60 41c1.7 2.1 1.7 3.9 0 3.9s-1.7-1.8 0-3.9Z',
+  /**
+   * Leaf sprig inside the arch's lower-left corner (variant "botanical"); mirrored for the right-hand side.
+   * Each leaf is a small pointed ellipse drawn along +x, then moved to (x, y) and turned by r degrees.
+   */
+  sprig: {
+    stem: 'M7.6 63.5C8.6 55.5 13.5 49.5 22.5 44.6',
+    leaf: 'M0 0C1.4 -1.8 3.9 -1.8 5.4 0C3.9 1.8 1.4 1.8 0 0Z',
+    leaves: [
+      { x: 8.7, y: 58.9, r: -114 },
+      { x: 8.7, y: 58.9, r: -26 },
+      { x: 10.9, y: 54.4, r: -100 },
+      { x: 10.9, y: 54.4, r: -12 },
+      { x: 14.4, y: 50.4, r: -88 },
+      { x: 14.4, y: 50.4, r: 0 },
+      { x: 22.5, y: 44.6, r: -29 },
+    ],
+  },
 } as const;

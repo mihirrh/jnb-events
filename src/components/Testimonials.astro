@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { emphasis, plain } from '../lib/text';
+import Motif from './Motif.astro';
 
 /** Pull-quote treatment: one oversized quotation set like a magazine feature, any others as a quiet row beneath. */
 interface Props { items: CollectionEntry<'testimonials'>[]; eyebrow: string; heading: string }
@@ -13,6 +14,12 @@ const [lead, ...rest] = items;
     <section class="relative overflow-hidden bg-cream-deep section" aria-labelledby="testimonials-heading">
       <span class="numeral pointer-events-none absolute -top-8 left-2 select-none text-[22rem] leading-none opacity-[0.16] md:left-10 md:text-[34rem]" aria-hidden="true">&ldquo;</span>
       <div class="wrap relative">
+        <!-- Motif accent above the section label -->
+        <div class="mb-6 flex items-center gap-4" aria-hidden="true">
+          <div class="h-px w-8 bg-line"></div>
+          <Motif variant="floral" size={36} class="opacity-40" />
+          <div class="h-px w-8 bg-line"></div>
+        </div>
         <div class="folio">
           <span>{eyebrow}</span><i aria-hidden="true"></i>
         </div>

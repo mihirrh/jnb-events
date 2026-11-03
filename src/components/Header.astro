@@ -53,6 +53,7 @@ const linkClass = 'nav-link inline-flex min-h-11 items-center text-[0.68rem] fon
         </ul>
       </nav>
       <a href={wa} target="_blank" rel="noopener noreferrer" class="enquire hidden lg:inline-flex" data-whatsapp>
+        <span class="online-dot" aria-hidden="true"></span>
         <Icon name="whatsapp" size={15} />
         <span>Enquire</span>
         <span class="sr-only"> on WhatsApp (opens in a new tab)</span>
@@ -139,6 +140,25 @@ const linkClass = 'nav-link inline-flex min-h-11 items-center text-[0.68rem] fon
     transition: transform 0.5s var(--ease-out-soft);
   }
   .nav-link:hover::after, .nav-link[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
+
+  /* Online indicator: a small green pulse dot */
+  .online-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    flex-shrink: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .online-dot {
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.75); }
+    }
+  }
 
   /* Enquire: text with a hairline, not a pill. */
   .enquire {

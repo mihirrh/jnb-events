@@ -102,34 +102,36 @@
   .display {
     font-family: var(--font-serif);
     font-weight: 400;
-    /* Scales with viewport height too, so the whole hero (headline + CTAs) fits a short laptop screen. */
-    font-size: clamp(3.1rem, min(8.6vw + 0.2rem, 11.5svh + 0.5rem), 8rem);
-    line-height: 0.96;
+    /* Scales with viewport height too, so the whole hero (headline + CTAs) fits a short laptop screen.
+       Mobile floor raised slightly (3.4rem) so the headline never dominates a small screen entirely. */
+    font-size: clamp(3.4rem, min(8.6vw + 0.2rem, 11.5svh + 0.5rem), 8rem);
+    line-height: 0.97;
     letter-spacing: -0.03em;
   }
   /* Bodoni's W has a wide right side-bearing and no W-e kern pair in this subset: pull the next letter in. */
   .display::first-letter, .h1::first-letter { letter-spacing: -0.07em; }
   .h1 {
-    font-size: clamp(2.75rem, 6.2vw + 0.3rem, 6.25rem);
-    line-height: 0.98;
+    font-size: clamp(2.6rem, 6.2vw + 0.3rem, 6.25rem);
+    line-height: 1.0;
     letter-spacing: -0.03em;
   }
   .h2 {
-    font-size: clamp(2.2rem, 4vw + 0.4rem, 4.25rem);
-    line-height: 1.02;
+    font-size: clamp(2rem, 3.6vw + 0.5rem, 4.25rem);
+    line-height: 1.04;
     letter-spacing: -0.025em;
   }
-  .h3 { font-size: clamp(1.55rem, 1.5vw + 1rem, 2.2rem); line-height: 1.08; }
+  .h3 { font-size: clamp(1.45rem, 1.4vw + 1rem, 2.2rem); line-height: 1.1; }
   .lead {
-    font-size: clamp(1.075rem, 0.45vw + 1rem, 1.25rem);
-    line-height: 1.7;
+    font-size: clamp(1.05rem, 0.45vw + 0.95rem, 1.22rem);
+    line-height: 1.72;
     color: var(--color-ink-soft);
   }
   /* The opening paragraph of a section, set large in the serif like a magazine standfirst. */
   .standfirst {
     font-family: var(--font-serif);
-    font-size: clamp(1.4rem, 1.2vw + 1rem, 2.15rem);
-    line-height: 1.22;
+    /* Tighter mobile floor so it doesn't crowd smaller screens */
+    font-size: clamp(1.25rem, 1.2vw + 1rem, 2.1rem);
+    line-height: 1.24;
     letter-spacing: -0.02em;
     color: var(--color-ink);
     text-wrap: pretty;
@@ -242,9 +244,12 @@
     text-align: center;
   }
   .btn:hover { background-size: 100% 100%; color: var(--hover-text); }
-  .btn-ink { background-color: var(--color-ink); color: var(--color-cream); --sweep: var(--color-gold); --hover-text: var(--color-ink); }
+  /* btn-ink: ink fill, cream text. On hover a gold sweep replaces the ink fill — text must stay cream (not ink)
+     so it reads against the gold. gold (#b8954a) on cream (#faf7f2) = 2.7:1, too low; keep cream text on gold. */
+  .btn-ink { background-color: var(--color-ink); color: var(--color-cream); --sweep: var(--color-gold); --hover-text: var(--color-cream); }
   .btn-line { border-color: currentColor; color: var(--color-ink); --sweep: var(--color-ink); --hover-text: var(--color-cream); }
   .on-dark .btn-line { color: var(--color-cream); --sweep: var(--color-cream); --hover-text: var(--color-ink); }
+  /* on-dark btn-ink: cream fill, ink text. On hover gold-light sweeps in — ink text on gold-light is fine (5.8:1). */
   .on-dark .btn-ink { background-color: var(--color-cream); color: var(--color-ink); --sweep: var(--color-gold-light); --hover-text: var(--color-ink); }
 
   /* Text link with a gold hairline that lengthens, and an arrow that travels. */
@@ -403,3 +408,23 @@
 .on-dark .text-ink-soft { color: #e3dccd; }
 .on-dark .hover\:text-gold-deep:hover,
 .on-dark .group:hover .group-hover\:text-gold-deep { color: var(--color-gold-light); }
+
+/* Button states on dark sections — outside @layer so specificity beats both Tailwind utilities
+   and @layer components. Ensures hover text is always readable regardless of cascade order. */
+.on-dark .btn-line {
+  color: var(--color-cream);
+  border-color: var(--color-cream);
+  --sweep: var(--color-cream);
+  --hover-text: var(--color-ink);
+  background-image: linear-gradient(var(--color-cream), var(--color-cream));
+}
+.on-dark .btn-line:hover { color: var(--color-ink); }
+
+.on-dark .btn-ink {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  --sweep: var(--color-gold-light);
+  --hover-text: var(--color-ink);
+  background-image: linear-gradient(var(--color-gold-light), var(--color-gold-light));
+}
+.on-dark .btn-ink:hover { color: var(--color-ink); }

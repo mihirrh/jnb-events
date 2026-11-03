@@ -3,6 +3,7 @@
  * JNB brand motif: the ogee mandap arch from the logo, drawn as a hairline.
  *   line   - the arch alone.
  *   floral - the arch with its lotus and dotted drop line, as in the logo.
+ *   botanical - floral, plus a leaf sprig in each lower corner. For 64px and up; below that use `line`.
  *
  * Drawing rules: 1px hairline that never thickens when scaled (`vector-effect`), round caps, only the
  * tiny dots filled. Colour comes from `currentColor`: antique gold on light, light gold on `.on-dark`.
@@ -12,7 +13,7 @@
 import { MOTIF as M } from '../lib/motif';
 
 interface Props {
-  variant?: 'line' | 'floral';
+  variant?: 'line' | 'floral' | 'botanical';
   /** Height in px; width follows the 120:66 viewBox. */
   size?: number;
   class?: string;
@@ -40,7 +41,7 @@ const width = Math.round((size * M.width) / M.height);
   {label && <title>{label}</title>}
   <path d={M.arch} vector-effect="non-scaling-stroke"></path>
   {
-    variant === 'floral' && (
+    variant !== 'line' && (
       <>
         {M.lotus.angles.map((a) => (
           <path d={M.lotus.petal} transform={a ? `rotate(${a} ${M.lotus.pivot[0]} ${M.lotus.pivot[1]})` : undefined} vector-effect="non-scaling-stroke" />
@@ -48,6 +49,20 @@ const width = Math.round((size * M.width) / M.height);
         {M.dots.map((d) => <circle cx={d.cx} cy={d.cy} r={d.r} fill="currentColor" stroke="none" />)}
         <path d={M.diamond} vector-effect="non-scaling-stroke" />
         <path d={M.drop} vector-effect="non-scaling-stroke" />
+      </>
+    )
+  }
+  {
+    variant === 'botanical' && (
+      <>
+        {[undefined, 'matrix(-1 0 0 1 120 0)'].map((flip) => (
+          <g transform={flip}>
+            <path d={M.sprig.stem} vector-effect="non-scaling-stroke" />
+            {M.sprig.leaves.map((l) => (
+              <path d={M.sprig.leaf} transform={`translate(${l.x} ${l.y}) rotate(${l.r})`} vector-effect="non-scaling-stroke" />
+            ))}
+          </g>
+        ))}
       </>
     )
   }

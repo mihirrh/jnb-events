@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Img from '../components/Img.astro';
 import CtaBand from '../components/CtaBand.astro';
+import Motif from '../components/Motif.astro';
 import { getAbout, getServices, getSettings } from '../lib/content';
 import { breadcrumbs } from '../lib/schema';
 import { emphasis } from '../lib/text';
@@ -68,6 +69,14 @@ const site = Astro.site!.toString();
       </dl>
     </div>
   </section>
+
+  <!-- Transition: moss → cream, softened with a centred motif mark -->
+  <div class="relative bg-cream" aria-hidden="true">
+    <div class="absolute inset-x-0 top-0 h-16 bg-moss"></div>
+    <div class="relative z-10 flex justify-center pt-5 pb-2">
+      <Motif variant="botanical" size={46} class="text-gold opacity-50" />
+    </div>
+  </div>
 
   <section class="bg-cream section-tight" aria-labelledby="about-services">
     <div class="wrap">
