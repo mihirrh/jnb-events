@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jnb-events",
+  "pages_build_output_dir": "dist",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
