@@ -33,6 +33,7 @@ const [lead, ...rest] = items;
             <span>
               <span class="font-semibold uppercase tracking-[0.2em]">{lead.data.name}</span>
               {lead.data.event && <span class="text-muted"> &nbsp;/&nbsp; {lead.data.event}</span>}
+              {lead.data.source && <span class="text-muted"> &nbsp;/&nbsp; {lead.data.source}</span>}
             </span>
           </figcaption>
         </figure>
@@ -48,6 +49,7 @@ const [lead, ...rest] = items;
                   <figcaption class="mt-5 text-sm text-muted">
                     <span class="font-semibold uppercase tracking-[0.2em] text-ink">{t.data.name}</span>
                     {t.data.event && <span> / {t.data.event}</span>}
+                    {t.data.source && <span> / {t.data.source}</span>}
                   </figcaption>
                 </figure>
               ))}

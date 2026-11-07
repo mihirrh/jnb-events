@@ -4,6 +4,7 @@ import Img from '../components/Img.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Testimonials from '../components/Testimonials.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
 import CtaBand from '../components/CtaBand.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import Motif from '../components/Motif.astro';
@@ -215,6 +216,8 @@ const rowServices = services.slice(3);
       </p>
     </div>
   </section>
+
+  <InstagramFeed />
 
   <Testimonials items={testimonials} eyebrow={home.testimonials.eyebrow} heading={home.testimonials.heading} />
 

@@ -384,14 +384,17 @@
   @keyframes hero-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
   .hero-zoom img { animation: hero-zoom 2.6s var(--ease-out-soft) both; }
 
-  /* Slow parallax drift on large photographs, only where the browser supports scroll-driven animation. */
+  /* Slow parallax drift on large photographs. Desktop-class devices only (wide screen + mouse): re-painting an
+     oversized photo on every scroll frame is what makes scrolling feel heavy on phones and tablets. */
   @supports (animation-timeline: view()) {
-    .parallax img {
-      height: 114%;
-      animation: drift linear both;
-      animation-timeline: view();
+    @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+      .parallax img {
+        height: 114%;
+        animation: drift linear both;
+        animation-timeline: view();
+      }
+      @keyframes drift { from { transform: translateY(-7%); } to { transform: translateY(0); } }
     }
-    @keyframes drift { from { transform: translateY(-7%); } to { transform: translateY(0); } }
   }
 }
 

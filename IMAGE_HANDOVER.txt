@@ -1,0 +1,193 @@
+================================================================================
+JNB EVENTS - IMAGE HANDOVER & REPLACEMENT CHEAT SHEET
+================================================================================
+
+This guide lists every image slot currently on the site, where the files live,
+the recommended image dimensions/orientations, suggested clean filenames
+(such as entrance_mandap.jpg / archway_entrance.jpg), and the content files
+to update.
+
+--------------------------------------------------------------------------------
+1. RECOMMENDED IMAGE SPECIFICATIONS & BEST PRACTICES
+--------------------------------------------------------------------------------
+• Format: JPG, WebP, or PNG (Sharp optimizes to WebP/AVIF at build time).
+• Resolution:
+  - Hero / Full bleed headers: 1920 × 1080 px or 2400 × 1350 px (16:9 Landscape)
+  - Gallery & Project Photos: 1600 × 1067 px (3:2 Landscape) or 1200 × 1500 px (4:5 Portrait)
+  - Detail / Portrait shots: 1200 × 1600 px (3:4 or 4:5 Portrait)
+  - Service Cards: 1200 × 800 px (3:2 Landscape)
+• File Naming Convention:
+  - Use lowercase letters, hyphens, or underscores (e.g. entrance_mandap.jpg or entrance-mandap.jpg).
+  - Avoid special characters (#, %, &, ?, spaces) in image filenames.
+• Directory Location:
+  - All images live inside: `src/assets/media/`
+  - Subfolders: `hero/`, `about/`, `home/`, `services/`, `gallery/`
+
+================================================================================
+2. COMPLETE IMAGE INVENTORY & SUGGESTED FILENAMES
+================================================================================
+
+--------------------------------------------------------------------------------
+A. HOMEPAGE & GLOBAL SECTIONS (src/content/pages/home.yaml)
+--------------------------------------------------------------------------------
+1. Hero Main Banner
+   - Current Path: /src/assets/media/hero/placeholder-hero.jpg
+   - Suggested Names: hero_main_mandap.jpg / archway_entrance_hero.jpg / luxury_mandap_wide.jpg
+   - Orientation: Landscape (16:9 or 21:9)
+   - Dimensions: ~1920 x 1080 px (or higher)
+   - Used In: src/content/pages/home.yaml (Line 8)
+
+2. About Intro (Portrait Card)
+   - Current Path: /src/assets/media/about/placeholder-about-portrait.jpg
+   - Suggested Names: stage_decor_portrait.jpg / floral_mandap_closeup.jpg / bride_groom_stage.jpg
+   - Orientation: Portrait (3:4 or 4:5)
+   - Dimensions: ~1200 x 1500 px
+   - Used In: src/content/pages/home.yaml (Line 21) & src/content/pages/about.md (Line 8)
+
+3. About Intro (Detail Card)
+   - Current Path: /src/assets/media/about/placeholder-about-detail.jpg
+   - Suggested Names: table_centrepiece_detail.jpg / cutlery_floral_detail.jpg / candle_ambience.jpg
+   - Orientation: Landscape (4:3 or 3:2)
+   - Dimensions: ~1200 x 900 px
+   - Used In: src/content/pages/home.yaml (Line 23) & src/content/pages/about.md (Line 10)
+
+4. Bottom Call-To-Action (CTA) Banner
+   - Current Path: /src/assets/media/home/placeholder-cta.jpg
+   - Suggested Names: evening_ambience_cta.jpg / ballroom_lighting_cta.jpg / entrance_archway_cta.jpg
+   - Orientation: Landscape (16:9)
+   - Dimensions: ~1920 x 1080 px
+   - Used In: src/content/pages/home.yaml (Line 45)
+
+--------------------------------------------------------------------------------
+B. SERVICES PAGES (src/content/services/*.md)
+--------------------------------------------------------------------------------
+5. Mandaps & Stages
+   - Current Main: /src/assets/media/services/placeholder-mandaps.jpg
+   - Suggested Names: mandap_stage_main.jpg / entrance_mandap.jpg / ivory_stage_setup.jpg
+   - Secondary Image: /src/assets/media/gallery/placeholder-blush-stage-1.jpg
+   - Used In: src/content/services/mandaps-and-stages.md
+
+6. Reception Décor & Centrepieces
+   - Current Main: /src/assets/media/services/placeholder-reception.jpg
+   - Suggested Names: reception_tables_main.jpg / floral_centrepieces.jpg / ballroom_setup.jpg
+   - Secondary Image: /src/assets/media/gallery/placeholder-reception-2.jpg
+   - Used In: src/content/services/reception-decor-centrepieces.md
+
+7. Civil Ceremony Décor
+   - Current Main: /src/assets/media/services/placeholder-civil.jpg
+   - Suggested Names: civil_ceremony_archway.jpg / aisle_runner_decor.jpg / ceremony_backdrop.jpg
+   - Secondary Image: /src/assets/media/gallery/placeholder-civil-2.jpg
+   - Used In: src/content/services/civil-ceremony-decor.md
+
+8. DJ & Entertainment
+   - Current Main: /src/assets/media/services/placeholder-dj.jpg
+   - Suggested Names: dj_booth_entertainment.jpg / dj_sound_lighting.jpg / stage_performer.jpg
+   - Secondary Image: /src/assets/media/gallery/placeholder-night-2.jpg
+   - Used In: src/content/services/dj-and-entertainment.md
+
+9. Dance Floor & Lighting
+   - Current Main: /src/assets/media/services/placeholder-dancefloor.jpg
+   - Suggested Names: led_dancefloor_lighting.jpg / custom_dancefloor_wrap.jpg / mood_uplighting.jpg
+   - Secondary Image: /src/assets/media/gallery/placeholder-night-3.jpg
+   - Used In: src/content/services/dance-floor-and-lighting.md
+
+10. Sparklers & Smoke Effects (Special Effects)
+    - Current Main: /src/assets/media/services/placeholder-effects.jpg
+    - Suggested Names: cold_sparklers_entrance.jpg / low_fog_smoke_first_dance.jpg / sparkler_tunnel.jpg
+    - Secondary Image: /src/assets/media/gallery/placeholder-sparklers-3.jpg
+    - Used In: src/content/services/sparklers-smoke-effects.md
+
+11. Full Event Styling / Décor Overview
+    - Current Main: /src/assets/media/services/placeholder-decor.jpg
+    - Suggested Names: event_styling_overview.jpg / foyer_entrance_decor.jpg / archway_entrance.jpg
+    - Secondary Image: /src/assets/media/gallery/placeholder-civil-3.jpg
+    - Used In: src/content/services/decor.md
+
+12. Packages Overview
+    - Current Main: /src/assets/media/services/placeholder-packages.jpg
+    - Suggested Names: complete_wedding_package.jpg / luxury_event_bundle.jpg
+    - Secondary Image: /src/assets/media/gallery/placeholder-ivory-mandap-3.jpg
+    - Used In: src/content/services/packages.md
+
+--------------------------------------------------------------------------------
+C. GALLERY & RECENT PROJECTS (src/content/projects/*.md)
+--------------------------------------------------------------------------------
+13. Project: Ivory & Gold Mandap
+    - Cover / Image 1: /src/assets/media/gallery/placeholder-ivory-mandap-1.jpg
+      Suggested: ivory_gold_mandap_front.jpg
+    - Image 2: /src/assets/media/gallery/placeholder-ivory-mandap-2.jpg
+      Suggested: ivory_gold_mandap_side_angle.jpg
+    - Image 3: /src/assets/media/gallery/placeholder-ivory-mandap-3.jpg
+      Suggested: ivory_gold_mandap_foyer_entrance.jpg
+    - Used In: src/content/projects/ivory-and-gold-mandap.md
+
+14. Project: Blush Stage & Backdrop
+    - Cover / Image 1: /src/assets/media/gallery/placeholder-blush-stage-1.jpg
+      Suggested: blush_backdrop_stage_wide.jpg
+    - Image 2: /src/assets/media/gallery/placeholder-blush-stage-2.jpg
+      Suggested: blush_floral_stage_pedestals.jpg
+    - Image 3: /src/assets/media/gallery/placeholder-blush-stage-3.jpg
+      Suggested: blush_sofa_seating_detail.jpg
+    - Used In: src/content/projects/blush-stage-and-backdrop.md
+
+15. Project: Reception in Sage & Ivory
+    - Cover / Image 1: /src/assets/media/gallery/placeholder-reception-1.jpg
+      Suggested: sage_ivory_tables_overview.jpg
+    - Image 2: /src/assets/media/gallery/placeholder-reception-2.jpg
+      Suggested: sage_tablecloth_tall_centrepiece.jpg
+    - Image 3: /src/assets/media/gallery/placeholder-reception-3.jpg
+      Suggested: sage_charger_plates_place_setting.jpg
+    - Used In: src/content/projects/reception-in-sage-and-ivory.md
+
+16. Project: Blush Civil Ceremony
+    - Cover / Image 1: /src/assets/media/gallery/placeholder-civil-1.jpg
+      Suggested: civil_ceremony_floral_arch.jpg
+    - Image 2: /src/assets/media/gallery/placeholder-civil-2.jpg
+      Suggested: civil_aisle_pedestals_candles.jpg
+    - Image 3: /src/assets/media/gallery/placeholder-civil-3.jpg
+      Suggested: registrar_signing_table_decor.jpg
+    - Used In: src/content/projects/blush-civil-ceremony.md
+
+17. Project: Evening Dancefloor & Lighting
+    - Cover / Image 1: /src/assets/media/gallery/placeholder-night-1.jpg
+      Suggested: led_dancefloor_party_wide.jpg
+    - Image 2: /src/assets/media/gallery/placeholder-night-2.jpg
+      Suggested: dj_lighting_rig_beams.jpg
+    - Image 3: /src/assets/media/gallery/placeholder-night-3.jpg
+      Suggested: party_atmosphere_uplighters.jpg
+    - Used In: src/content/projects/evening-dancefloor-and-lighting.md
+
+18. Project: Sparkler Exit & Smoke Machine
+    - Cover / Image 1: /src/assets/media/gallery/placeholder-sparklers-1.jpg
+      Suggested: first_dance_dry_ice_clouds.jpg
+    - Image 2: /src/assets/media/gallery/placeholder-sparklers-2.jpg
+      Suggested: sparkler_tunnel_exit_night.jpg
+    - Image 3: /src/assets/media/gallery/placeholder-sparklers-3.jpg
+      Suggested: cold_spark_pyro_stage_burst.jpg
+    - Used In: src/content/projects/sparkler-exit-and-smoke.md
+
+================================================================================
+3. HOW TO REPLACE IMAGES (TWO EASY METHODS)
+================================================================================
+
+METHOD A: DIRECT FILE SWAP (RECOMMENDED FOR BULK REPLACEMENT)
+1. Name your photos with your chosen names (e.g., entrance_mandap.jpg, archway_entrance.jpg).
+2. Move them into the respective folder in:
+   `src/assets/media/hero/`
+   `src/assets/media/about/`
+   `src/assets/media/home/`
+   `src/assets/media/services/`
+   `src/assets/media/gallery/`
+3. Update the path in the matching `.md` or `.yaml` file.
+   Example in `src/content/pages/home.yaml`:
+     image: /src/assets/media/hero/entrance_mandap.jpg
+     imageAlt: "Bespoke gold and ivory floral mandap entrance with soft lighting"
+4. Run `npm run check` or `npm run dev` to verify the build.
+
+METHOD B: VIA PAGES CMS (NO CODE REQUIRED)
+1. Open Pages CMS (`app.pagescms.org`).
+2. Go to Media → upload your new photos.
+3. Edit the desired Page, Service, or Project.
+4. Select the newly uploaded photo and update the Alt text.
+5. Hit Save. Changes automatically trigger a build & deploy!
+================================================================================

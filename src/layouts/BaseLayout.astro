@@ -4,7 +4,7 @@ import '../styles/global.css';
 import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import FloatingEnquire from '../components/FloatingEnquire.astro';
 import { getImage } from 'astro:assets';
 import { getSettings, getHome, getServices } from '../lib/content';
 import { localBusiness, website } from '../lib/schema';
@@ -20,12 +20,12 @@ interface Props {
   /** True for pages that open with a full-bleed photo (transparent header). */
   overlayHeader?: boolean;
   noindex?: boolean;
-  /** The floating WhatsApp button is hidden on internal tool pages where it could cover controls. */
-  floatingWhatsApp?: boolean;
+  /** The floating Enquire button is hidden on internal tool pages where it could cover controls. */
+  floatingEnquire?: boolean;
   jsonLd?: object[];
   type?: 'website' | 'article';
 }
-const { title, description, image: pageImage, imageAlt: pageImageAlt, overlayHeader = false, noindex = false, floatingWhatsApp = true, jsonLd = [], type } = Astro.props;
+const { title, description, image: pageImage, imageAlt: pageImageAlt, overlayHeader = false, noindex = false, floatingEnquire = true, jsonLd = [], type } = Astro.props;
 const settings = await getSettings();
 const siteUrl = new URL('/', Astro.site!).toString();
 
@@ -65,7 +65,7 @@ const baseLd = [
       <slot />
     </main>
     <Footer />
-    {floatingWhatsApp && <FloatingWhatsApp />}
+    {floatingEnquire && <FloatingEnquire />}
 
     <script>
       // Gentle scroll reveals. Elements are visible by default if IntersectionObserver is missing.

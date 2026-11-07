@@ -3,10 +3,10 @@ title: Packages
 order: 8
 summary: Bespoke packages that bring mandaps, décor, DJ, dancefloor and effects together.
 lead: Our packages are built around you, not a fixed menu. Choose the elements you want and we will put together a package for your event.
-image: /src/assets/media/services/placeholder-packages.jpg
-imageAlt: Placeholder image - a styled wedding stage
-secondImage: /src/assets/media/gallery/placeholder-ivory-mandap-3.jpg
-secondImageAlt: Placeholder image - mandap detail
+image: /src/assets/media/hero/grand_brick_archway_mandap.jpg
+imageAlt: Grand luxury Asian wedding ceremony setup under a historic brick archway in the United Kingdom, featuring an ornate carved wooden mandap with red and white florals. Complete Hindu wedding styling with white Chiavari chairs and festoon lighting in the Midlands.
+secondImage: /src/assets/media/services/marquee_carved_wooden_mandap.jpg
+secondImageAlt: Intricately carved traditional Hindu wooden mandap set up inside a luxury white pleated marquee in Leicestershire. Bespoke Asian wedding decor featuring a vibrant red and orange floral canopy and elegant white drapes.
 keyPoints:
   - Mix and match mandaps, décor, DJ, dancefloor, sparklers and smoke
   - Priced to your event, with competitive pricing

@@ -242,6 +242,8 @@ const testimonials = defineCollection({
     name: z.string(),
     /** e.g. "Wedding" or "Corporate event". */
     event: z.string().optional(),
+    /** e.g. "Google review". Shown beside the name when set. */
+    source: z.string().optional(),
     order: z.number().int().default(100),
     /** Only published testimonials are shown. The section hides itself if none are published. */
     published: z.boolean().default(false),

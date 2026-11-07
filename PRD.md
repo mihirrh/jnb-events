@@ -164,7 +164,7 @@ The motif is the ogee mandap arch from the JNB logo, drawn as a 1px hairline SVG
 
 | Component | File | Notes |
 |---|---|---|
-| `BaseLayout` | `src/layouts/BaseLayout.astro` | Wraps every page: `<head>`, Header, Footer, FloatingWhatsApp, reveal script, JSON-LD |
+| `BaseLayout` | `src/layouts/BaseLayout.astro` | Wraps every page: `<head>`, Header, Footer, FloatingEnquire, reveal script, JSON-LD |
 | `Header` | `src/components/Header.astro` | Fixed, condenses on scroll, hides on scroll-down, returns on scroll-up. Transparent over hero (`overlayHeader`). Mobile full-screen menu. |
 | `Footer` | `src/components/Footer.astro` | Botanical motif divider → enquiry copy + phone → services run-in index → wordmark + nav row → copyright |
 | `PageHero` | `src/components/PageHero.astro` | Inner-page opener: folio, `h1`, optional lead, hairline, centred floral motif below |
@@ -176,7 +176,7 @@ The motif is the ogee mandap arch from the JNB logo, drawn as a 1px hairline SVG
 | `Logo` | `src/components/Logo.astro` | Renders the wordmark SVG in `tone="dark"` or `tone="light"` |
 | `Img` | `src/components/Img.astro` | Wrapper around Astro's `<Image>` with aspect-ratio, reveal animation, and parallax support |
 | `WhatsAppButton` | `src/components/WhatsAppButton.astro` | Opens WhatsApp with a pre-filled message. Tracks `source` for analytics. |
-| `FloatingWhatsApp` | `src/components/FloatingWhatsApp.astro` | Fixed bottom-right WhatsApp pill, hidden on quote page |
+| `FloatingEnquire` | `src/components/FloatingEnquire.astro` | Fixed bottom-right "Enquire" button on every screen size; opens a menu with WhatsApp or Email. Hidden on quote page |
 | `GalleryFilter` | `src/components/GalleryFilter.astro` | Category filter tabs for the gallery index page |
 | `QuoteRow` | `src/components/QuoteRow.astro` | Single line-item row in the quote builder form |
 | `SEO` | `src/components/SEO.astro` | `<title>`, `<meta>`, Open Graph, Twitter Card, canonical, JSON-LD injection |

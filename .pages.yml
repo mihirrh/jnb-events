@@ -443,5 +443,6 @@ content:
       - { name: quote, label: Quote (use real client words only), type: text, required: true }
       - { name: name, label: Client name, type: string, required: true }
       - { name: event, label: Event type (e.g. Wedding), type: string }
+      - { name: source, label: Where it was left (e.g. Google review), type: string }
       - { name: order, label: Order (1 = first), type: number, default: 100 }
       - { name: published, label: Published (show on the website), type: boolean, default: false }

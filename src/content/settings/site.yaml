@@ -22,4 +22,8 @@ serviceAreas:
   - North West
   - Nationwide
 serviceAreaNote: Based in Leicester, covering the Midlands, London, and the rest of the UK.
-social: []
+social:
+  - label: Instagram
+    url: https://www.instagram.com/jnb.sounds.events
+  - label: Google Reviews
+    url: https://maps.app.goo.gl/yc8HABoshppiNUhu5

@@ -1,0 +1,87 @@
+---
+import { getInstagramPosts, IMAGE_WIDTH, IMAGE_HEIGHT } from '../lib/instagram';
+import { getSettings } from '../lib/content';
+
+/**
+ * Swipeable row of the latest Instagram posts (native scroll-snap: swipe on touch, trackpad or arrow buttons).
+ * Renders nothing when no posts are available, so it is safe to leave in place before the token is set up.
+ */
+interface Props { eyebrow?: string; heading?: string }
+const { eyebrow = 'On Instagram', heading = 'Latest from *our feed*' } = Astro.props;
+
+const posts = await getInstagramPosts();
+const settings = await getSettings();
+const profile = settings.social.find((s) => s.url.includes('instagram.com'))?.url;
+const headingHtml = heading.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\*([^*]+)\*/g, '<em>$1</em>');
+const arrow = 'h-12 w-12 items-center justify-center border border-ink/30 text-ink transition-colors hover:bg-ink hover:text-cream disabled:pointer-events-none disabled:opacity-30';
+---
+
+{
+  posts.length > 0 && (
+    <section class="bg-cream section-tight" aria-labelledby="instagram-heading" data-ig>
+      <div class="wrap">
+        <div class="folio"><span>{eyebrow}</span><i aria-hidden="true"></i></div>
+        <div class="mt-8 flex flex-wrap items-end justify-between gap-6">
+          <h2 id="instagram-heading" class="h2 reveal" set:html={headingHtml} />
+          <div class="flex items-center gap-5">
+            {profile && (
+              <a href={profile} target="_blank" rel="noopener noreferrer me" class="link-arrow">
+                <span>Follow us<span class="sr-only"> on Instagram (opens in a new tab)</span></span><span aria-hidden="true">&rarr;</span>
+              </a>
+            )}
+            <div class="hidden gap-2 sm:flex" data-ig-controls>
+              <button type="button" class:list={['ig-btn', arrow]} data-dir="-1" aria-label="Previous posts"><span aria-hidden="true">&larr;</span></button>
+              <button type="button" class:list={['ig-btn', arrow]} data-dir="1" aria-label="Next posts"><span aria-hidden="true">&rarr;</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <ul class="ig-track mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4" tabindex="0" aria-label="Instagram posts. Scroll sideways to see more." data-ig-track>
+          {posts.map((p) => (
+            <li class="w-[72%] shrink-0 snap-start sm:w-[40%] lg:w-[24%]">
+              <a href={p.permalink} target="_blank" rel="noopener noreferrer" class="group relative block no-underline">
+                <div class="media media-zoom" style={`aspect-ratio:${IMAGE_WIDTH}/${IMAGE_HEIGHT}`}>
+                  <img src={`/instagram/${p.id}.webp`} alt={p.alt} width={IMAGE_WIDTH} height={IMAGE_HEIGHT} loading="lazy" decoding="async" draggable="false" />
+                </div>
+                {p.isVideo && <span class="cap">Video</span>}
+                <span class="sr-only">View on Instagram (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .ig-track { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .ig-track::-webkit-scrollbar { display: none; }
+  /* The arrow buttons need JS; without it the row is still swipeable/scrollable. */
+  :global(html:not(.js)) [data-ig-controls] { display: none; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ig]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-ig-track]');
+    const prev = root.querySelector<HTMLButtonElement>('[data-dir="-1"]');
+    const next = root.querySelector<HTMLButtonElement>('[data-dir="1"]');
+    if (!track || !prev || !next) return;
+
+    const update = () => {
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    };
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    [prev, next].forEach((b) =>
+      b.addEventListener('click', () => {
+        track.scrollBy({ left: Number(b.dataset.dir) * track.clientWidth * 0.8, behavior: reduce ? 'auto' : 'smooth' });
+      }),
+    );
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>

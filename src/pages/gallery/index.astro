@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import GalleryFilter from '../../components/GalleryFilter.astro';
+import InstagramFeed from '../../components/InstagramFeed.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { getSimplePage, getProjects, categoriesInUse } from '../../lib/content';
 import { breadcrumbs } from '../../lib/schema';
@@ -41,6 +42,8 @@ const site = Astro.site!.toString();
       </div>
     </div>
   </section>
+
+  <InstagramFeed eyebrow="Fresh from Instagram" heading="Our latest *posts*" />
 
   <CtaBand
     eyebrow="Like what you see?"

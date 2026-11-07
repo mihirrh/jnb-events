@@ -299,9 +299,35 @@ The line items page automatically flows onto additional pages if the list is lon
 | Item | Notes |
 |---|---|
 | **No form email** | `settings.contact.email` is blank. Enquiries go to WhatsApp. Add a [Formspree](https://formspree.io) or [Web3Forms](https://web3forms.com) URL to `formEndpoint` to enable email delivery. |
-| **No social links** | `settings.social` is an empty array. Add Instagram/Facebook URLs in Site settings to show them in the footer. |
+| **Instagram feed needs a token** | The swipeable "latest posts" row (`InstagramFeed.astro`, `src/lib/instagram.ts`) is hidden until `INSTAGRAM_ACCESS_TOKEN` is set. See section 11. |
 | **Placeholder images** | All photos are placeholders. Replace them with real JNB Events photography before launch. |
 | **No analytics** | Add [Plausible](https://plausible.io) or [Fathom](https://usefathom.com) for privacy-respecting traffic data — both are GDPR-compliant without a cookie banner. |
 | **One testimonial** | The testimonials section requires at least one published testimonial to appear. Add real client reviews in the CMS. |
 | **No video support** | The current image components do not support video. Adding a video hero would require a new component. |
 | **PDF font subsetting** | The quote PDF loads full Bodoni and Instrument Sans WOFF files (~180KB combined). Could be reduced with a custom Latin-only subset. |
+
+---
+
+## 11. Instagram feed (swipeable posts)
+
+The homepage and `/gallery/` show the latest 12 Instagram posts as a swipeable row. The site is static, so the posts
+are fetched **at build time** (`src/lib/instagram.ts`) and the photos are saved into the site as `/instagram/<id>.webp`
+(Instagram's own image links expire). With no token, or if Instagram is unreachable, the section is hidden and the build still succeeds.
+
+Full walkthrough (with Google reviews and other open items): [`SOCIAL_AND_REVIEWS_SETUP.md`](SOCIAL_AND_REVIEWS_SETUP.md).
+
+**One-time setup**
+
+1. Instagram app -> Settings -> Account type -> switch to **Professional** (Business or Creator). Free.
+2. Go to <https://developers.facebook.com> -> create an app (type: Business) -> add the product **Instagram** -> *API setup with Instagram login*.
+3. Add `jnb.sounds.events` as an Instagram tester / sign in with it, then **Generate token** (grant `instagram_business_basic`).
+4. Put the token in Cloudflare Pages -> Settings -> Variables and Secrets as `INSTAGRAM_ACCESS_TOKEN` (encrypted, Production).
+   For local builds use `.env` (see `.env.example`). The token is only used during the build and never reaches visitors.
+
+**Staying up to date**
+
+- `.github/workflows/daily-rebuild.yml` triggers a Cloudflare Pages build every day at about 05:17 UTC, so new posts appear within a day.
+  Create a Cloudflare Pages *Deploy hook* and store its URL as the GitHub secret `CF_PAGES_DEPLOY_HOOK`.
+- Each build also refreshes the token's 60-day life, so it never expires while the daily rebuild runs. If the site is not
+  rebuilt for 60 days the token lapses: generate a new one (step 3) and update the variable.
+- A failed refresh shows as a `[instagram]` warning in the Cloudflare build log.

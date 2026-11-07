@@ -5,8 +5,8 @@ hero:
   eyebrow: Leicester · Leicestershire · UK-wide
   headline: Weddings & events, *styled with intent.*
   subheading: Bespoke mandaps, ceremony and reception décor, DJ and dancefloor effects - designed around your day and delivered with care.
-  image: /src/assets/media/hero/placeholder-hero.jpg
-  imageAlt: Placeholder image - an ivory and gold floral mandap with hanging lights
+  image: /src/assets/media/hero/grand_mandap_modern_venue.jpg
+  imageAlt: Grand luxury wedding ceremony setup in a modern UK venue, featuring a radiant gold aisle runner, carved Ganesh pedestals, and a spectacular floral mandap. Premium Asian wedding decorators providing high-end styling across Leicester and the Midlands.
   primaryCta:
     label: Chat on WhatsApp
     message: "Hello JNB Events, I'd like to discuss styling for my wedding or event."
@@ -18,10 +18,10 @@ intro:
     We offer our clients a wide range of services for weddings and events. We create bespoke packages for mandaps, civil ceremony décor, table centrepieces, DJ, dancefloor, sparklers, smoke machines and more.
 
     Based in Leicester and covering Leicestershire and the rest of the UK, we deliver premium-quality styling and entertainment at competitive prices.
-  image: /src/assets/media/about/placeholder-about-portrait.jpg
-  imageAlt: Placeholder image - a blush floral mandap
-  secondImage: /src/assets/media/about/placeholder-about-detail.jpg
-  secondImageAlt: Placeholder image - reception tables with floral centrepieces
+  image: /src/assets/media/about/modern_hall_gold_aisle_mandap.jpg
+  imageAlt: Luxury Asian wedding ceremony in the Midlands featuring a striking gold mirrored aisle runner, elegant floral arrangements, and a beautifully lit modern mandap stage. Bespoke wedding styling in Leicester with draped white chairs and gold sashes.
+  secondImage: /src/assets/media/about/carved_wooden_mandap_close.jpg
+  secondImageAlt: Exquisite hand-carved wooden Hindu wedding mandap adorned with warm red, orange, and white floral arrangements under a marquee in Leicestershire. Luxury Asian wedding decor featuring bespoke ornate seating and a central Ganesh statue for Midlands weddings.
   linkLabel: More about us
 services:
   eyebrow: What we do
@@ -42,7 +42,7 @@ cta:
   eyebrow: Start planning
   heading: Let's talk about *your day.*
   text: The quickest way to reach us is WhatsApp. Send a message with your date, venue and what you have in mind.
-  image: /src/assets/media/home/placeholder-cta.jpg
-  imageAlt: Placeholder image - warm evening lighting
+  image: /src/assets/media/hero/historic_archway_mandap_setup.jpg
+  imageAlt: Spectacular luxury Asian wedding ceremony inside a historic UK brick archway venue, featuring a grand carved mandap, pristine white aisle runner, and elegant lime wash Chiavari chairs. Bespoke Hindu wedding styling and event production in the Midlands.
   label: Message us on WhatsApp
   message: "Hello JNB Events, I'd like to check availability for my date."

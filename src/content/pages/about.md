@@ -5,10 +5,10 @@ seo:
 eyebrow: About us
 heading: Styling and entertainment, *made to measure.*
 lead: We offer our clients a wide range of services for weddings and events. We create bespoke packages for mandaps, civil ceremony décor, table centrepieces, DJ, dancefloor, sparklers, smoke machines and more.
-image: /src/assets/media/about/placeholder-about-portrait.jpg
-imageAlt: Placeholder image - a blush floral mandap
-secondImage: /src/assets/media/about/placeholder-about-detail.jpg
-secondImageAlt: Placeholder image - reception tables with floral centrepieces
+image: /src/assets/media/about/rustic_festoon_mandap.jpg
+imageAlt: Stunning carved wooden mandap decorated with cascading red and white roses, set beneath ambient festoon lighting for a romantic Asian wedding in the United Kingdom. Traditional Hindu wedding decor with elegant white draped backdrops in the Midlands.
+secondImage: /src/assets/media/about/carved_mandap_white_aisle.jpg
+secondImageAlt: Close-up of a luxury Hindu wedding mandap featuring ornate carved wooden chairs, a bespoke sweetheart frame, and rich red and cream floral styling in Leicestershire. Premium Asian wedding event design and stage backdrops in Leicester.
 highlightsHeading: How we work
 highlights:
   - title: Bespoke, not off-the-shelf
