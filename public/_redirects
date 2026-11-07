@@ -1,0 +1,2 @@
+# /sitemap.xml is the URL most crawlers and tools try first. Serve the generated sitemap there (status 200 = rewrite, not redirect).
+/sitemap.xml /sitemap-0.xml 200

@@ -1,17 +1,42 @@
 ---
-import Sprig from './Sprig.astro';
+import { emphasis, plain } from '../lib/text';
+import Motif from './Motif.astro';
 
-/** Compact editorial page opener used on every inner page. Renders the page's single H1. */
-interface Props { eyebrow?: string; heading: string; lead?: string; dark?: boolean }
-const { eyebrow, heading, lead, dark = false } = Astro.props;
+/**
+ * Editorial page opener for inner pages. Renders the page's single H1.
+ * Composition: a folio line, the headline set large on the left, and the standfirst dropped to the
+ * baseline of the headline on the right, closed by a hairline. No ornament - the type does the work.
+ * `heading` may wrap a word in *asterisks* to set it in italic.
+ */
+interface Props { eyebrow?: string; heading: string; lead?: string; dark?: boolean; folio?: string }
+const { eyebrow, heading, lead, dark = false, folio } = Astro.props;
 ---
 
-<section class:list={['relative overflow-hidden pt-36 pb-14 md:pt-44 md:pb-20', dark ? 'on-dark bg-night text-cream' : 'bg-cream']}>
-  <Sprig class:list={['pointer-events-none absolute -right-4 top-20 hidden h-72 md:block lg:right-16', dark ? 'text-gold/40' : 'text-gold/45']} />
+<section class:list={['relative overflow-hidden pt-32 md:pt-48', dark ? 'on-dark bg-night text-cream' : 'bg-cream']}>
   <div class="wrap relative">
-    {eyebrow && <p class="eyebrow hero-in">{eyebrow}</p>}
-    <h1 class="h1 hero-in mt-6 max-w-4xl" style="--d:80ms">{heading}</h1>
-    {lead && <p class="lead hero-in mt-7 max-w-2xl" style="--d:160ms">{lead}</p>}
-    <hr class="rule-gold mt-12 max-w-xs" />
+    <div class="folio hero-in">
+      {folio && <b>{folio}</b>}
+      {eyebrow && <span>{eyebrow}</span>}
+      <i aria-hidden="true"></i>
+    </div>
+    <div class="mt-10 grid gap-10 pb-14 md:mt-16 md:pb-20 lg:grid-cols-12 lg:items-end lg:gap-8">
+      <h1
+        class:list={['h1 hero-in', lead ? 'lg:col-span-8' : 'lg:col-span-10']}
+        style="--d:80ms"
+        aria-label={plain(heading)}
+        set:html={emphasis(heading)}
+      />
+      {
+        lead && (
+          <p class="lead hero-in max-w-sm lg:col-span-3 lg:col-start-10 lg:pb-3" style="--d:180ms">{lead}</p>
+        )
+      }
+    </div>
+    <div class="hairline"></div>
+    <!-- Motif mark centred below the rule: a quiet brand accent on every inner page -->
+    <div class="flex justify-center pt-6" aria-hidden="true">
+      <Motif variant="floral" size={40} class="opacity-40" />
+    </div>
   </div>
+  <div class="h-6 md:h-12"></div>
 </section>

@@ -14,8 +14,8 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     sitemap({
-      // Thank-you / utility pages should not be listed.
-      filter: (page) => !page.includes('/404'),
+      // Thank-you / utility pages and the unlisted quote tool should not be listed.
+      filter: (page) => !page.includes('/404') && !page.includes('/quote/'),
     }),
   ],
   vite: {

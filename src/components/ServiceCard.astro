@@ -1,25 +1,53 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Img from './Img.astro';
+import Icon from './Icon.astro';
 
+/**
+ * Two treatments of the same service:
+ *  - "feature": a large photograph with a plate caption, used for the first two services.
+ *  - "row": a ruled index line (number, big serif title, summary, small thumbnail) for the rest.
+ */
 interface Props {
   service: CollectionEntry<'services'>;
   index: number;
+  variant?: 'feature' | 'row';
   ratio?: number;
   sizes?: string;
   class?: string;
 }
-const { service, index, ratio = 4 / 5, sizes = '(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw', class: className } = Astro.props;
+const { service, index, variant = 'feature', ratio = 4 / 5, sizes = '(min-width:1024px) 40vw, 90vw', class: className } = Astro.props;
 const n = String(index + 1).padStart(2, '0');
+const href = `/services/${service.id}/`;
 ---
 
-<a href={`/services/${service.id}/`} class:list={['group block no-underline', className]}>
-  <Img src={service.data.image} alt={service.data.imageAlt} ratio={ratio} sizes={sizes} class="media-zoom" reveal />
-  <div class="mt-5 flex items-baseline gap-4">
-    <span class="font-serif text-lg text-gold-deep" aria-hidden="true">{n}</span>
-    <div>
-      <h3 class="h3 transition-colors group-hover:text-gold-deep">{service.data.title}</h3>
-      <p class="mt-2 max-w-md text-[0.95rem] leading-relaxed text-muted">{service.data.summary}</p>
-    </div>
-  </div>
-</a>
+{
+  variant === 'feature' ? (
+    <a href={href} class:list={['group block no-underline max-sm:grid max-sm:grid-cols-[2fr_3fr] max-sm:items-start max-sm:gap-x-5', className]}>
+      <Img src={service.data.image} alt={service.data.imageAlt} ratio={ratio} sizes={sizes} class="media-zoom max-sm:!aspect-[4/5]" reveal />
+      <div class="mt-4 grid grid-cols-[auto_1fr] gap-x-4 max-sm:mt-0">
+        <span class="numeral-sm pt-1 text-2xl" aria-hidden="true">{n}</span>
+        <div class="pt-1">
+          <h3 class="h3 !text-[clamp(1.6rem,1.6vw+1rem,2.4rem)]">{service.data.title}</h3>
+          <p class="mt-3 max-w-md text-[0.95rem] leading-relaxed text-muted">{service.data.summary}</p>
+        </div>
+      </div>
+    </a>
+  ) : (
+    <a
+      href={href}
+      class:list={[
+        'group grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-1 border-t border-gold/25 py-5 no-underline md:grid-cols-12 md:gap-x-8 md:py-5',
+        className,
+      ]}
+    >
+      <span class="numeral-sm text-xl md:col-span-1 md:text-2xl" aria-hidden="true">{n}</span>
+      <h3 class="h3 !text-[clamp(1.5rem,1.6vw+0.9rem,2.2rem)] transition-transform duration-500 group-hover:translate-x-2 md:col-span-4">{service.data.title}</h3>
+      <p class="col-start-2 col-end-4 mt-1 max-w-md text-[0.95rem] leading-relaxed text-muted md:col-span-4 md:col-start-auto md:mt-0 md:pr-6">{service.data.summary}</p>
+      <div class="hidden md:col-span-2 md:block" aria-hidden="true">
+        <Img src={service.data.image} alt="" ratio={3 / 2} sizes="200px" widths={[200, 400]} class="media-zoom" />
+      </div>
+      <Icon name="arrow" size={22} class="col-start-3 row-start-1 text-gold-light transition-transform duration-500 group-hover:translate-x-1.5 md:col-span-1 md:col-start-auto md:row-start-auto md:justify-self-end" />
+    </a>
+  )
+}

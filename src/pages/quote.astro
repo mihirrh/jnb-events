@@ -1,0 +1,310 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteRow from '../components/QuoteRow.astro';
+import { getQuote, getSettings } from '../lib/content';
+import { calculate, formatPence, formatPercent, type QuoteItem } from '../lib/quote';
+
+const q = await getQuote();
+const settings = await getSettings();
+const site = Astro.site!;
+
+const start: QuoteItem[] = q.items.map((i) => ({ description: i.description, pence: Math.round(i.price * 100), free: i.free }));
+const totals = calculate(start, {
+  discountEnabled: q.discount.enabled,
+  discountPercent: q.discount.percent,
+  vatEnabled: q.vat.enabled,
+  vatRate: q.vat.rate,
+});
+
+// Everything the browser script needs, as plain data (no secrets: all of this is already public on the site).
+const config = {
+  vatRate: q.vat.rate,
+  wording: q.pdf,
+  contact: { phone: settings.contact.whatsappNumber, email: settings.contact.email, website: site.host },
+};
+const vatRate = formatPercent(q.vat.rate);
+---
+
+<BaseLayout title={q.seo.title} description={q.seo.description} noindex floatingEnquire={false}>
+  <PageHero eyebrow="Internal tool" folio="Q" heading={q.heading} lead={q.lead} />
+
+  <section class="bg-cream pb-[clamp(3.5rem,7vw,7rem)]" aria-label="Quote builder">
+    <div class="wrap">
+      <noscript>
+        <p class="mb-10 border border-line bg-cream-deep p-5 text-ink-soft">The quote builder needs JavaScript to calculate totals and create the PDF. Please turn it on for this page.</p>
+      </noscript>
+
+      <form id="quote-form" class="grid gap-14 lg:grid-cols-12 lg:gap-12" novalidate data-config={JSON.stringify(config)}>
+        <div class="lg:col-span-7">
+          <!-- 1. Client -->
+          <fieldset>
+            <legend class="folio w-full"><b>01</b><span>Client</span><i aria-hidden="true"></i></legend>
+            <div class="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2">
+              <div class="field sm:col-span-2">
+                <label for="q-client">Client name</label>
+                <input id="q-client" type="text" maxlength="80" autocomplete="off" placeholder="e.g. Priya &amp; Raj Patel" />
+              </div>
+              <div class="field">
+                <label for="q-date">Event date</label>
+                <input id="q-date" type="date" />
+              </div>
+              <div class="field">
+                <label for="q-venue">Venue</label>
+                <input id="q-venue" type="text" maxlength="120" autocomplete="off" placeholder="e.g. The Grand Hall, Leicester" />
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 2. Line items -->
+          <fieldset class="mt-16">
+            <legend class="folio w-full"><b>02</b><span>Line items</span><i aria-hidden="true"></i></legend>
+            <ol id="q-rows" class="mt-6 border-b border-line">
+              {start.map((it, i) => <QuoteRow index={i} description={it.description} price={it.pence / 100} free={it.free} />)}
+            </ol>
+            <p id="q-empty" class="py-6 text-muted" hidden>No items yet. Add the first one below.</p>
+            <button type="button" id="q-add" class="btn btn-line mt-8">Add line item</button>
+          </fieldset>
+
+          <!-- 3. Adjustments -->
+          <fieldset class="mt-16">
+            <legend class="folio w-full"><b>03</b><span>Discount &amp; VAT</span><i aria-hidden="true"></i></legend>
+            <div class="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+              <div class="border-t border-line pt-5">
+                <label class="inline-flex min-h-11 cursor-pointer items-center gap-3 text-[1.02rem]">
+                  <input id="q-discount-on" type="checkbox" class="size-5 accent-[var(--color-gold-deep)]" checked={q.discount.enabled} />
+                  <span>Apply a discount</span>
+                </label>
+                <div class="field mt-3">
+                  <label for="q-discount-pct">Discount percentage (%)</label>
+                  <input id="q-discount-pct" type="number" min="0" max="100" step="0.5" inputmode="decimal" value={q.discount.percent} disabled={!q.discount.enabled} />
+                </div>
+              </div>
+              <div class="border-t border-line pt-5">
+                <label class="inline-flex min-h-11 cursor-pointer items-center gap-3 text-[1.02rem]">
+                  <input id="q-vat-on" type="checkbox" class="size-5 accent-[var(--color-gold-deep)]" checked={q.vat.enabled} />
+                  <span>Add VAT at {vatRate}%</span>
+                </label>
+                <p class="mt-3 max-w-xs text-sm text-muted">VAT is worked out on the price after any discount.</p>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- Summary -->
+        <aside class="lg:col-span-5">
+          <div class="on-dark bg-night p-7 text-cream sm:p-9 lg:sticky lg:top-28">
+            <div class="folio"><span>Summary</span><i aria-hidden="true"></i></div>
+            <dl class="mt-7 space-y-3" id="q-summary">
+              <div class="flex items-baseline justify-between gap-6">
+                <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cream/75">Subtotal</dt>
+                <dd class="num text-lg" id="q-subtotal">{formatPence(totals.subtotal)}</dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-6" id="q-discount-row" hidden={!(q.discount.enabled && totals.discount > 0)}>
+                <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-gold-light" id="q-discount-label">Special discount ({formatPercent(q.discount.percent)}%)</dt>
+                <dd class="num text-lg text-gold-light" id="q-discount">&ndash;{formatPence(totals.discount)}</dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-6" id="q-vat-row" hidden={!q.vat.enabled}>
+                <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cream/75">VAT ({vatRate}%)</dt>
+                <dd class="num text-lg" id="q-vat">{formatPence(totals.vat)}</dd>
+              </div>
+            </dl>
+            <div class="mt-6 border-t border-gold/40 pt-6">
+              <p class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cream/75">
+                Final total <span id="q-vat-note" class="font-normal normal-case tracking-normal text-cream/65" hidden={!q.vat.enabled}>(including VAT)</span>
+              </p>
+              <p class="num mt-2 text-[clamp(2.2rem,2.6vw+1rem,3.2rem)] font-medium leading-none text-gold-light" id="q-total" role="status" aria-live="polite" aria-atomic="true">{formatPence(totals.total)}</p>
+            </div>
+            <button type="button" id="q-download" class="btn btn-ink mt-8 w-full">Download PDF</button>
+            <p id="q-status" class="mt-4 min-h-[1.5em] text-sm text-cream/80" role="status"></p>
+            <p class="mt-2 text-sm text-cream/65">The four-page PDF is made in this browser. Nothing is uploaded or saved.</p>
+          </div>
+        </aside>
+      </form>
+    </div>
+  </section>
+
+  <template id="q-template"><QuoteRow index={0} /></template>
+</BaseLayout>
+
+<script>
+  import { calculate, formatDate, formatPence, formatPercent, parsePence, type QuoteItem } from '../lib/quote';
+  // Fonts are fetched only when someone clicks Download. Vite hashes them into /_astro/ like any other asset.
+  import serifUrl from '@fontsource/bodoni-moda/files/bodoni-moda-latin-400-normal.woff?url';
+  import serifItalicUrl from '@fontsource/bodoni-moda/files/bodoni-moda-latin-400-italic.woff?url';
+  import sansUrl from '@fontsource/instrument-sans/files/instrument-sans-latin-400-normal.woff?url';
+  import sansBoldUrl from '@fontsource/instrument-sans/files/instrument-sans-latin-600-normal.woff?url';
+  import logoUrl from '../assets/brand/jnb-logo-full.png?url';
+
+  const form = document.getElementById('quote-form') as HTMLFormElement | null;
+  if (form) {
+    const cfg = JSON.parse(form.dataset.config ?? '{}');
+    const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+    const rows = $<HTMLOListElement>('q-rows');
+    const empty = $('q-empty');
+    const template = $<HTMLTemplateElement>('q-template');
+    const discountOn = $<HTMLInputElement>('q-discount-on');
+    const discountPct = $<HTMLInputElement>('q-discount-pct');
+    const vatOn = $<HTMLInputElement>('q-vat-on');
+    const status = $('q-status');
+    const button = $<HTMLButtonElement>('q-download');
+
+    const rowEls = () => [...rows.querySelectorAll<HTMLElement>('[data-row]')];
+
+    function readItems(): QuoteItem[] {
+      return rowEls().map((r) => ({
+        description: r.querySelector<HTMLInputElement>('[data-desc]')!.value.trim(),
+        pence: parsePence(r.querySelector<HTMLInputElement>('[data-price]')!.value),
+        free: r.querySelector<HTMLInputElement>('[data-free]')!.checked,
+      }));
+    }
+
+    function readSwitches() {
+      const pct = Number.parseFloat(discountPct.value);
+      return {
+        discountEnabled: discountOn.checked,
+        discountPercent: Number.isFinite(pct) ? pct : 0,
+        vatEnabled: vatOn.checked,
+        vatRate: Number(cfg.vatRate) || 0,
+      };
+    }
+
+    function render() {
+      const sw = readSwitches();
+      const t = calculate(readItems(), sw);
+      $('q-subtotal').textContent = formatPence(t.subtotal);
+      const showDiscount = sw.discountEnabled && t.discount > 0;
+      $('q-discount-row').hidden = !showDiscount;
+      $('q-discount-label').textContent = `Special discount (${formatPercent(sw.discountPercent)}%)`;
+      $('q-discount').textContent = `\u2013${formatPence(t.discount)}`;
+      $('q-vat-row').hidden = !sw.vatEnabled;
+      $('q-vat-note').hidden = !sw.vatEnabled;
+      $('q-vat').textContent = formatPence(t.vat);
+      $('q-total').textContent = formatPence(t.total);
+      empty.hidden = rowEls().length > 0;
+    }
+
+    /** Keeps ids, label links and screen-reader labels in step with the visible order after add/remove. */
+    function renumber() {
+      rowEls().forEach((r, i) => {
+        const n = i + 1;
+        const desc = r.querySelector<HTMLInputElement>('[data-desc]')!;
+        const price = r.querySelector<HTMLInputElement>('[data-price]')!;
+        desc.id = `q-desc-${n}`;
+        price.id = `q-price-${n}`;
+        const labelDesc = r.querySelector<HTMLLabelElement>('[data-label="desc"]')!;
+        labelDesc.htmlFor = desc.id;
+        labelDesc.textContent = `Item ${n}`;
+        const labelPrice = r.querySelector<HTMLLabelElement>('[data-label="price"]')!;
+        labelPrice.htmlFor = price.id;
+        const remove = r.querySelector('[data-label="remove"]');
+        if (remove) remove.textContent = ` item ${n}`;
+      });
+    }
+
+    function syncFree(row: HTMLElement) {
+      const free = row.querySelector<HTMLInputElement>('[data-free]')!.checked;
+      const price = row.querySelector<HTMLInputElement>('[data-price]')!;
+      price.disabled = free;
+      price.placeholder = free ? 'Free' : '0.00';
+      if (free) price.value = '';
+    }
+
+    form.addEventListener('submit', (e) => e.preventDefault());
+
+    form.addEventListener('input', (e) => {
+      const target = e.target as HTMLElement;
+      const row = target.closest<HTMLElement>('[data-row]');
+      if (row && target.matches('[data-free]')) syncFree(row);
+      if (target === discountOn) discountPct.disabled = !discountOn.checked;
+      render();
+    });
+
+    // Tidy a typed price when the field is left ("1250" -> "1250.00").
+    form.addEventListener('focusout', (e) => {
+      const t = e.target as HTMLInputElement;
+      if (t.matches?.('[data-price]') && !t.disabled && t.value.trim()) t.value = (parsePence(t.value) / 100).toFixed(2);
+    });
+
+    form.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-remove]');
+      if (!btn) return;
+      const row = btn.closest<HTMLElement>('[data-row]')!;
+      const all = rowEls();
+      const i = all.indexOf(row);
+      row.remove();
+      renumber();
+      render();
+      const next = rowEls()[Math.min(i, rowEls().length - 1)];
+      (next?.querySelector<HTMLInputElement>('[data-desc]') ?? $('q-add')).focus();
+      status.textContent = '';
+    });
+
+    $('q-add').addEventListener('click', () => {
+      rows.append(template.content.cloneNode(true));
+      renumber();
+      render();
+      rowEls().at(-1)!.querySelector<HTMLInputElement>('[data-desc]')!.focus();
+    });
+
+    async function fetchBytes(url: string): Promise<Uint8Array> {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('font request failed');
+      return new Uint8Array(await res.arrayBuffer());
+    }
+
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      status.textContent = 'Creating your PDF\u2026';
+      try {
+        const [{ default: PDFDocument }, { toBlob }, pdf, serif, serifItalic, sans, sansBold, logo] = await Promise.all([
+          import('pdfkit'),
+          import('pdfkit/output'),
+          import('../lib/quote-pdf'),
+          fetchBytes(serifUrl),
+          fetchBytes(serifItalicUrl),
+          fetchBytes(sansUrl),
+          fetchBytes(sansBoldUrl),
+          fetchBytes(logoUrl),
+        ]);
+        const data = {
+          clientName: $<HTMLInputElement>('q-client').value,
+          eventDate: $<HTMLInputElement>('q-date').value,
+          venue: $<HTMLInputElement>('q-venue').value,
+          items: readItems(),
+          switches: readSwitches(),
+          wording: cfg.wording,
+          contact: cfg.contact,
+          fonts: { serif, serifItalic, sans, sansBold },
+          logo,
+        };
+        const doc = new PDFDocument({
+          ...pdf.PDF_OPTIONS,
+          lang: 'en-GB',
+          displayTitle: true,
+          info: { Title: `Quotation \u2013 ${data.clientName.trim() || 'JNB Events'}`, Author: 'JNB Events', Subject: formatDate(data.eventDate, 'Event quotation') },
+        });
+        const blob = toBlob(doc);
+        pdf.drawQuote(doc, data);
+        doc.end();
+        const url = URL.createObjectURL(await blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = pdf.filenameFor(data);
+        document.body.append(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 10_000);
+        status.textContent = 'Your PDF has been downloaded.';
+      } catch (err) {
+        console.error('Quote PDF failed', err instanceof Error ? err.name : 'error');
+        status.textContent = 'Sorry, the PDF could not be created. Please try again.';
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    renumber();
+    render();
+  }
+</script>

@@ -1,38 +1,56 @@
 ---
 import { Image } from 'astro:assets';
+import wordmarkSvg from '../assets/brand/jnb-wordmark.svg?raw';
+import lockupSvg from '../assets/brand/jnb-lockup.svg?raw';
+import fullDark from '../assets/brand/jnb-logo-full.png';
+import fullLight from '../assets/brand/jnb-logo-full-light.png';
 import type { Settings } from '../lib/content';
 
 /**
- * Brand mark. Uses the logo uploaded in the CMS if there is one; otherwise a typographic
- * wordmark with the logo's arch motif so the site always looks finished.
+ * Brand mark. Uses the logo uploaded in the CMS if there is one; otherwise the JNB Events wordmark from
+ * brand/jnb_logo.svg, inlined as vector so it takes its colour from CSS:
+ *   - tone="dark"  the logo's own deep gold, for cream backgrounds
+ *   - tone="light" light gold, for night backgrounds and photographs
+ *   - tone="auto"  inherits `color` from the parent (the header recolours it as it changes state)
+ * `showTagline` switches to the lock-up with "Decor . DJ . Mandaps" underneath, for places with room.
+ * `full` shows the complete logo with its mandap arch, lotus and leaves (a raster, since that artwork is raster
+ * in the original); size it with `class`.
+ * Regenerate the SVGs with `npm run build:brand`.
  */
-interface Props { settings: Settings; tone?: 'dark' | 'light'; compact?: boolean }
-const { settings, tone = 'dark', compact = false } = Astro.props;
-const light = tone === 'light';
+interface Props { settings: Settings; tone?: 'dark' | 'light' | 'auto'; showTagline?: boolean; full?: boolean; class?: string }
+const { settings, tone = 'dark', showTagline = false, full = false, class: className } = Astro.props;
+
+const raw = showTagline ? lockupSvg : wordmarkSvg;
+const [, vw, vh] = raw.match(/viewBox="[-\d.]+ [-\d.]+ ([\d.]+) ([\d.]+)"/) ?? [];
+const aspect = `${vw} / ${vh}`;
+const svg = raw.replace('<svg ', '<svg focusable="false" ').trim();
+const label = showTagline ? `${settings.siteName} - ${settings.tagline}` : settings.siteName;
 ---
 
 {
-  settings.logo ? (
+  full ? (
+    <Image src={tone === 'light' ? fullLight : fullDark} alt={settings.logoAlt ?? settings.siteName} widths={[320, 480, 640]} sizes="(min-width: 640px) 320px, 240px" class:list={['h-auto', className]} loading="lazy" />
+  ) : settings.logo ? (
     <Image
       src={settings.logo}
       alt={settings.logoAlt ?? settings.siteName}
-      height={compact ? 44 : 64}
-      class="h-auto w-auto max-h-12 sm:max-h-14"
+      height={64}
+      class:list={['h-auto w-auto max-h-12 sm:max-h-14', className]}
       loading="eager"
     />
   ) : (
-    <span class="inline-flex items-center gap-2.5 whitespace-nowrap sm:gap-3" role="img" aria-label={`${settings.siteName} - ${settings.tagline}`}>
-      <svg viewBox="0 0 40 48" width="30" height="36" fill="none" stroke="#b8954a" stroke-width="1.2" aria-hidden="true" class="shrink-0">
-        <path d="M4 46V22a16 16 0 0 1 32 0v24"></path>
-        <path d="M10 46V23a10 10 0 0 1 20 0v23" opacity=".55"></path>
-        <path d="M20 46V30m0 6c-4-1-6-4-6-7 4 0 6 3 6 7Zm0-3c3-1 5-3 5-6-3 0-5 2-5 6Z"></path>
-      </svg>
-      <span class="flex flex-col leading-none" aria-hidden="true">
-        <span class:list={['font-serif text-[1.4rem] tracking-[0.15em] sm:text-[1.55rem] sm:tracking-[0.16em]', light ? 'text-cream' : 'text-ink']}>JNB EVENTS</span>
-        <span class:list={['mt-1.5 text-[0.54rem] font-semibold tracking-[0.3em] sm:text-[0.56rem] sm:tracking-[0.34em]', light ? 'text-gold-light' : 'text-gold-deep']}>
-          DECOR · DJ · MANDAPS
-        </span>
-      </span>
-    </span>
+    <span class:list={['logo-mark', `tone-${tone}`, showTagline && 'has-tagline', className]} style={`aspect-ratio:${aspect}`} role="img" aria-label={label} set:html={svg.replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"')} />
   )
 }
+
+<style is:global>
+  .logo-mark { display: inline-block; height: 2.05rem; line-height: 0; vertical-align: middle; }
+  .logo-mark svg { display: block; width: 100%; height: 100%; }
+  .logo-mark.has-tagline { height: 3.4rem; }
+  .logo-mark.tone-dark { color: var(--color-logo-gold); }
+  .logo-mark.tone-light { color: var(--color-gold-light); }
+  @media (min-width: 1024px) {
+    .logo-mark { height: 2.9rem; }
+    .logo-mark.has-tagline { height: 4.4rem; }
+  }
+</style>

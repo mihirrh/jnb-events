@@ -6,6 +6,7 @@ import GalleryFilter from '../../../components/GalleryFilter.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 import { getProjects, categoriesInUse, slugify, getSettings } from '../../../lib/content';
 import { breadcrumbs } from '../../../lib/schema';
+import { plate } from '../../../lib/plates';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
@@ -20,7 +21,6 @@ const { category, all, projects } = Astro.props;
 const settings = await getSettings();
 const site = Astro.site!.toString();
 const url = `${site}gallery/category/${slugify(category)}/`;
-const ratios = [4 / 5, 1, 4 / 5, 4 / 3];
 ---
 
 <BaseLayout
@@ -36,20 +36,25 @@ const ratios = [4 / 5, 1, 4 / 5, 4 / 3];
     ]),
   ]}
 >
-  <PageHero eyebrow="Gallery" heading={category} lead={`${projects.length} ${projects.length === 1 ? 'project' : 'projects'} in this category.`} />
+  <PageHero folio="03" eyebrow="Gallery" heading={category} />
 
-  <section class="section-tight bg-cream" aria-label={`${category} projects`}>
+  <section class="bg-cream pb-[clamp(4rem,9vw,9rem)]" aria-label={`${category} projects`}>
     <div class="wrap">
+      <h2 class="sr-only">{category} projects</h2>
       <GalleryFilter active={category} available={all} />
-      <div class="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((p, i) => <ProjectCard project={p} ratio={ratios[i % ratios.length]} delay={(i % 3) * 90} />)}
+      <div class="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-12 lg:gap-y-14">
+        {projects.map((p, i) => {
+          const lone = i === projects.length - 1 && i % 5 === 0 && projects.length > 1;
+            const pl = lone ? { cls: 'lg:col-span-12', ratio: 21 / 9 } : plate(i);
+          return <ProjectCard project={p} index={i} ratio={pl.ratio} class={pl.cls} delay={(i % 2) * 120} sizes="(min-width:1024px) 52vw, (min-width:640px) 48vw, 94vw" />;
+        })}
       </div>
     </div>
   </section>
 
   <CtaBand
     eyebrow="Enquire"
-    heading="Want something similar?"
+    heading="Want something *similar?*"
     text="Message us on WhatsApp and tell us about your event."
     source={`${category} gallery`}
   />

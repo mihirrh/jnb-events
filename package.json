@@ -10,22 +10,30 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "build:brand": "node scripts/build-brand.mjs",
     "astro": "astro",
     "images:generate": "node scripts/generate-placeholders.mjs",
     "audit": "node scripts/audit-dist.mjs",
-    "verify": "astro check && astro build && node scripts/audit-dist.mjs"
+    "verify": "astro check && astro build && node scripts/audit-dist.mjs",
+    "check:layout": "node scripts/check-layout.mjs",
+    "check:fallbacks": "node scripts/check-fallbacks.mjs",
+    "check:quote": "node scripts/check-quote.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
-    "@fontsource-variable/cormorant": "^5.3.0",
-    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/bodoni-moda": "^5.3.0",
+    "@fontsource-variable/instrument-sans": "^5.3.0",
+    "@fontsource/bodoni-moda": "^5.3.0",
+    "@fontsource/instrument-sans": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.4",
+    "pdfkit": "^0.20.2",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "playwright": "^1.64.1",
     "typescript": "^6.0.3"
   },
   "description": "Website for JNB Events - wedding and event décor, DJ and mandaps in Leicester",

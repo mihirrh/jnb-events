@@ -4,9 +4,13 @@ import '../styles/global.css';
 import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
-import { getSettings } from '../lib/content';
+import FloatingEnquire from '../components/FloatingEnquire.astro';
+import { getImage } from 'astro:assets';
+import { getSettings, getHome, getServices } from '../lib/content';
 import { localBusiness, website } from '../lib/schema';
+// Preload only the two above-the-fold faces (Latin subset). Vite hashes these exactly as the @font-face rules do.
+import bodoniUrl from '@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-normal.woff2?url';
+import sansUrl from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -16,15 +20,27 @@ interface Props {
   /** True for pages that open with a full-bleed photo (transparent header). */
   overlayHeader?: boolean;
   noindex?: boolean;
+  /** The floating Enquire button is hidden on internal tool pages where it could cover controls. */
+  floatingEnquire?: boolean;
   jsonLd?: object[];
   type?: 'website' | 'article';
 }
-const { title, description, image, imageAlt, overlayHeader = false, noindex = false, jsonLd = [], type } = Astro.props;
+const { title, description, image: pageImage, imageAlt: pageImageAlt, overlayHeader = false, noindex = false, floatingEnquire = true, jsonLd = [], type } = Astro.props;
 const settings = await getSettings();
 const siteUrl = new URL('/', Astro.site!).toString();
 
+// Every page gets a social-preview image: its own if it has one, otherwise the homepage hero.
+const home = await getHome();
+const image = pageImage ?? home.hero.image;
+const imageAlt = pageImage ? pageImageAlt : home.hero.imageAlt;
+const businessImage = new URL((await getImage({ src: home.hero.image, width: 1200, height: 630, format: 'jpg', fit: 'cover' })).src, siteUrl).toString();
+const services = await getServices();
+
 // LocalBusiness + WebSite are emitted on every page so search engines always see who we are and where we work.
-const baseLd = [localBusiness(settings, siteUrl), website(settings, siteUrl)];
+const baseLd = [
+  localBusiness(settings, siteUrl, businessImage, services.map((s) => ({ name: s.data.title, description: s.data.summary, url: `${siteUrl}services/${s.id}/` }))),
+  website(settings, siteUrl),
+];
 ---
 
 <!doctype html>
@@ -35,6 +51,9 @@ const baseLd = [localBusiness(settings, siteUrl), website(settings, siteUrl)];
     <meta name="theme-color" content="#faf7f2" />
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="font" type="font/woff2" href={bodoniUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={sansUrl} crossorigin />
     <SEO title={title} description={description} image={image} imageAlt={imageAlt} noindex={noindex} type={type} jsonLd={[...baseLd, ...jsonLd]} />
     <!-- Marks the document so reveal animations only apply when JS is available -->
     <script is:inline>document.documentElement.classList.add('js');</script>
@@ -46,7 +65,7 @@ const baseLd = [localBusiness(settings, siteUrl), website(settings, siteUrl)];
       <slot />
     </main>
     <Footer />
-    <FloatingWhatsApp />
+    {floatingEnquire && <FloatingEnquire />}
 
     <script>
       // Gentle scroll reveals. Elements are visible by default if IntersectionObserver is missing.

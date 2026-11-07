@@ -1,0 +1,74 @@
+---
+/**
+ * JNB brand motif: the ogee mandap arch from the logo, drawn as a hairline.
+ *   line   - the arch alone.
+ *   floral - the arch with its lotus and dotted drop line, as in the logo.
+ *   botanical - floral, plus a leaf sprig in each lower corner. For 64px and up; below that use `line`.
+ *
+ * Drawing rules: 1px hairline that never thickens when scaled (`vector-effect`), round caps, only the
+ * tiny dots filled. Colour comes from `currentColor`: antique gold on light, light gold on `.on-dark`.
+ * Decorative by default (aria-hidden); pass `label` if it ever carries meaning.
+ * Use sparingly - the logo itself is the brand mark; this only echoes it.
+ */
+import { MOTIF as M } from '../lib/motif';
+
+interface Props {
+  variant?: 'line' | 'floral' | 'botanical';
+  /** Height in px; width follows the 120:66 viewBox. */
+  size?: number;
+  class?: string;
+  label?: string;
+}
+const { variant = 'line', size = 56, class: className, label } = Astro.props;
+const width = Math.round((size * M.width) / M.height);
+---
+
+<svg
+  class:list={['motif', className]}
+  viewBox={`0 0 ${M.width} ${M.height}`}
+  width={width}
+  height={size}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+>
+  {label && <title>{label}</title>}
+  <path d={M.arch} vector-effect="non-scaling-stroke"></path>
+  {
+    variant !== 'line' && (
+      <>
+        {M.lotus.angles.map((a) => (
+          <path d={M.lotus.petal} transform={a ? `rotate(${a} ${M.lotus.pivot[0]} ${M.lotus.pivot[1]})` : undefined} vector-effect="non-scaling-stroke" />
+        ))}
+        {M.dots.map((d) => <circle cx={d.cx} cy={d.cy} r={d.r} fill="currentColor" stroke="none" />)}
+        <path d={M.diamond} vector-effect="non-scaling-stroke" />
+        <path d={M.drop} vector-effect="non-scaling-stroke" />
+      </>
+    )
+  }
+  {
+    variant === 'botanical' && (
+      <>
+        {[undefined, 'matrix(-1 0 0 1 120 0)'].map((flip) => (
+          <g transform={flip}>
+            <path d={M.sprig.stem} vector-effect="non-scaling-stroke" />
+            {M.sprig.leaves.map((l) => (
+              <path d={M.sprig.leaf} transform={`translate(${l.x} ${l.y}) rotate(${l.r})`} vector-effect="non-scaling-stroke" />
+            ))}
+          </g>
+        ))}
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .motif { color: var(--color-gold); flex: none; }
+  :global(.on-dark) .motif { color: var(--color-gold-light); }
+</style>

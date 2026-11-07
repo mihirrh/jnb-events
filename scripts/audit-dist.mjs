@@ -54,6 +54,17 @@ for (const file of pages) {
   const h1s = [...html.matchAll(/<h1[\s>]/g)].length;
   if (h1s !== 1) err(page, `expected exactly 1 <h1>, found ${h1s}`);
 
+  // Heading levels must not skip downwards (h1 -> h3 etc.)
+  let prevLevel = 0;
+  for (const m of html.matchAll(/<h([1-6])[\s>]/g)) {
+    const level = Number(m[1]);
+    if (prevLevel && level > prevLevel + 1) {
+      err(page, `heading level skips from h${prevLevel} to h${level}`);
+      break;
+    }
+    prevLevel = level;
+  }
+
   const title = get(/<title>([^<]*)<\/title>/);
   const desc = get(/<meta name="description" content="([^"]*)"/);
   if (!title) err(page, 'missing <title>');
@@ -98,6 +109,10 @@ for (const file of pages) {
     if (tag.includes('id="lightbox-img"')) continue; // hidden dialog image, sized by CSS
     if (!/\bwidth=/.test(tag) || !/\bheight=/.test(tag)) warn(page, `<img> without width/height (layout shift risk): ${tag.slice(0, 60)}`);
   }
+  // Responsive images: any <img> with a srcset needs a `sizes` hint, otherwise browsers assume 100vw and over-download.
+  for (const m of html.matchAll(/<img\b[^>]*>/g)) {
+    if (/\bsrcset=/.test(m[0]) && !/\bsizes=/.test(m[0])) warn(page, `<img> with srcset but no sizes: ${m[0].slice(0, 70)}`);
+  }
   const eager = [...html.matchAll(/<img\b[^>]*loading="eager"/g)].length;
   if (eager > 3) warn(page, `${eager} eager images (only above-the-fold images should be eager)`);
 
@@ -115,8 +130,13 @@ for (const file of pages) {
     if (!/rel="[^"]*noopener/.test(m[0])) err(page, `target=_blank without rel=noopener: ${m[0].slice(0, 60)}`);
   }
 
-  // Sitemap coverage (404 excluded on purpose)
-  if (page !== '/404.html' && !sitemapUrls.has(page)) err(page, 'not listed in sitemap');
+  // No page ships a script file except the quote tool (everything else is static HTML + inline CSS).
+  if (page !== '/quote/' && /<script[^>]*\ssrc=/.test(html)) err(page, 'loads a JavaScript file (only /quote/ may)');
+
+  // Sitemap coverage. Pages marked noindex (404, the internal quote tool) must NOT be listed; all others must be.
+  const noindex = /<meta name="robots" content="noindex/.test(html);
+  if (noindex && sitemapUrls.has(page)) err(page, 'noindex page is listed in sitemap');
+  if (!noindex && page !== '/404.html' && !sitemapUrls.has(page)) err(page, 'not listed in sitemap');
 
   // Weight of HTML itself
   const kb = statSync(file).size / 1024;
@@ -130,13 +150,15 @@ if (!/Sitemap: https:\/\//.test(robots)) err('/robots.txt', 'missing Sitemap lin
 // JS payload
 const js = files.filter((f) => f.endsWith('.js'));
 const jsKb = js.reduce((n, f) => n + statSync(f).size, 0) / 1024;
+// The quote tool's PDF engine is a lazy chunk fetched only on "Download PDF"; the page itself loads the small entry script.
+const entryKb = js.filter((f) => /quote\.astro_astro_type_script/.test(f)).reduce((n, f) => n + statSync(f).size, 0) / 1024;
 
 // Images
 const imgs = files.filter((f) => /\.(avif|webp|jpe?g|png)$/i.test(f));
 const biggest = imgs.map((f) => [statSync(f).size / 1024, relative(DIST, f)]).sort((a, b) => b[0] - a[0]).slice(0, 3);
 
 console.log(`Pages audited: ${pages.length}   Sitemap URLs: ${sitemapUrls.size}`);
-console.log(`Client JS total: ${jsKb.toFixed(1)} kB across ${js.length} file(s)`);
+console.log(`Client JS total: ${jsKb.toFixed(1)} kB across ${js.length} file(s), of which /quote/ loads ${entryKb.toFixed(1)} kB on view (rest is fetched on Download PDF)`);
 console.log('Largest images:', biggest.map(([k, f]) => `${f.split('/').pop()} ${k.toFixed(0)}kB`).join(', '));
 if (warnings.length) console.log('\nWarnings:\n - ' + warnings.join('\n - '));
 if (errors.length) {

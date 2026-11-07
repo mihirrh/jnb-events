@@ -27,7 +27,10 @@ npm run dev        # http://localhost:4321
 | `npm run preview` | Serves `dist/` locally |
 | `npm run check` | Type-checks Astro, TypeScript and content |
 | `npm run audit` | After a build: checks links, H1s, titles/descriptions, canonical/OG tags, JSON-LD, alt text, sitemap |
-| `npm run verify` | `check` + `build` + `audit` in one go |
+| `npm run verify` | `check` + `build` + `audit` in one go (no browser needed, safe for CI) |
+| `npm run check:layout` | After a build: opens every page in headless Chromium at 390 / 768 / 1024 / 1440 px and reports failed or hidden images, horizontal overflow, small tap targets, console errors and page height. Add `--shots` to save screenshots to `.scratch/shots/`, `--page=/about/` or `--vp=mobile` to narrow it. One-time setup: `npx playwright install chromium`. |
+| `npm run check:fallbacks` | After a build: renders every page with JavaScript off and with reduced motion, and fails if any image or text is hidden. Same Playwright setup as `check:layout`. |
+| `npm run check:quote` | After a build: drives the quote builder in headless Chromium (totals, discount and VAT switches, add/remove, a real PDF download checked for 4 pages) on a phone and a desktop viewport. |
 | `npm run images:generate` | Re-creates the placeholder images (not needed once real photos are in) |
 
 ---
@@ -100,6 +103,27 @@ Uploaded images go to `src/assets/media/` (subfolder per type: `hero`, `gallery`
 4. Optionally write extra page text in **Page text**.
 5. Services appear automatically on the homepage, the Services page, the footer and in structured data.
 
+### Make a customer quotation (PDF)
+
+The owner-only quote builder lives at `/quote/`. It is not linked from the menu, not in the sitemap, marked `noindex` and behind a password (see below). Bookmark it on the phone you use for meetings.
+
+1. Type the client name, event date and venue.
+2. Edit the line items (description and price). Tick **Free** to print FREE instead of a price. **Add line item** and **Remove** change the list.
+3. Switch the discount on or off and set its percentage; switch VAT (20%) on or off. The summary updates instantly: Subtotal, then discount, then VAT, then Final total. VAT is worked out on the price after discount.
+4. Press **Download PDF**. The four-page quotation (cover, about, event details, important notice) is made in the browser. Nothing is uploaded or stored, and a long list simply continues onto extra pages.
+
+**Password.** `/quote/` is protected by a sign-in page that runs on Cloudflare (`functions/quote/[[path]].ts`), so the builder is never sent to anyone who has not entered the password. The password is **not** in this repository. To set or change it:
+
+1. Cloudflare dashboard -> **Workers & Pages** -> the project -> **Settings -> Variables and Secrets** -> **Add**.
+2. Type: **Secret**. Name: `QUOTE_PASSWORD`. Value: the password. Add it for **Production** (and **Preview** if you want to test branches). Save, then redeploy (or push any commit).
+3. Changing the password signs everyone out. Until a password is set, the page shows "not available" (it fails closed).
+
+Sign-in lasts 12 hours on that browser. Use a long password (a few random words is best) and, for brute-force protection, add a Cloudflare **Security -> WAF -> Rate limiting rule** on the path `/quote/*` (for example 10 requests per minute per IP). To test locally, put `QUOTE_PASSWORD=something` in a git-ignored `.dev.vars` file and run `npm run build && npx wrangler pages dev dist --ip 127.0.0.1`.
+
+To change the starting line items, the default discount and VAT, or any of the wording printed in the PDF, edit **Quote builder defaults** in Pages CMS (`src/content/pages/quote.yaml`). The client details are typed in each time and are never saved.
+
+How it is built: `src/lib/quote.ts` does all money maths in whole pence (no rounding drift); `src/lib/quote-pdf.ts` draws the PDF with [PDFKit](https://pdfkit.org), using the logo's vector wordmark (`src/lib/brand-paths.ts`). The PDF engine and fonts (about 530 kB) are fetched only when **Download PDF** is pressed, so the page itself loads about 6 kB of script and the rest of the site still ships no JavaScript.
+
 ### Change the WhatsApp number or message
 
 Pages CMS -> **Site settings** -> **Contact details**. Enter the number as normal (e.g. `07872 340258`); the site converts it to international format for WhatsApp links automatically. Every WhatsApp button on the site updates.
@@ -122,6 +146,21 @@ Categories are a fixed list so URLs and filters stay tidy. To add one, edit **bo
 If they ever disagree, `npm run build` stops with a clear error naming the file - nothing broken goes live.
 
 ---
+
+## Brand assets
+
+The official logo lives in `brand/` (`jnb_logo.svg` and `jnb_logo.png`, the Canva exports). They are kept as the
+source of truth but are **not** served: the SVG is ~670 kB of metadata and embedded watermark art. Instead:
+
+```bash
+npm run build:brand
+```
+
+reads the vector wordmark and tagline outlines from `brand/jnb_logo.svg` and writes
+`src/assets/brand/jnb-wordmark.svg` and `jnb-lockup.svg` (inlined by `Logo.astro`, so they can be recoloured), `jnb-logo-full.png` / `jnb-logo-full-light.png` (the complete logo with its arch, lotus and leaves, used in the footer and on the quote cover),
+`src/lib/brand-paths.ts` (the same outlines for the quote PDF and sign-in page), and `public/favicon.svg`,
+`apple-touch-icon.png` and `logo.png` (used in structured data). Run it again if the logo is ever replaced,
+and commit the results.
 
 ## 5. Project structure
 
@@ -156,6 +195,7 @@ src/
 - Every page has a unique title and description, one `<h1>`, canonical URL, Open Graph and Twitter tags.
 - JSON-LD: `LocalBusiness` and `WebSite` on every page, plus `Service`, `ItemList`, `ImageGallery` and `BreadcrumbList` where relevant. Only facts supplied by the owner are included (name, number, area served, location). There are no ratings, review counts, awards or years in business.
 - `sitemap-index.xml` and `robots.txt` are generated automatically from the configured site URL.
+- `/sitemap.xml` is served as a rewrite to the generated sitemap via `public/_redirects`, so crawlers that try that URL first still find it.
 - All content is static and identical for every visitor - nothing is personalised by cookies.
 - **After launch:** add the site to Google Search Console and submit `https://<your-domain>/sitemap-index.xml`; create or claim a Google Business Profile for the Leicester business and keep name/phone consistent with the site.
 
@@ -163,8 +203,18 @@ src/
 
 ## 6. Things the owner still needs to supply
 
-- Real photography (replace every "PLACEHOLDER IMAGE") and a logo file (optional: *Site settings -> Logo image*)
+- Real photography (replace every "PLACEHOLDER IMAGE") (the logo is already in)
 - Business email address
 - Final domain name (see section 2)
 - Real testimonials (only if genuine and permitted)
 - A read-through of the Privacy page wording
+
+---
+
+## Design notes (phase 3)
+
+- **Gold is an accent.** Buttons are ink (cream on dark); gold is used for the "JNB" wordmark, hairlines, small running numbers and hover sweeps. Large numerals are a tint of the text colour.
+- **Brand motif:** `src/components/Motif.astro` redraws the logo's ogee mandap arch (and its lotus, in the `floral` variant) as a hairline. It is only a quiet echo of the logo and is used sparingly - currently the 404 page. Don't add it to photographs or headings.
+- **Photographs never hide.** Reveals use opacity, not `clip-path` (a clipped element has no area, so the observer never fires and the photo stays blank).
+- **Page length budgets** are enforced by `check:layout`: homepage 8.5 viewport heights, inner pages 6, project pages 7 (phones get 1.6x). Nothing is collapsed or hidden behind a click; pages are shortened by composition (three-across features, ruled lists, fewer plates).
+- Photos are generated placeholders until real photography is supplied through the CMS.

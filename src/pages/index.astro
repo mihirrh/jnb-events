@@ -1,32 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Img from '../components/Img.astro';
-import Sprig from '../components/Sprig.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Testimonials from '../components/Testimonials.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
 import CtaBand from '../components/CtaBand.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Motif from '../components/Motif.astro';
 import { getHome, getServices, getProjects, getPublishedTestimonials, getSettings } from '../lib/content';
 import { serviceList } from '../lib/schema';
+import { emphasis, plain } from '../lib/text';
 
 const home = await getHome();
 const settings = await getSettings();
 const services = await getServices();
-const projects = (await getProjects()).filter((p) => p.data.featured).slice(0, 5);
+const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 4);
+const [opener, ...collage] = featured;
 const testimonials = await getPublishedTestimonials();
 const site = Astro.site!.toString();
 
-// Asymmetric placements for the featured grid (desktop). Each tuple: [grid classes, aspect ratio].
+// Placement of the collage below the full-bleed opener (desktop): [grid classes, aspect ratio].
 const layout: [string, number][] = [
-  ['lg:col-span-7', 4 / 3],
-  ['lg:col-span-5 lg:mt-24', 4 / 5],
-  ['lg:col-span-4', 4 / 5],
-  ['lg:col-span-4 lg:mt-16', 1],
-  ['lg:col-span-4 lg:mt-8', 4 / 5],
+  ['lg:col-span-4', 1],
+  ['lg:col-span-4 lg:mt-12', 1],
+  ['lg:col-span-4', 1],
 ];
 
-const paragraphs = home.intro.body.split(/\n\s*\n/);
+const [lead, ...rest] = home.intro.body.split(/\n\s*\n/);
+const featureServices = services.slice(0, 3);
+const rowServices = services.slice(3);
 ---
 
 <BaseLayout
@@ -37,137 +40,184 @@ const paragraphs = home.intro.body.split(/\n\s*\n/);
   overlayHeader
   jsonLd={[serviceList(services.map((s) => ({ name: s.data.title, url: `${site}services/${s.id}/` })))]}
 >
-  <!-- ============================== HERO ============================== -->
-  <section class="on-dark relative isolate flex min-h-[100svh] items-end overflow-hidden bg-night text-cream">
-    <div class="hero-zoom absolute inset-0 -z-10" aria-hidden="false">
-      <Img
-        src={home.hero.image}
-        alt={home.hero.imageAlt}
-        sizes="100vw"
-        priority
-        widths={[480, 768, 1100, 1600, 2400]}
-        class="!aspect-auto h-full w-full"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-night/90 via-night/45 to-night/30"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-night/60 via-night/20 to-transparent"></div>
+  <!-- ============================== HERO ==============================
+       Full-bleed photograph, headline anchored bottom-left at monumental scale, and a ruled
+       "colophon" row beneath it. -->
+  <section class="on-dark relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-night text-cream">
+    <div class="hero-zoom absolute inset-0 -z-10">
+      <Img src={home.hero.image} alt={home.hero.imageAlt} sizes="100vw" priority widths={[480, 768, 1100, 1600, 2400]} class="!aspect-auto h-full w-full" />
+      <div class="absolute inset-0 bg-gradient-to-t from-night via-night/35 via-55% to-night/5"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-night/55 via-night/10 via-50% to-transparent"></div>
+      <div class="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-night/55 to-transparent"></div>
     </div>
 
-    <div class="wrap w-full pb-16 pt-40 md:pb-24">
+    <div class="wrap relative mt-auto w-full pb-16 pt-32 md:pb-12 md:pt-36">
       <p class="eyebrow hero-in" style="--d:100ms">{home.hero.eyebrow}</p>
-      <h1 class="display hero-in mt-6 max-w-[14ch] md:max-w-4xl" style="--d:220ms">{home.hero.headline}</h1>
-      <p class="lead hero-in mt-7 max-w-xl !text-cream/90" style="--d:360ms">{home.hero.subheading}</p>
-      <div class="hero-in mt-10 flex flex-col gap-4 sm:flex-row" style="--d:480ms">
-        <WhatsAppButton
-          label={home.hero.primaryCta.label}
-          message={home.hero.primaryCta.message}
-          variant="gold"
-          source="homepage hero"
-          class="w-full sm:w-auto"
-        />
-        <a href="/gallery/" class="btn btn-line w-full sm:w-auto">{home.hero.secondaryCtaLabel}</a>
+      <h1 class="display hero-in mt-4 max-w-[11ch] md:mt-6 md:max-w-[12ch] lg:max-w-[14ch]" style="--d:220ms" aria-label={plain(home.hero.headline)} set:html={emphasis(home.hero.headline)} />
+
+      <div class="hero-in mt-7 grid gap-6 border-t border-cream/20 pt-6 sm:mt-8 sm:gap-7 sm:pt-7 lg:grid-cols-12 lg:items-end" style="--d:420ms">
+        <p class="lead max-w-md !text-cream/90 lg:col-span-5">{home.hero.subheading}</p>
+        <div class="flex flex-col gap-3 sm:flex-row lg:col-span-7 lg:justify-end">
+          <WhatsAppButton label={home.hero.primaryCta.label} message={home.hero.primaryCta.message} variant="ink" source="homepage hero" class="w-full sm:w-auto" />
+          <a href="/gallery/" class="btn btn-line w-full sm:w-auto">{home.hero.secondaryCtaLabel}</a>
+        </div>
       </div>
-      <p class="hero-in mt-8 text-xs uppercase tracking-[0.22em] text-cream/70" style="--d:560ms">{settings.tagline}</p>
     </div>
   </section>
 
-  <!-- =========================== BRAND STATEMENT =========================== -->
+  <!-- =========================== BRAND STATEMENT ===========================
+       Asymmetric: a tall photograph at the left, a smaller second photograph overlapping it and
+       breaking out of the column, the standfirst set large in the serif on the right. -->
   <section class="section relative overflow-hidden bg-cream" aria-labelledby="intro-heading">
-    <Sprig class="pointer-events-none absolute -left-6 top-10 hidden h-64 text-gold/40 lg:block" />
-    <div class="wrap grid items-center gap-14 lg:grid-cols-12 lg:gap-8">
-      <div class="relative lg:col-span-5 lg:col-start-1">
-        <div class="arch frame-gold max-w-md">
-          <Img src={home.intro.image} alt={home.intro.imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 40vw, 90vw" reveal />
+    <div class="wrap grid gap-16 lg:grid-cols-12 lg:gap-8">
+      <div class="relative pb-16 lg:col-span-5 lg:pb-32">
+        <div class="max-w-md lg:max-w-none">
+          <Img src={home.intro.image} alt={home.intro.imageAlt} ratio={3 / 4} sizes="(min-width:1024px) 38vw, 90vw" class="parallax" reveal />
         </div>
-        <div class="absolute -bottom-10 right-0 w-[46%] border-8 border-cream lg:-right-10">
-          <Img src={home.intro.secondImage} alt={home.intro.secondImageAlt} ratio={4 / 5} sizes="(min-width:1024px) 18vw, 40vw" reveal delay={200} />
+        <div class="absolute bottom-0 right-0 w-[48%] max-w-[16rem] border-[10px] border-cream sm:right-8 lg:-right-16 lg:w-[52%] lg:max-w-none">
+          <Img src={home.intro.secondImage} alt={home.intro.secondImageAlt} ratio={4 / 5} sizes="(min-width:1024px) 20vw, 44vw" reveal delay={250} />
         </div>
       </div>
-      <div class="mt-8 lg:col-span-6 lg:col-start-7 lg:mt-0">
-        <p class="eyebrow">{home.intro.eyebrow}</p>
-        <h2 id="intro-heading" class="h2 reveal mt-6">{home.intro.heading}</h2>
-        <div class="reveal mt-8 space-y-5 text-[1.05rem] text-ink-soft" style="--d:100ms">
-          {paragraphs.map((p) => <p>{p}</p>)}
+
+      <div class="lg:col-span-6 lg:col-start-7 lg:pt-16">
+        <div class="folio"><b>01</b><span>{home.intro.eyebrow}</span><i aria-hidden="true"></i></div>
+        <h2 id="intro-heading" class="h2 reveal mt-8" aria-label={plain(home.intro.heading)} set:html={emphasis(home.intro.heading)} />
+        <!-- Motif accent beneath the heading, centred, very quiet -->
+        <div class="reveal mt-5 flex items-center gap-4" style="--d:60ms" aria-hidden="true">
+          <div class="h-px flex-1 bg-line"></div>
+          <Motif variant="floral" size={38} class="opacity-50" />
+          <div class="h-px flex-1 bg-line"></div>
         </div>
-        <a href="/about/" class="link-arrow reveal mt-10" style="--d:160ms">
+        <p class="standfirst reveal mt-6" style="--d:100ms">{lead}</p>
+        <div class="reveal mt-7 grid gap-4 text-[1.02rem] text-ink-soft md:grid-cols-12" style="--d:160ms">
+          <div class="space-y-4 md:col-span-9">{rest.map((p) => <p>{p}</p>)}</div>
+        </div>
+        <a href="/about/" class="link-arrow reveal mt-9" style="--d:200ms">
           <span>{home.intro.linkLabel}</span><span aria-hidden="true">&rarr;</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ================================ SERVICES ================================ -->
+  <!-- ================================ SERVICES ================================
+       Dark. Two photographic features, offset against each other, then a ruled index of the rest. -->
   <section class="on-dark section bg-night text-cream" aria-labelledby="services-heading">
     <div class="wrap">
-      <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
-        <div class="lg:col-span-7">
-          <p class="eyebrow">{home.services.eyebrow}</p>
-          <h2 id="services-heading" class="h2 reveal mt-6">{home.services.heading}</h2>
-        </div>
-        <p class="lead reveal lg:col-span-5">{home.services.intro}</p>
+      <div class="folio"><b>02</b><span>{home.services.eyebrow}</span><i aria-hidden="true"></i></div>
+      <div class="mt-8 grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="services-heading" class="h2 reveal lg:col-span-8" aria-label={plain(home.services.heading)} set:html={emphasis(home.services.heading)} />
+        <p class="lead reveal lg:col-span-3 lg:col-start-10">{home.services.intro}</p>
       </div>
 
-      <div class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+      <!-- Three feature service cards with deliberate variation in vertical rhythm -->
+      <div class="mt-10 grid gap-8 sm:mt-12 sm:grid-cols-3 sm:gap-5 lg:mt-16 lg:grid-cols-12 lg:gap-8">
         {
-          services.map((s, i) => (
+          featureServices.map((s, i) => (
             <ServiceCard
               service={s}
               index={i}
-              sizes="(min-width:1024px) 22vw, (min-width:640px) 45vw, 90vw"
-              class={i % 2 === 1 ? 'lg:mt-20' : ''}
+              variant="feature"
+              ratio={i === 0 ? 3 / 4 : i === 1 ? 1 / 1 : 4 / 5}
+              sizes="(min-width:1024px) 31vw, (min-width:640px) 30vw, 40vw"
+              class={`lg:col-span-4${i === 1 ? ' lg:mt-10' : i === 2 ? ' lg:mt-4' : ''}`}
             />
           ))
         }
       </div>
 
+      <div class="mt-12 lg:mt-16">
+        {rowServices.map((s, i) => <ServiceCard service={s} index={i + featureServices.length} variant="row" />)}
+        <div class="border-t border-gold/25"></div>
+      </div>
+
       <!-- WhatsApp CTA directly after services -->
-      <div class="reveal mt-24 grid items-center gap-8 border-t border-gold/40 pt-12 lg:grid-cols-12">
+      <div class="reveal mt-10 grid items-center gap-6 lg:mt-14 lg:grid-cols-12">
         <div class="lg:col-span-8">
-          <h3 class="h2 !text-[clamp(1.9rem,3vw+0.5rem,3rem)]">{home.services.ctaHeading}</h3>
-          <p class="lead mt-4 max-w-2xl">{home.services.ctaText}</p>
+          <h3 class="font-serif text-[clamp(1.6rem,2vw+0.8rem,2.6rem)] leading-tight tracking-[-0.02em]" set:html={emphasis(home.services.ctaHeading)} />
+          <p class="mt-2 max-w-xl text-cream/80">{home.services.ctaText}</p>
         </div>
         <div class="lg:col-span-4 lg:text-right">
-          <WhatsAppButton label="Chat on WhatsApp" message={home.services.ctaMessage} variant="gold" source="homepage services" class="w-full sm:w-auto" />
+          <WhatsAppButton label="Chat on WhatsApp" message={home.services.ctaMessage} variant="ink" source="homepage services" class="w-full sm:w-auto" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- =============================== FEATURED WORK =============================== -->
+  <!-- Transition: night → cream. A centred motif mark bridges the hard colour jump. -->
+  <div class="relative bg-cream" aria-hidden="true">
+    <div class="absolute inset-x-0 top-0 h-16 bg-night"></div>
+    <div class="relative z-10 flex justify-center pt-6 pb-2">
+      <Motif variant="botanical" size={46} class="text-gold opacity-55" />
+    </div>
+  </div>
+
+  <!-- =============================== FEATURED WORK ===============================
+       Opens with one full-bleed photograph, then a collage of overlapping / offset plates. -->
   {
-    projects.length > 0 && (
-      <section class="section bg-cream" aria-labelledby="featured-heading">
-        <div class="wrap">
-          <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p class="eyebrow">{home.featured.eyebrow}</p>
-              <h2 id="featured-heading" class="h2 reveal mt-6">{home.featured.heading}</h2>
-              <p class="lead reveal mt-5 max-w-xl">{home.featured.intro}</p>
+    opener && (
+      <section class="bg-cream pb-[clamp(4rem,8vw,8rem)]" aria-labelledby="featured-heading">
+        <a href={`/gallery/${opener.id}/`} class="group relative block no-underline" aria-label={`${opener.data.title} - ${opener.data.category}`}>
+          <Img
+            src={opener.data.images[0].image}
+            alt={opener.data.images[0].alt}
+            ratio={3 / 2}
+            sizes="100vw"
+            widths={[640, 1100, 1600, 2400]}
+            class="media-zoom !aspect-[4/3] sm:!aspect-[16/9] lg:!aspect-[3/1]"
+            reveal
+          />
+          <span class="cap">{opener.data.category} &mdash; {opener.data.title}</span>
+        </a>
+
+        <div class="wrap mt-14 md:mt-20">
+          <div class="folio"><b>03</b><span>{home.featured.eyebrow}</span><i aria-hidden="true"></i></div>
+          <div class="mt-10 grid gap-8 lg:grid-cols-12 lg:items-end">
+            <h2 id="featured-heading" class="h2 reveal lg:col-span-7" aria-label={plain(home.featured.heading)} set:html={emphasis(home.featured.heading)} />
+            <div class="lg:col-span-4 lg:col-start-9">
+              <p class="lead reveal">{home.featured.intro}</p>
+              <a href="/gallery/" class="link-arrow mt-6">
+                <span>{home.featured.linkLabel}</span><span aria-hidden="true">&rarr;</span>
+              </a>
             </div>
-            <a href="/gallery/" class="link-arrow self-start md:self-end">
-              <span>{home.featured.linkLabel}</span><span aria-hidden="true">&rarr;</span>
-            </a>
           </div>
 
-          <div class="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-12">
-            {
-              projects.map((p, i) => {
-                const [cls, ratio] = layout[i] ?? layout[2];
+          {collage.length > 0 && (
+            <div class="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-5 sm:gap-y-12 lg:mt-16 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-0">
+              {collage.map((p, i) => {
+                const [cls, ratio] = layout[i] ?? layout[0];
                 return (
                   <ProjectCard
                     project={p}
+                    index={i + 1}
                     ratio={ratio}
-                    class={cls}
-                    delay={(i % 3) * 90}
-                    sizes={i === 0 ? '(min-width:1024px) 58vw, (min-width:640px) 50vw, 100vw' : '(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw'}
+                    class={`${cls} max-sm:[&:last-child:nth-child(odd)]:col-span-2`}
+                    delay={(i % 2) * 120}
+                    sizes="(min-width:1024px) 31vw, (min-width:640px) 30vw, 94vw"
                   />
                 );
-              })
-            }
-          </div>
+              })}
+            </div>
+          )}
         </div>
       </section>
     )
   }
+
+  <!-- ============================= WHERE WE WORK =============================
+       Local SEO in plain sight, kept to a single ruled strip. -->
+  <!-- Soft divider: hairline rule to bridge featured work (cream) → areas (cream-deep) -->
+  <div class="bg-cream" aria-hidden="true"><div class="wrap"><hr class="hairline" /></div></div>
+
+  <section class="bg-cream-deep section-tight" aria-labelledby="areas-heading">
+    <div class="wrap grid items-baseline gap-4 lg:grid-cols-12 lg:gap-8">
+      <div class="folio lg:col-span-3"><b>04</b><span id="areas-heading">Where we work</span></div>
+      <p class="font-serif text-[clamp(1.6rem,2.4vw+0.8rem,3rem)] leading-tight tracking-[-0.02em] lg:col-span-9">
+        {settings.serviceAreas.join(' · ')}
+      </p>
+    </div>
+  </section>
+
+  <InstagramFeed />
 
   <Testimonials items={testimonials} eyebrow={home.testimonials.eyebrow} heading={home.testimonials.heading} />
 
@@ -176,6 +226,7 @@ const paragraphs = home.intro.body.split(/\n\s*\n/);
     heading={home.cta.heading}
     text={home.cta.text}
     image={home.cta.image}
+    imageAlt={home.cta.imageAlt}
     label={home.cta.label}
     message={home.cta.message}
     source="homepage footer banner"

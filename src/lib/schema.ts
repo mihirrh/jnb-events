@@ -17,17 +17,24 @@ function areaServed(settings: Settings) {
   return settings.serviceAreas.map((name) => ({ '@type': AREA_TYPES[name] ?? 'Place', name }));
 }
 
-export function localBusiness(settings: Settings, siteUrl: string, imageUrl?: string) {
+export function localBusiness(
+  settings: Settings,
+  siteUrl: string,
+  imageUrl?: string,
+  offers: { name: string; description: string; url: string }[] = [],
+) {
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': `${siteUrl}#business`,
     name: settings.siteName,
     description: settings.description,
+    slogan: settings.tagline,
     url: siteUrl,
     telephone: `+${toInternational(settings.contact.whatsappNumber)}`,
     ...(settings.contact.email ? { email: settings.contact.email } : {}),
     ...(imageUrl ? { image: imageUrl } : {}),
+    logo: `${siteUrl}logo.png`,
     address: {
       '@type': 'PostalAddress',
       addressLocality: settings.location.locality,
@@ -35,6 +42,18 @@ export function localBusiness(settings: Settings, siteUrl: string, imageUrl?: st
       addressCountry: settings.location.country,
     },
     areaServed: areaServed(settings),
+    ...(offers.length
+      ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: `${settings.siteName} services`,
+            itemListElement: offers.map((o) => ({
+              '@type': 'Offer',
+              itemOffered: { '@type': 'Service', name: o.name, description: o.description, url: o.url },
+            })),
+          },
+        }
+      : {}),
     knowsAbout: ['Wedding décor', 'Mandaps', 'Civil ceremony décor', 'Wedding DJ', 'Event lighting', 'Special effects'],
     ...(settings.social.length ? { sameAs: settings.social.map((s) => s.url) } : {}),
   };

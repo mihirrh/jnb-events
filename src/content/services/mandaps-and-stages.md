@@ -3,10 +3,10 @@ title: Mandaps & Stages
 order: 1
 summary: Bespoke mandaps and stages, designed around your venue, colours and ceremony.
 lead: The mandap is the heart of the ceremony. We design and build mandaps and stages in your chosen palette, from elegant and understated to richly layered and floral.
-image: /src/assets/media/services/placeholder-mandaps.jpg
-imageAlt: Placeholder image - an ivory and gold floral mandap
-secondImage: /src/assets/media/gallery/placeholder-blush-stage-1.jpg
-secondImageAlt: Placeholder image - a blush floral stage
+image: /src/assets/media/services/floral_aisle_gold_runner.jpg
+imageAlt: Beautiful blush and deep purple floral arrangements lining a shimmering gold aisle runner for a luxury Hindu wedding ceremony in Leicestershire. Expert Asian event decorators in the UK featuring a grand floral mandap setup.
+secondImage: /src/assets/media/services/grand_brick_venue_wedding.jpg
+secondImageAlt: Elegant Hindu wedding decor in a unique heritage venue in Leicestershire, showcasing a pristine white aisle runner, intricately carved Ganesh statues, and a luxury floral mandap. Professional Asian wedding stylists delivering premium events across Leicester.
 keyPoints:
   - Bespoke mandap designs in your colours and style
   - Matching stages, seating and entrance styling

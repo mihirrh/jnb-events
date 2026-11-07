@@ -3,76 +3,102 @@ import { getSettings, getServices } from '../lib/content';
 import { whatsappUrl, telUrl } from '../lib/contact';
 import { NAV } from '../lib/nav';
 import Logo from './Logo.astro';
-import Icon from './Icon.astro';
-import Sprig from './Sprig.astro';
+import Motif from './Motif.astro';
 
+/**
+ * Footer, composed like the last page of a brochure rather than a link directory:
+ *  1. an invitation and the contact details set large,
+ *  2. the services as a run-in index (a single flowing line of serif text, not a list of links),
+ *  3. one quiet row with the wordmark and site links, then the small print.
+ */
 const settings = await getSettings();
 const services = await getServices();
 const year = new Date().getFullYear();
+const small = 'inline-flex min-h-11 items-center text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-cream/75 no-underline transition-colors hover:text-gold-light';
 ---
 
-<footer class="on-dark relative overflow-hidden bg-night text-cream">
-  <Sprig class="pointer-events-none absolute -right-6 bottom-0 hidden h-80 text-gold/30 md:block" />
-  <div class="wrap relative pt-20 pb-28 lg:pb-12">
-    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-10">
-      <div class="sm:col-span-2 lg:col-span-4">
-        <Logo settings={settings} tone="light" />
-        <p class="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-cream/75">{settings.description}</p>
-        <p class="mt-4 flex items-start gap-2 text-sm text-cream/75">
-          <Icon name="pin" size={18} class="mt-0.5 shrink-0 text-gold-light" />
-          <span>{settings.serviceAreaNote}</span>
+<footer class="on-dark relative bg-night text-cream" aria-label="Site footer">
+
+  <!-- Subtle motif divider to soften the transition into the footer -->
+  <div class="motif-divider" aria-hidden="true">
+    <div class="wrap flex flex-col items-center gap-3 pt-10 pb-0">
+      <div class="h-px w-16 bg-gold/30"></div>
+      <Motif variant="botanical" size={52} class="opacity-60" />
+      <div class="h-px w-16 bg-gold/30"></div>
+    </div>
+  </div>
+
+  <div class="wrap pt-10 md:pt-14">
+    <!-- Top row: invitation copy + contact details -->
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">Enquiries</p>
+        <p class="mt-5 font-serif text-[clamp(2rem,3.4vw+0.4rem,3.7rem)] leading-[1.06] tracking-[-0.025em]">
+          Your date, your venue &mdash; <em>our attention to detail.</em>
         </p>
       </div>
 
-      <nav aria-label="Footer" class="lg:col-span-2">
-        <h2 class="eyebrow !text-gold-light">Explore</h2>
-        <ul class="mt-5 space-y-1">
-          {NAV.map((n) => (
-            <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href={n.href}>{n.label}</a></li>
-          ))}
-          <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href="/privacy/">Privacy</a></li>
-        </ul>
-      </nav>
-
-      <nav aria-label="Services" class="lg:col-span-3">
-        <h2 class="eyebrow !text-gold-light">Services</h2>
-        <ul class="mt-5 space-y-1">
-          {services.map((s) => (
-            <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href={`/services/${s.id}/`}>{s.data.title}</a></li>
-          ))}
-        </ul>
-      </nav>
-
-      <div class="sm:col-span-2 lg:col-span-3">
-        <h2 class="eyebrow !text-gold-light">Contact</h2>
-        <ul class="mt-5 space-y-1">
-          <li>
-            <a class="inline-flex min-h-11 items-center gap-2 text-cream/85 no-underline hover:text-gold-light" href={whatsappUrl(settings)} target="_blank" rel="noopener noreferrer">
-              <Icon name="whatsapp" size={18} /> WhatsApp<span class="sr-only"> (opens in a new tab)</span>
-            </a>
-          </li>
-          <li>
-            <a class="inline-flex min-h-11 items-center gap-2 text-cream/85 no-underline hover:text-gold-light" href={telUrl(settings)}>
-              <Icon name="phone" size={18} /> {settings.contact.whatsappNumber}
-            </a>
-          </li>
-          {settings.contact.email && (
-            <li>
-              <a class="inline-flex min-h-11 items-center gap-2 break-all text-cream/85 no-underline hover:text-gold-light" href={`mailto:${settings.contact.email}`}>
-                <Icon name="mail" size={18} /> {settings.contact.email}
-              </a>
-            </li>
-          )}
-          {settings.social.map((s) => (
-            <li><a class="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-light" href={s.url} target="_blank" rel="noopener noreferrer me">{s.label}<span class="sr-only"> (opens in a new tab)</span></a></li>
-          ))}
-        </ul>
-      </div>
+      <address class="not-italic lg:col-span-4 lg:col-start-9 lg:self-end lg:pb-2">
+        <a
+          href={telUrl(settings)}
+          class="num block py-1 text-[clamp(1.6rem,2vw+0.9rem,2.4rem)] leading-none no-underline transition-colors hover:text-gold-light"
+        >{settings.contact.whatsappNumber}</a>
+        {
+          settings.contact.email && (
+            <a href={`mailto:${settings.contact.email}`} class="mt-3 block break-all text-[0.95rem] text-cream/75 no-underline hover:text-gold-light">{settings.contact.email}</a>
+          )
+        }
+        <a href={whatsappUrl(settings)} target="_blank" rel="noopener noreferrer" class="link-arrow mt-5" data-whatsapp>
+          <span>Message on WhatsApp<span class="sr-only"> (opens in a new tab)</span></span><span aria-hidden="true">&rarr;</span>
+        </a>
+      </address>
     </div>
 
-    <div class="mt-16 flex flex-col gap-2 border-t border-gold/30 pt-6 text-sm text-cream/60 sm:flex-row sm:justify-between">
-      <p>&copy; {year} {settings.siteName}. All rights reserved.</p>
-      <p>{settings.location.locality}, {settings.location.region} · Covering the UK</p>
+    <!-- Services run-in index -->
+    <nav aria-label="Services" class="mt-10 border-t border-gold/20 pt-7 md:mt-12">
+      <ul class="font-serif text-[clamp(1.1rem,0.7vw+0.92rem,1.45rem)] leading-[1.8] tracking-[-0.01em]">
+        {
+          services.map((s) => (
+            <li class="inline">
+              <a href={`/services/${s.id}/`} class="runin text-cream no-underline">{s.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Wordmark + navigation row -->
+    <div class="mt-7 flex flex-col gap-5 border-t border-gold/20 pt-6 lg:flex-row lg:items-center lg:justify-between">
+      <a href="/" class="inline-flex items-center" aria-label={`${settings.siteName} - home`}><Logo settings={settings} tone="light" full class="w-[13rem] sm:w-[17rem]" /></a>
+      <nav aria-label="Footer">
+        <ul class="flex flex-wrap gap-x-6 gap-y-1">
+          {NAV.map((n) => <li><a class={small} href={n.href}>{n.label}</a></li>)}
+          {settings.social.map((s) => (
+            <li><a class={small} href={s.url} target="_blank" rel="noopener noreferrer me">{s.label}<span class="sr-only"> (opens in a new tab)</span></a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Small print + motif accent -->
+    <div class="flex items-center justify-between pb-24 pt-3 lg:pb-8">
+      <p class="text-[0.65rem] uppercase tracking-[0.22em] text-cream/50">
+        &copy; {year} {settings.siteName}
+        &nbsp;&middot;&nbsp; <a href="/privacy/" class="inline-flex min-h-11 items-center text-cream/65 underline decoration-gold/40 underline-offset-4 hover:text-gold-light">Privacy</a>
+      </p>
+      <Motif variant="line" size={32} class="hidden opacity-30 lg:block" />
     </div>
   </div>
 </footer>
+
+<style>
+  /* Run-in index: titles flow as one line of type, separated by a fine gold slash. */
+  .runin { position: relative; transition: color 0.3s; }
+  .runin:hover { color: var(--color-gold-light); }
+  li.inline:not(:last-child)::after {
+    content: '/';
+    margin-inline: 0.65em;
+    color: var(--color-gold-light);
+    opacity: 0.5;
+  }
+</style>

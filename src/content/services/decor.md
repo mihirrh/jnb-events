@@ -3,10 +3,10 @@ title: Décor
 order: 2
 summary: Wedding and event décor with considered detail, from entrances and backdrops to full venue styling.
 lead: We style spaces so they feel cohesive and considered. Backdrops, entrances, florals, drapes and lighting - chosen to work together.
-image: /src/assets/media/services/placeholder-decor.jpg
-imageAlt: Placeholder image - warm draped lighting
-secondImage: /src/assets/media/gallery/placeholder-civil-3.jpg
-secondImageAlt: Placeholder image - draped lighting installation
+image: /src/assets/media/services/modern_gold_mandap_blush_florals.jpg
+imageAlt: Contemporary open-frame gold mandap decorated with blush pink and white roses for a luxury Hindu wedding in Leicester. Beautiful Asian ceremony stage with traditional carved seating and a modern white draped backdrop.
+secondImage: /src/assets/media/services/floral_arch_ganesh_mandap.jpg
+secondImageAlt: Exquisite carved wooden mandap seating framed by a vibrant pink and purple floral arch and a central Ganesh statue. Premium Asian wedding stage styling and traditional Hindu decor in the Midlands.
 keyPoints:
   - Backdrops, entrances and photo moments
   - Colour palettes and florals matched to your theme
