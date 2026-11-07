@@ -29,7 +29,6 @@ const site = Astro.site!.toString();
     <div class="wrap">
       <h2 class="sr-only">Projects</h2>
       <GalleryFilter available={cats} />
-      <p class="mt-5 text-xs uppercase tracking-[0.2em] text-muted" aria-live="polite">{projects.length} {projects.length === 1 ? 'project' : 'projects'}</p>
 
       <div class="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-12 lg:gap-y-14">
         {
