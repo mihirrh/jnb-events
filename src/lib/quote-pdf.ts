@@ -347,55 +347,57 @@ function notice(doc: PDFDocument, d: QuotePdfData, pageNo: number) {
   cornerFlow(doc, 'tr', 0.62, 0.6);
   cornerFlow(doc, 'bl', 0.62, 0.6);
 
-  let y = rich(doc, d.wording.noticeHeading, M, 100, CW, { size: 36, lineHeight: 40, color: C.ink, align: 'center' });
-  y += 14;
+  let y = rich(doc, d.wording.noticeHeading, M, 75, CW, { size: 30, lineHeight: 34, color: C.ink, align: 'center' });
+  y += 10;
   hairline(doc, W / 2 - 24, y, W / 2 + 24, C.gold, 0.8);
-  y += 32;
+  y += 20;
 
   if (offer) {
     const boxW = 380;
     const bx = (W - boxW) / 2;
     const pct = formatPercent(sw.discountPercent);
     const text = clean(d.wording.offerText).replace(/\{percent\}/g, pct);
-    font(doc, F.serif, 14.5, C.ink);
-    const textH = doc.heightOfString(text, { width: boxW - 64, align: 'center', lineGap: 4 });
-    const boxH = 30 + 14 + 22 + textH + 22 + 11 + 12 + 34 + 28;
+    font(doc, F.serif, 13, C.ink);
+    const textH = doc.heightOfString(text, { width: boxW - 56, align: 'center', lineGap: 3 });
+    const boxH = 20 + 12 + 16 + textH + 16 + 10 + 14 + 26 + 18;
     doc.save().lineWidth(0.7).strokeColor(C.gold).rect(bx, y, boxW, boxH).stroke().restore();
     doc.save().lineWidth(0.4).strokeColor(C.gold).strokeOpacity(0.5).rect(bx + 4, y + 4, boxW - 8, boxH - 8).stroke().restore();
-    let by = y + 30;
-    caps(doc, `Special offer \u2014 ${pct}% discount`, bx, by, { size: 8.5, color: C.goldDeep, spacing: 2.6, align: 'center', width: boxW });
-    by += 14 + 22;
-    para(doc, text, bx + 32, by, { f: F.serif, size: 14.5, color: C.ink, width: boxW - 64, align: 'center', lineGap: 4 });
-    by += textH + 22;
-    caps(doc, sw.vatEnabled ? 'Final price after discount (inc. VAT)' : 'Final price after discount', bx, by, { f: F.sans, size: 7.5, color: C.muted, spacing: 2, align: 'center', width: boxW });
-    by += 20;
-    font(doc, F.serif, 30, C.goldDeep);
+    let by = y + 20;
+    caps(doc, `Special offer \u2014 ${pct}% discount`, bx, by, { size: 8, color: C.goldDeep, spacing: 2.4, align: 'center', width: boxW });
+    by += 12 + 16;
+    para(doc, text, bx + 28, by, { f: F.serif, size: 13, color: C.ink, width: boxW - 56, align: 'center', lineGap: 3 });
+    by += textH + 16;
+    caps(doc, sw.vatEnabled ? 'Final price after discount (inc. VAT)' : 'Final price after discount', bx, by, { f: F.sans, size: 7, color: C.muted, spacing: 1.8, align: 'center', width: boxW });
+    by += 14;
+    font(doc, F.serif, 26, C.goldDeep);
     doc.text(formatPence(t.total), bx, by, { width: boxW, align: 'center', lineBreak: false });
-    y += boxH + 30;
+    y += boxH + 20;
   } else {
-    y += 70;
+    y += 30;
   }
 
-  y += para(doc, clean(d.wording.bookingNote), 120, y, { f: F.sans, size: 11, color: C.inkSoft, width: W - 240, align: 'center', lineGap: 6 }) + 22;
-  y += para(doc, clean(d.wording.invitation), 120, y, { f: F.serifItalic, size: 15, color: C.ink, width: W - 240, align: 'center', lineGap: 5 }) + 16;
+  const noteW = Math.min(CW, 430);
+  const noteX = (W - noteW) / 2;
+  const noteH = para(doc, clean(d.wording.bookingNote), noteX, y, { f: F.sans, size: 9, color: C.inkSoft, width: noteW, align: 'center', lineGap: 4 });
+  y += noteH + 16;
 
   const contact = [d.contact.phone, d.contact.email].filter(Boolean).join('   \u00B7   ');
   if (contact) {
-    font(doc, F.sans, 10.5, C.ink);
+    font(doc, F.sans, 9.5, C.ink);
     doc.text(clean(contact), M, y, { width: CW, align: 'center', lineBreak: false });
-    y += 18;
+    y += 14;
   }
   if (d.contact.website) {
-    font(doc, F.sans, 10.5, C.goldDeep);
+    font(doc, F.sans, 9.5, C.goldDeep);
     doc.text(d.contact.website, M, y, { width: CW, align: 'center', lineBreak: false, link: `https://${d.contact.website}` });
     y += 18;
   }
 
-  // Sign-off sits under the contact lines, but never closer than 80pt to the page footer.
-  const closeY = Math.min(y + 26, H - 80 - 22 - 12 - 46);
-  drawWordmark(doc, W / 2, closeY + 12, 132, C.logo);
-  font(doc, F.serifItalic, 18, C.ink);
-  doc.text(clean(d.wording.thanks), M, closeY + 62, { width: CW, align: 'center', lineBreak: false });
+  // Draw wordmark and thank you sign-off directly underneath with clean spacing
+  const wmH = drawWordmark(doc, W / 2, y, 115, C.logo);
+  y += wmH + 12;
+  font(doc, F.serifItalic, 15, C.ink);
+  doc.text(clean(d.wording.thanks), M, y, { width: CW, align: 'center', lineBreak: false });
   footer(doc, pageNo);
 }
 

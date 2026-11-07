@@ -44,6 +44,7 @@ const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new
     breadcrumbs([
       { name: 'Home', url: site },
       { name: 'Gallery', url: `${site}gallery/` },
+      { name: data.category, url: `${site}gallery/category/${slugify(data.category)}/` },
       { name: data.title, url },
     ]),
   ]}

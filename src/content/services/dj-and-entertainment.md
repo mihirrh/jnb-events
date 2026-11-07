@@ -1,24 +1,35 @@
 ---
 title: DJ & Entertainment
 order: 5
-summary: A wedding and event DJ who keeps the dancefloor full, with sound and lighting to match.
-lead: The right music makes the night. Our DJ service covers your ceremony, reception and party, with quality sound and a playlist shaped around your guests.
+summary: Professional wedding DJ hire, premium sound systems and entertainment in Leicester and the Midlands.
+lead: Exceptional music creates an electric party atmosphere. Our wedding DJ and host services deliver seamless music programming across your ceremony, drinks reception, grand entrance, and high-energy evening party.
 image: /src/assets/media/services/placeholder-dj.jpg
-imageAlt: Placeholder image - a DJ booth with stage lighting
+imageAlt: Professional Asian wedding DJ setup in Leicester with concert-grade sound, wireless DMX lighting, and a packed dance floor.
 secondImage: /src/assets/media/gallery/placeholder-night-2.jpg
-secondImageAlt: Placeholder image - DJ decks under coloured lights
+secondImageAlt: Luxury wedding entertainment in the Midlands featuring high-end audio production, moving head beams, and custom DJ booth styling.
 keyPoints:
-  - Wedding and event DJ for ceremony, reception and evening
-  - Quality sound and lighting
-  - Music planned around your guests and cultures
-  - Easy to bundle with dancefloor, sparklers and smoke effects
+  - Experienced Asian, Hindu, Punjabi, Bollywood & cross-cultural wedding DJs
+  - Concert-grade sound systems tailored to your venue size and acoustic profile
+  - Intelligent moving-head lighting and custom DJ booths
+  - Seamlessly bundled with LED dance floors, cold sparklers, and dry ice low fog
 relatedCategory: DJ & Entertainment
-whatsappMessage: "Hello JNB Events, I'd like to ask about DJ availability for my event."
+whatsappMessage: "Hello JNB Events, I'd like to check DJ availability and packages for my wedding."
 seo:
-  title: Wedding DJ Leicester | DJ & Entertainment | JNB Events
-  description: Wedding and event DJ in Leicester, Leicestershire and across the UK, with quality sound, lighting and dancefloor effects at competitive prices.
+  title: Wedding DJ Leicester | Asian & Indian Wedding DJ | JNB Events
+  description: Premier wedding DJ hire in Leicester, Leicestershire & the Midlands. Professional Asian, Bollywood, Bhangra & multi-genre wedding DJ entertainment with premium sound.
 ---
 
-Tell us the kind of night you want and the music your guests love, and we will build the soundtrack around it.
+The soundtrack to your wedding sets the emotional tone for the entire day and night. At **JNB Events**, our **wedding DJ service in Leicester** brings over a decade of experience entertaining Asian, Indian, English, and multicultural weddings across Leicestershire, Birmingham, Nottingham, Derby, and London.
 
-Looking for a **wedding DJ in Leicester**? Message us with your date to check availability.
+### Tailored Playlists & Expert Crowd Reading
+
+We know that great weddings bring together generations and cultures. Our DJs curate seamless mixes blending:
+
+- **Bhangra & Punjabi Hits**: Timeless anthems and modern chart-toppers to pack the dance floor.
+- **Bollywood & Indian Classics**: High-energy dance tracks and romantic melodies for grand entrances and first dances.
+- **R&B, Hip-Hop, Pop & House**: Contemporary floor-fillers and classic throwback anthems for diverse guest lists.
+- **Ceremony & Ambient Music**: Carefully timed background soundscapes for mandap ceremonies, civil vows, and dinner sets.
+
+### Audio Excellence & Stage Presence
+
+We provide tour-grade audio equipment (including RCF/Pioneer systems), crisp wireless microphones for speeches, and tasteful hosting that keeps the evening running smoothly without overpowering your celebration. Bundled seamlessly with our **LED dance floors**, **cold sparkler fountains**, and **low fog effects**, we offer an all-in-one entertainment production. Message us on WhatsApp to check DJ availability for your wedding date.
