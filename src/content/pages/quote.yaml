@@ -41,6 +41,11 @@ pdf:
   packageLabel: Package details
   noticeHeading: Important Notice
   offerText: Enjoy an exclusive {percent}% discount on your complete event decoration package.
-  bookingNote: This quotation is offered on a first come, first serve basis. The booking will only be confirmed once the required deposit is received and the date is secured.
-  invitation: If you have any questions, or would like to adjust anything, we would love to hear from you.
+  bookingNote: |-
+    Please note this quote is valid for 15 days from the date sent to the client. If you are happy with the quotation, please get in touch so we can discuss payment methods and secure your dates.
+
+    Please be aware that the quoted rate is subject to availability on a first-come, first-served basis. Due to high demand during wedding season, we have limited availability. If you have any further questions or require adjustments, please let us know and we can arrange a consultation to discuss your quotation and find the best setup for your event.
+
+    We look forward to hearing from you.
+  invitation: We would be delighted to work with you and bring your celebration to life.
   thanks: Thank you for considering JNB Events.

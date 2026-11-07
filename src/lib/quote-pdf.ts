@@ -376,8 +376,12 @@ function notice(doc: PDFDocument, d: QuotePdfData, pageNo: number) {
     y += 70;
   }
 
-  y += para(doc, clean(d.wording.bookingNote), 120, y, { f: F.sans, size: 11, color: C.inkSoft, width: W - 240, align: 'center', lineGap: 6 }) + 22;
-  y += para(doc, clean(d.wording.invitation), 120, y, { f: F.serifItalic, size: 15, color: C.ink, width: W - 240, align: 'center', lineGap: 5 }) + 16;
+  const noteW = Math.min(CW, 420);
+  const noteX = (W - noteW) / 2;
+  y += para(doc, clean(d.wording.bookingNote), noteX, y, { f: F.sans, size: 9.5, color: C.inkSoft, width: noteW, align: 'center', lineGap: 4.5 }) + 18;
+  if (d.wording.invitation) {
+    y += para(doc, clean(d.wording.invitation), noteX, y, { f: F.serifItalic, size: 13.5, color: C.ink, width: noteW, align: 'center', lineGap: 4 }) + 16;
+  }
 
   const contact = [d.contact.phone, d.contact.email].filter(Boolean).join('   \u00B7   ');
   if (contact) {
