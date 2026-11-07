@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Contact JNB Events | WhatsApp 07872 340258 | Leicester
-  description: Enquire about wedding and event décor, mandaps, DJ and dancefloor effects in Leicester, Leicestershire and across the UK. WhatsApp 07872 340258.
+  title: Contact JNB Events | Wedding Décor & Mandap Hire Leicester
+  description: Get in touch with JNB Events for wedding decor, mandap hire, DJ, and dance floor hire in Leicester, Leicestershire, and across the Midlands. WhatsApp 07872 340258.
 eyebrow: Contact
 heading: Let's plan *your celebration.*
 lead: WhatsApp is the fastest way to reach us. Send your date, venue and ideas and we will get back to you.

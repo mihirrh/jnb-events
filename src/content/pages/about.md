@@ -1,10 +1,10 @@
 ---
 seo:
-  title: About JNB Events | Wedding & Event Styling in Leicester
-  description: Leicester-based JNB Events offers bespoke mandaps, civil ceremony décor, centrepieces, DJ and dancefloor effects for weddings and events across Leicestershire and the UK.
+  title: About JNB Events | Wedding Styling & Mandaps Leicester
+  description: Learn about JNB Events - Leicester's premier Asian wedding decorators offering bespoke mandap hire, civil ceremony styling, DJ entertainment and full venue styling.
 eyebrow: About us
 heading: Styling and entertainment, *made to measure.*
-lead: We offer our clients a wide range of services for weddings and events. We create bespoke packages for mandaps, civil ceremony décor, table centrepieces, DJ, dancefloor, sparklers, smoke machines and more.
+lead: We offer our clients a wide range of services for weddings and events. We create bespoke packages for mandaps, civil ceremony décor, table centrepieces, DJ, dancefloor, sparklers, smoke machines and more across Leicestershire and the Midlands.
 image: /src/assets/media/about/rustic_festoon_mandap.jpg
 imageAlt: Stunning carved wooden mandap decorated with cascading red and white roses, set beneath ambient festoon lighting for a romantic Asian wedding in the United Kingdom. Traditional Hindu wedding decor with elegant white draped backdrops in the Midlands.
 secondImage: /src/assets/media/about/carved_mandap_white_aisle.jpg
