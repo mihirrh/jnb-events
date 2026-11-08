@@ -21,7 +21,7 @@ seo:
 
 The visual energy of your evening reception hinges on two vital components: an inviting, immaculate dance floor and well-balanced lighting. At **JNB Events**, we provide luxury **LED dance floor hire in Leicester** and comprehensive event lighting across the Midlands.
 
-### White LED Starlit & Gloss Dance Floors
+## White LED Starlit & Gloss Dance Floors
 
 Our dance floors are maintained in flawless condition, thoroughly polished before every event:
 - **Twinkling White LED Starlit Floors**: Hundreds of built-in LEDs with adjustable twinkle speeds to match the tempo of your first dance.
@@ -29,7 +29,7 @@ Our dance floors are maintained in flawless condition, thoroughly polished befor
 - **Custom Sizing**: Scaled precisely to your guest count, from intimate 12x12ft floors to expansive 24x24ft banquet layouts.
 - **Non-Slip Aluminium Edging**: Low-profile, wheelchair-accessible borders ensuring guest safety.
 
-### Architectural Uplighting & Stage Illumination
+## Architectural Uplighting & Stage Illumination
 
 Lighting defines the mood of every chapter of your day:
 - **Perimeter Wireless Uplighting**: Bathe ballroom walls and architectural pillars in your chosen theme colour, from warm amber and champagne gold to deep magenta and royal navy.

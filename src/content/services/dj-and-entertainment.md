@@ -21,7 +21,7 @@ seo:
 
 The soundtrack to your wedding sets the emotional tone for the entire day and night. At **JNB Events**, our **wedding DJ service in Leicester** brings over a decade of experience entertaining Asian, Indian, English, and multicultural weddings across Leicestershire, Birmingham, Nottingham, Derby, and London.
 
-### Tailored Playlists & Expert Crowd Reading
+## Tailored Playlists & Expert Crowd Reading
 
 We know that great weddings bring together generations and cultures. Our DJs curate seamless mixes blending:
 
@@ -30,6 +30,6 @@ We know that great weddings bring together generations and cultures. Our DJs cur
 - **R&B, Hip-Hop, Pop & House**: Contemporary floor-fillers and classic throwback anthems for diverse guest lists.
 - **Ceremony & Ambient Music**: Carefully timed background soundscapes for mandap ceremonies, civil vows, and dinner sets.
 
-### Audio Excellence & Stage Presence
+## Audio Excellence & Stage Presence
 
 We provide tour-grade audio equipment (including RCF/Pioneer systems), crisp wireless microphones for speeches, and tasteful hosting that keeps the evening running smoothly without overpowering your celebration. Bundled seamlessly with our **LED dance floors**, **cold sparkler fountains**, and **low fog effects**, we offer an all-in-one entertainment production. Message us on WhatsApp to check DJ availability for your wedding date.

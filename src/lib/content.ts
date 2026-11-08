@@ -50,5 +50,5 @@ export const getHome = async () => (await must('home', 'home')).data;
 export const getAbout = async () => (await must('about', 'about')).data;
 export const getQuote = async () => (await must('quote', 'quote')).data;
 export const getContact = async () => (await must('contact', 'contact')).data;
-/** Simple pages: 'services' | 'gallery' | 'privacy'. */
-export const getSimplePage = async (id: 'services' | 'gallery' | 'privacy') => must('pages', id);
+/** Simple pages: 'services' | 'gallery' | 'privacy' | 'terms'. */
+export const getSimplePage = async (id: 'services' | 'gallery' | 'privacy' | 'terms') => must('pages', id);

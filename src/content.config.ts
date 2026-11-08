@@ -144,7 +144,7 @@ const contact = defineCollection({
 
 /* ------------------------- Simple pages: services, gallery, privacy ------------------ */
 const pages = defineCollection({
-  loader: glob({ pattern: '{services,gallery,privacy}.md', base: './src/content/pages' }),
+  loader: glob({ pattern: '{services,gallery,privacy,terms}.md', base: './src/content/pages' }),
   schema: z.object({
     seo,
     eyebrow: z.string().optional(),

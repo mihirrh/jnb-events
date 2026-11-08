@@ -21,7 +21,7 @@ seo:
 
 As leading **wedding decorators in Leicester**, **JNB Events** delivers luxury venue transformations for Asian weddings, civil ceremonies, receptions, and corporate galas across the East and West Midlands. We believe exceptional event décor is built on proportion, harmony, and thoughtful detailing that looks magnificent in person and captivates on camera.
 
-### Full-Venue Event Styling & Stage Backdrops
+## Full-Venue Event Styling & Stage Backdrops
 
 From modern blank-canvas conference centres and country manor houses to historic heritage spaces, we provide complete styling solutions:
 

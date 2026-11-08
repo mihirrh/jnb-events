@@ -21,7 +21,7 @@ seo:
 
 Your civil wedding is the legal and emotional heart of your marriage. At **JNB Events**, we design refined **civil ceremony décor in Leicester** and across Leicestershire, transforming hotel ballrooms, country barns, registry suites, and estate gardens into romantic, photogenic settings.
 
-### Romantic Ceremony Arches & Aisle Concepts
+## Romantic Ceremony Arches & Aisle Concepts
 
 Whether your taste leans towards clean contemporary minimalism or lavish floral abundance, our civil ceremony setups include:
 

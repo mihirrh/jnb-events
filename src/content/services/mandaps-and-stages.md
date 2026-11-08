@@ -21,7 +21,7 @@ seo:
 
 At **JNB Events**, we understand that your wedding mandap is not merely a structure; it is the sacred focal point where sacred vows are exchanged and unforgettable memories are created. We specialise in luxury **mandap hire in Leicester**, providing bespoke ceremony styling across Leicestershire, Nottingham, Derby, Birmingham, Coventry, and venues throughout the UK.
 
-### Traditional & Contemporary Mandap Designs
+## Traditional & Contemporary Mandap Designs
 
 Every couple's vision is unique. Our collection includes:
 
@@ -29,7 +29,7 @@ Every couple's vision is unique. Our collection includes:
 - **Modern Gold Geometric & Open-Frame Mandaps**: Sleek, contemporary metallic structures paired with lush blush, plum, or botanical floral arrangements, perfect for modern venues and marquee weddings.
 - **Heritage & Marquee Setups**: Custom staging tailored to historic brick archways, countryside estates, and grand ballrooms with matching festoon or chandelier lighting.
 
-### Complete Ceremony Staging & Aisle Styling
+## Complete Ceremony Staging & Aisle Styling
 
 Our service encompasses the entire ceremony space:
 - Handcrafted bridal and havan seating with matching groom and family chairs.

@@ -20,7 +20,7 @@ seo:
 
 Planning a luxury Asian or multicultural wedding often means coordinating half a dozen separate suppliers. At **JNB Events**, we streamline your planning by providing a complete, harmonised production under one roof. Our **bespoke wedding packages in Leicester** and the wider Midlands give you creative continuity, flawless on-day logistics, and exceptional value.
 
-### What Can Be Included in Your Bespoke Package?
+## What Can Be Included in Your Bespoke Package?
 
 We tailor every bundle to your exact itinerary and venue layout:
 
@@ -43,7 +43,7 @@ We tailor every bundle to your exact itinerary and venue layout:
    - Indoor-safe cold sparkler fountains for grand entrances and cake cutting.
    - 'Dancing on Clouds' dry ice low fog for an enchanting first dance.
 
-### Why Choose an All-in-One Package?
+## Why Choose an All-in-One Package?
 
 - **Cohesive Design**: Your ceremony styling, evening lighting, and reception décor share a unified colour palette and aesthetic standard.
 - **Flawless Timing**: Our team manages the turnaround from daytime ceremony to evening party without awkward vendor clashes.

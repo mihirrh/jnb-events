@@ -21,7 +21,7 @@ seo:
 
 Your evening reception should feel like a magnificent celebration from the moment guests enter the dining room. At **JNB Events**, we provide luxury **wedding reception décor in Leicester** and across the Midlands, creating cohesive table landscapes and stunning room transformations.
 
-### Statement Table Centrepieces & Ambient Table Scapes
+## Statement Table Centrepieces & Ambient Table Scapes
 
 We offer a versatile collection of table centrepieces designed to suit high-ceiling ballrooms, marquee spaces, and intimate dining rooms:
 

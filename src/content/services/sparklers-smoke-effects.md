@@ -21,14 +21,14 @@ seo:
 
 Few moments evoke pure magic like a couple stepping onto the dance floor surrounded by thick, billowing white clouds, or entering the reception banquet to radiant fountains of light. At **JNB Events**, we provide professional **wedding special effects hire in Leicester** and throughout the Midlands.
 
-### Indoor-Safe Cold Sparkler Fountains
+## Indoor-Safe Cold Sparkler Fountains
 
 Our cold spark machines produce stunning cascading plumes of golden light without the dangers of traditional pyrotechnics:
 - **Non-Hazardous & Cold to the Touch**: Operates at cool temperatures with no flame, smoke, or burning odour.
 - **Venue Friendly**: Widely approved by hotel ballrooms and wedding venues across Leicestershire and the UK.
 - **Spectacular Photo Moments**: Perfect for cake cutting, grand entrances, and celebratory midnight countdowns.
 
-### 'Dancing on Clouds' Dry Ice Low Fog
+## 'Dancing on Clouds' Dry Ice Low Fog
 
 Unlike standard smoke machines that rise and trigger smoke alarms, our genuine dry ice low-lying fog stays hugging the floor:
 - Creates a pure white, knee-deep cloud effect across the dance floor.
