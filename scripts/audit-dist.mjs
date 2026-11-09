@@ -42,7 +42,7 @@ const exists = (path) => {
 const titles = new Map();
 const descs = new Map();
 const sitemapUrls = new Set();
-for (const f of files.filter((f) => /sitemap-\d+\.xml$/.test(f))) {
+for (const f of files.filter((f) => /sitemap(-\d+)?\.xml$/.test(f))) {
   for (const m of readFileSync(f, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) sitemapUrls.add(new URL(m[1]).pathname);
 }
 

@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // Keep in sync with the live domain. Used for canonical URLs, sitemap and JSON-LD.
@@ -12,12 +11,7 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [
-    sitemap({
-      // Thank-you / utility pages and the unlisted quote tool should not be listed.
-      filter: (page) => !page.includes('/404') && !page.includes('/quote/'),
-    }),
-  ],
+  integrations: [],
   vite: {
     plugins: [tailwindcss()],
   },
