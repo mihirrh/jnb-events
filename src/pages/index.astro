@@ -101,7 +101,7 @@ const rowServices = services.slice(3);
 
   <!-- ================================ SERVICES ================================
        Dark. Two photographic features, offset against each other, then a ruled index of the rest. -->
-  <section class="on-dark section bg-night text-cream" aria-labelledby="services-heading">
+  <section class="on-dark section relative bg-night text-cream" aria-labelledby="services-heading">
     <div class="wrap">
       <div class="folio"><b>02</b><span>{home.services.eyebrow}</span><i aria-hidden="true"></i></div>
       <div class="mt-8 grid gap-6 lg:grid-cols-12 lg:items-end">
@@ -140,12 +140,12 @@ const rowServices = services.slice(3);
           <WhatsAppButton label="Chat on WhatsApp" message={home.services.ctaMessage} variant="ink" source="homepage services" class="w-full sm:w-auto" />
         </div>
       </div>
+    </div>
 
-      <!-- Motif accent at the base of the dark section -->
-      <div class="reveal mt-14 flex items-center justify-center gap-4 lg:mt-20" aria-hidden="true">
-        <div class="h-px flex-1 bg-gold/20"></div>
-        <Motif variant="botanical" size={46} class="text-gold opacity-60" />
-        <div class="h-px flex-1 bg-gold/20"></div>
+    <!-- Floating Medallion Seal anchored on the seam -->
+    <div class="absolute inset-x-0 -bottom-7 z-20 flex justify-center pointer-events-none" aria-hidden="true">
+      <div class="flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 bg-night text-gold-light shadow-[0_6px_20px_rgba(0,0,0,0.5)]">
+        <Motif variant="floral" size={28} class="text-gold-light opacity-90" />
       </div>
     </div>
   </section>
