@@ -1,6 +1,6 @@
 ---
 title: Packages
-order: 8
+order: 9
 summary: Bespoke Asian wedding packages combining mandaps, décor, DJ, dance floors and special effects in Leicester & the Midlands.
 lead: Why manage multiple suppliers when one trusted team can deliver your entire celebration? Our bespoke packages seamlessly combine ceremony mandaps, venue décor, professional DJ entertainment, LED dance floors, and special effects.
 image: /src/assets/media/hero/grand_brick_archway_mandap.jpg

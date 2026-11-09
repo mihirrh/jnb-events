@@ -17,9 +17,9 @@ All 10 photos were renamed, catalogued, and integrated into their respective web
 | **#5** | `5.jpg` | `luxury_asian_wedding_ceremony.jpg` | Gallery Project<br>`3:2 Landscape` (1600 × 1067 px) | `src/assets/media/gallery/` | • Modern Gold Aisle Mandap Project (`modern-gold-aisle-mandap.md`) |
 | **#6** | `6.jpg` | `rustic_festoon_mandap.jpg` | Portrait Feature<br>`4:5 Portrait` (1200 × 1500 px) | `src/assets/media/about/`<br>`src/assets/media/gallery/` | • About Page Portrait Feature (`about.md`)<br>• Traditional Carved Wooden Mandap Project |
 | **#7** | `7.jpg` | `carved_mandap_white_aisle.jpg` | Detail Close-up<br>`4:3 Landscape` (1200 × 900 px) | `src/assets/media/about/`<br>`src/assets/media/gallery/` | • About Page Detail Card (`about.md`)<br>• Traditional Carved Wooden Mandap Project |
-| **#8** | `8.jpg` | `historic_archway_mandap_setup.jpg` | Hero / CTA Banner<br>`16:9 Landscape` (1920 × 1080 px) | `src/assets/media/hero/`<br>`src/assets/media/gallery/` | • Homepage Bottom CTA Banner (`home.yaml`)<br>• Historic Archway Mandap Project |
-| **#9** | `9.jpg` | `grand_brick_venue_wedding.jpg` | Service Cover / Gallery<br>`3:2 Landscape` (1600 × 1067 px) | `src/assets/media/services/`<br>`src/assets/media/gallery/` | • Packages Service Page (`packages.md`)<br>• Historic Archway Mandap Project |
-| **#10** | `10.jpg` | `luxury_chiavari_seating_mandap.jpg` | Detail Close-up<br>`4:3 Landscape` (1200 × 900 px) | `src/assets/media/gallery/` | • Historic Archway Mandap Project (`historic-archway-mandap.md`) |
+| **#8** | `8.jpg` | `historic_archway_mandap_setup.jpg` | Hero / CTA Banner<br>`16:9 Landscape` (1920 × 1080 px) | `src/assets/media/hero/`<br>`src/assets/media/gallery/` | • Homepage Bottom CTA Banner (`home.yaml`)<br>• Archway Mandap Project |
+| **#9** | `9.jpg` | `grand_brick_venue_wedding.jpg` | Service Cover / Gallery<br>`3:2 Landscape` (1600 × 1067 px) | `src/assets/media/services/`<br>`src/assets/media/gallery/` | • Packages Service Page (`packages.md`)<br>• Archway Mandap Project |
+| **#10** | `10.jpg` | `luxury_chiavari_seating_mandap.jpg` | Detail Close-up<br>`4:3 Landscape` (1200 × 900 px) | `src/assets/media/gallery/` | • Archway Mandap Project (`archway-mandap.md`) |
 
 ---
 
@@ -115,41 +115,41 @@ All 10 photos were renamed, catalogued, and integrated into their respective web
 
 ---
 
-### Photo #8: Historic Archway Mandap Setup
+### Photo #8: Archway Mandap Setup
 - **Production Filename**: `historic_archway_mandap_setup.jpg`
 - **Slot**: Hero / Banner (16:9 Landscape, 1920 × 1080 px)
 - **Cropping Focus**: Wide crop capturing brick arches and overhead festoon lights framing the mandap stage and aisle.
 - **Alt Text (Accessibility & SEO)**:
-  > *Spectacular luxury Asian wedding ceremony inside a historic UK brick archway venue, featuring a grand carved mandap, pristine white aisle runner, and elegant lime wash Chiavari chairs. Bespoke Hindu wedding styling and event production in the Midlands.*
-- **Content Description**: An awe-inspiring ceremony setting nestled within historic brick arches, juxtaposing industrial architectural grandeur with the delicate romance of a floral-adorned traditional mandap.
+  > *Spectacular luxury Asian wedding ceremony featuring a grand carved archway mandap, pristine white aisle runner, and elegant lime wash Chiavari chairs. Bespoke Hindu wedding styling and event production in Leicestershire and the Midlands.*
+- **Content Description**: An awe-inspiring archway mandap ceremony setup, beautifully styled with romantic red and white floral arrangements, carved wooden detailing, and ambient festoon lighting.
 - **Content References**:
   - `src/content/pages/home.yaml` (`cta.image`)
-  - `src/content/projects/historic-archway-mandap.md`
+  - `src/content/projects/archway-mandap.md`
 
 ---
 
-### Photo #9: Heritage Venue Wedding Setup with Carved Ganesh
+### Photo #9: Archway Mandap Setup with Carved Ganesh
 - **Production Filename**: `grand_brick_venue_wedding.jpg`
 - **Slot**: Service Cover / Gallery Landscape (3:2 Landscape, 1600 × 1067 px)
 - **Cropping Focus**: Centred on the white aisle runner and carved Ganesh statues in the foreground leading to the stage.
 - **Alt Text (Accessibility & SEO)**:
-  > *Elegant Hindu wedding decor in a unique heritage venue in Leicestershire, showcasing a pristine white aisle runner, intricately carved Ganesh statues, and a luxury floral mandap. Professional Asian wedding stylists delivering premium events across Leicester.*
-- **Content Description**: Elevate your unique heritage venue with our premium ceremony styling, featuring a pristine white aisle lined with traditional carved statues leading to a breathtaking mandap.
+  > *Elegant Hindu wedding decor showcasing a pristine white aisle runner, intricately carved Ganesh statues, and a luxury floral archway mandap. Professional Asian wedding stylists delivering premium events across Leicester.*
+- **Content Description**: Elevate your ceremony styling with a pristine white aisle lined with traditional carved statues leading to a breathtaking archway mandap.
 - **Content References**:
   - `src/content/services/packages.md` (`image`)
-  - `src/content/projects/historic-archway-mandap.md`
+  - `src/content/projects/archway-mandap.md`
 
 ---
 
-### Photo #10: Luxury Chiavari Seating & Mandap Angled View
+### Photo #10: Luxury Chiavari Seating & Archway Mandap Angled View
 - **Production Filename**: `luxury_chiavari_seating_mandap.jpg`
 - **Slot**: Detail Close-up (4:3 Landscape, 1200 × 900 px)
 - **Cropping Focus**: Rows of Chiavari chairs leading up to the decorated mandap stage.
 - **Alt Text (Accessibility & SEO)**:
-  > *Angled view of a beautiful Asian wedding ceremony setup in a grand UK brick venue, featuring elegant lime wash Chiavari seating, festoon lighting, and a lavishly decorated floral mandap stage. Luxury event stylists providing bespoke decor in Leicester.*
+  > *Angled view of a beautiful Asian wedding ceremony setup featuring elegant lime wash Chiavari seating, festoon lighting, and a lavishly decorated floral archway mandap stage. Luxury event stylists in Leicestershire.*
 - **Content Description**: Carefully curated guest seating and impeccable stage design come together under ambient festoon lighting to create an intimate yet striking atmosphere for your special day.
 - **Content References**:
-  - `src/content/projects/historic-archway-mandap.md`
+  - `src/content/projects/archway-mandap.md`
 
 ---
 

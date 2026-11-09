@@ -1,6 +1,6 @@
 ---
 title: Reception Décor & Centrepieces
-order: 4
+order: 5
 summary: Luxury wedding reception styling and table centrepieces in Leicester, Leicestershire and the Midlands.
 lead: The evening reception is where celebration takes centre stage. We style banquet and round tables with elevated floral stands, crystal candelabras, low botanical arrangements, and bespoke sweetheart tables designed to captivate your guests.
 image: /src/assets/media/services/placeholder-reception.jpg

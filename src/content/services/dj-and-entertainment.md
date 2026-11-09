@@ -1,6 +1,6 @@
 ---
 title: DJ & Entertainment
-order: 5
+order: 6
 summary: Professional wedding DJ hire, premium sound systems and entertainment in Leicester and the Midlands.
 lead: Exceptional music creates an electric party atmosphere. Our wedding DJ and host services deliver seamless music programming across your ceremony, drinks reception, grand entrance, and high-energy evening party.
 image: /src/assets/media/services/placeholder-dj.jpg

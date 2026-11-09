@@ -1,6 +1,6 @@
 ---
 title: Civil Ceremony Décor
-order: 3
+order: 4
 summary: Elegant, romantic styling for civil weddings and partnership ceremonies in Leicester and Leicestershire.
 lead: A civil ceremony deserves an atmosphere of intimacy and understated grandeur. We style ceremony rooms with bespoke floral arches, romantic aisle runners, registrar table florals, and Chiavari chair styling tailored to your licensed venue.
 image: /src/assets/media/services/floral_planter_aisle_mandap.jpg

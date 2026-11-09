@@ -149,11 +149,11 @@ All photography is located under `src/assets/media/` and processed by Astro Shar
 | `carved_wooden_mandap_close.jpg` | 4:3 Landscape | Homepage Intro Detail Card (`home.yaml`), Carved Mandap Project |
 | `rustic_festoon_mandap.jpg` | 4:5 Portrait | About Page Main Feature (`about.md`), Carved Mandap Project |
 | `carved_mandap_white_aisle.jpg` | 4:3 Landscape | About Page Detail Card (`about.md`), Carved Mandap Project |
-| `historic_archway_mandap_setup.jpg` | 16:9 Landscape | Homepage CTA Banner (`home.yaml`), Historic Archway Project |
+| `historic_archway_mandap_setup.jpg` | 16:9 Landscape | Homepage CTA Banner (`home.yaml`), Archway Mandap Project |
 | `floral_aisle_gold_runner.jpg` | 3:2 Landscape | Mandaps Service Cover (`mandaps-and-stages.md`) |
 | `grand_brick_venue_wedding.jpg` | 3:2 Landscape | Packages Service Cover (`packages.md`) |
 | `luxury_asian_wedding_ceremony.jpg` | 3:2 Landscape | Modern Gold Aisle Mandap Gallery Project |
-| `luxury_chiavari_seating_mandap.jpg` | 4:3 Landscape | Historic Archway Mandap Gallery Project |
+| `luxury_chiavari_seating_mandap.jpg` | 4:3 Landscape | Archway Mandap Gallery Project |
 
 ---
 

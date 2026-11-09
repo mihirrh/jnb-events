@@ -1,6 +1,6 @@
 ---
 title: Sparklers, Smoke & Special Effects
-order: 6
+order: 7
 summary: Cold spark fountains, dry ice low fog 'dancing on clouds', and wedding special effects hire in Leicester.
 lead: Transform key wedding highlights into cinematic spectacles. We provide indoor-safe cold sparkler fountains, heavy dry ice low fog machines for your first dance, and atmospheric haze compliant with UK venue safety standards.
 image: /src/assets/media/services/placeholder-effects.jpg

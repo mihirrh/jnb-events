@@ -1,6 +1,6 @@
 ---
 title: Dance Floor & Lighting
-order: 7
+order: 8
 summary: White LED starlit dance floors, custom monograms, and architectural mood lighting in Leicester & the Midlands.
 lead: A pristine gloss dance floor and intelligent room lighting redefine how your venue feels when the party begins. We supply white and black LED starlit dance floors, perimeter wireless uplighting, and moving-head stage beams.
 image: /src/assets/media/services/placeholder-dancefloor.jpg
