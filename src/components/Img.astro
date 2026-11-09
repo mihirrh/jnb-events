@@ -16,6 +16,7 @@ interface Props {
   /** width / height, e.g. 4/5. Omit to keep the photo's own shape. */
   ratio?: number;
   widths?: number[];
+  quality?: number | 'low' | 'mid' | 'high' | 'max';
   priority?: boolean;
   class?: string;
   /** CSS object-position for the crop, e.g. "50% 30%". */
@@ -29,7 +30,8 @@ const {
   alt,
   sizes,
   ratio,
-  widths = [400, 640, 900, 1280, 1800],
+  widths,
+  quality = 86,
   priority = false,
   class: className = '',
   position,
@@ -37,8 +39,10 @@ const {
   delay = 0,
 } = Astro.props;
 
-const usable = widths.filter((w) => w <= src.width);
-const finalWidths = usable.length ? usable : [src.width];
+const defaultWidths = [480, 640, 768, 1024, 1280, 1536, 1920, 2400];
+const targetWidths = widths ?? defaultWidths;
+const usable = targetWidths.filter((w) => w < src.width);
+const finalWidths = Array.from(new Set([...usable, src.width])).sort((a, b) => a - b);
 const baseW = finalWidths[finalWidths.length - 1];
 const crop = ratio ? { width: baseW, height: Math.round(baseW / ratio) } : {};
 const aspect = ratio ?? src.width / src.height;
@@ -55,7 +59,7 @@ const aspect = ratio ?? src.width / src.height;
     sizes={sizes}
     formats={['avif', 'webp']}
     fallbackFormat="jpg"
-    quality={72}
+    quality={quality}
     loading={priority ? 'eager' : 'lazy'}
     decoding={priority ? 'sync' : 'async'}
     fetchpriority={priority ? 'high' : 'auto'}

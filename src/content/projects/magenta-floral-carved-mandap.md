@@ -3,7 +3,7 @@ title: Magenta & Purple Floral Carved Mandap
 category: Mandaps & Stages
 summary: A magnificent fusion of traditional craftsmanship and rich magenta and purple florals, creating a breathtaking focal point within a sleek modern venue.
 location: Leicestershire
-date: 2026-02-18
+date: 2026-06-10
 featured: true
 images:
   - image: /src/assets/media/gallery/grand_carved_mandap_modern_venue.jpg

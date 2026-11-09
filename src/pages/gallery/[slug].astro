@@ -29,8 +29,8 @@ const site = Astro.site!.toString();
 const url = `${site}gallery/${entry.id}/`;
 const hasBody = Boolean(entry.body?.trim());
 
-const full_ = await Promise.all(data.images.map((im) => getImage({ src: im.image, width: 2000, format: 'webp', quality: 80 })));
-const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new URL((await getImage({ src: im.image, width: 1600, format: 'jpg' })).src, site).toString()));
+const full_ = await Promise.all(data.images.map((im) => getImage({ src: im.image, width: 2400, format: 'webp', quality: 88 })));
+const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new URL((await getImage({ src: im.image, width: 1600, format: 'jpg', quality: 85 })).src, site).toString()));
 
 ---
 
@@ -98,7 +98,7 @@ const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new
                     alt={im.alt}
                     sizes={full ? '(min-width:1280px) 1180px, 94vw' : '(min-width:1280px) 580px, (min-width:640px) 47vw, 94vw'}
                     ratio={i === 0 ? 16 / 9 : full ? 16 / 9 : 4 / 3}
-                    widths={full ? [640, 1100, 1600, 2000] : [480, 800, 1100]}
+                    widths={full ? [640, 1024, 1536, 2000, 2400] : [480, 768, 1024, 1536, 1920]}
                     class="media-zoom"
                     priority={i === 0}
                     reveal={i > 0}

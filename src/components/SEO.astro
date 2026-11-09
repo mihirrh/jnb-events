@@ -25,7 +25,7 @@ const canonical = new URL(Astro.url.pathname, site).toString();
 // 1200x630 is the size social networks expect for link previews.
 let ogImage: string | undefined;
 if (image) {
-  const og = await getImage({ src: image, width: 1200, height: 630, format: 'jpg', quality: 78, fit: 'cover' });
+  const og = await getImage({ src: image, width: 1200, height: 630, format: 'jpg', quality: 85, fit: 'cover' });
   ogImage = new URL(og.src, site).toString();
 }
 ---

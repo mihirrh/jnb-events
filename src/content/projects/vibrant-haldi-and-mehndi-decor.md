@@ -3,7 +3,7 @@ title: Vibrant Haldi & Mehndi Décor
 category: Décor
 summary: A colourful pre-wedding celebration featuring marigold floral backdrops, traditional urli bowls, festive jhoola swing, and comfortable lounge seating.
 location: Leicestershire
-date: 2026-06-10
+date: 2026-02-18
 featured: true
 images:
   - image: /src/assets/media/services/placeholder-haldi-mehndi.jpg
