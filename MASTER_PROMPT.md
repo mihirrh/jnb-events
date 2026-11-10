@@ -163,8 +163,7 @@ jnb-events/
   - 1 × Ganesh Pedestal / Foyer Statue
   - 1 × Walkway Entrance Gate / Floral Arch
   - Premium pleated backdrop with ambient uplighting
-  - Brand new aisle carpet runner (red, ivory, or white)
-  - 1 × Traditional Koda Kodi bowl
+  - Aisle and mandap carpet runner (red, ivory, or white)
 
 ### 4.3 Interactive Quote Builder (`src/pages/quote.astro`)
 - Step-by-step ceremony and reception decor estimator:
@@ -252,7 +251,7 @@ Follow these strict requirements:
 2. ARCHITECTURE & PAGES:
    - Astro Content Collections for pages, services, projects, settings, and testimonials.
    - Pages: Homepage (/), About (/about/), Services (/services/ and /services/[slug]/), Gallery (/gallery/ and /gallery/[slug]/), Interactive Quote Builder (/quote/), Contact (/contact/), Privacy, Terms, and 404.
-   - Include complete ceremonial package inclusions on the Mandaps & Stages page (Choris, Bajots, Patlas, Chairs, Havan Kund, Ganesh, Walkway, Backdrop, Carpet, Koda Kodi).
+   - Include complete ceremonial package inclusions on the Mandaps & Stages page (Choris, Bajots, Patlas, Chairs, Havan Kund, Ganesh, Walkway, Backdrop, Carpet).
 
 3. INTERACTIVE & CONVERSION:
    - Live Quote Builder on /quote/ with instant PDF download.

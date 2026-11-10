@@ -40,14 +40,13 @@ Every full ceremony mandap package is comprehensively equipped with all essentia
 - **Ganesh for Foyer**: Ornate Ganesh statue and welcome display for the venue entrance.
 - **Entrance Gate**: Decorative ceremony entrance archway / gate.
 - **Pleated Backdrop for Mandap**: Elegant draped pleated fabric backdrop framing the stage.
-- **Brand New Carpet for Mandap & Walkway**: Fresh, pristine carpet runner laid for the mandap stage and aisle.
-- **Koda Kodi Bowl**: Traditional ceremonial bowl for post-wedding rituals and games.
+- **Carpet for Mandap & Walkway**: Professional carpet runner laid for the mandap stage and aisle walkway.
 
 ## Complete Ceremony Staging & Aisle Styling
 
 Our service encompasses the entire ceremony space:
 - Handcrafted bridal and havan seating with matching groom and family chairs.
-- Fresh **carpet aisle runners**, carved Ganesh pedestal aisle markers, and lush floral walkway arrangements.
+- **Carpet aisle runners**, carved Ganesh pedestal aisle markers, and lush floral walkway arrangements.
 - Coordinating entrance arches, welcome signs, and pleated backdrop drapery.
 
 Whether you are hosting an intimate family wedding in Leicestershire or a grand celebration across the Midlands, our experienced team manages every detail of logistics, rigging, and staging with precision. Contact us via WhatsApp to check availability for your date.
