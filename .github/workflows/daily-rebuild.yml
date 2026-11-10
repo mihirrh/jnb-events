@@ -19,5 +19,10 @@ jobs:
         env:
           HOOK: ${{ secrets.CF_PAGES_DEPLOY_HOOK }}
         run: |
-          test -n "$HOOK" || { echo "CF_PAGES_DEPLOY_HOOK secret is not set"; exit 1; }
+          if [ -z "$HOOK" ]; then
+            echo "::notice title=Deploy Hook Skipped::CF_PAGES_DEPLOY_HOOK secret is not set in GitHub repository settings. Set it up in repo Settings -> Secrets and variables -> Actions to enable daily automatic Instagram rebuilds."
+            exit 0
+          fi
+          echo "Triggering Cloudflare Pages rebuild..."
           curl --fail --silent --show-error --max-time 30 -X POST "$HOOK" > /dev/null
+          echo "Rebuild successfully triggered."
