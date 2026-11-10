@@ -172,53 +172,7 @@ content:
               - { name: secondImage, label: Smaller photo, type: image, required: true, options: { path: src/assets/media/about } }
               - { name: secondImageAlt, label: Smaller photo description (alt text), type: string, required: true }
               - { name: linkLabel, label: Link text (goes to About page), type: string, required: true }
-          # ------------------------------------------------------------- Quote builder
-  - name: quote
-    label: Quote builder defaults
-    type: file
-    path: src/content/pages/quote.yaml
-    format: yaml
-    description: Starting values for the unlisted /quote/ tool and the fixed wording of the quotation PDF. Client name, date and venue are typed into the tool each time.
-    fields:
-      - { name: seo, component: seo }
-      - { name: heading, label: Page heading (*word* is set in italic), type: string, required: true }
-      - { name: lead, label: Page introduction, type: text, required: true }
-      - name: items
-        label: Starting line items
-        type: object
-        list: true
-        fields:
-          - { name: description, label: Description, type: string, required: true, options: { maxlength: 140 } }
-          - { name: price, label: Price in pounds (ignored when Free is ticked), type: number }
-          - { name: free, label: Free (prints FREE instead of a price), type: boolean }
-      - name: discount
-        label: Discount
-        type: object
-        fields:
-          - { name: enabled, label: Start with the discount switched on, type: boolean }
-          - { name: percent, label: Discount percentage, type: number, required: true }
-      - name: vat
-        label: VAT
-        type: object
-        fields:
-          - { name: enabled, label: Start with VAT switched on, type: boolean }
-          - { name: rate, label: VAT rate percentage, type: number, required: true }
-      - name: pdf
-        label: Wording in the PDF
-        type: object
-        fields:
-          - { name: aboutHeading, label: Page 2 heading, type: string, required: true }
-          - { name: aboutBody, label: Page 2 text (blank line between paragraphs), type: text, required: true }
-          - { name: quoteHeading, label: Page 3 heading, type: string, required: true }
-          - { name: quoteSubheading, label: Page 3 subheading, type: string, required: true }
-          - { name: packageLabel, label: Page 3 section label, type: string, required: true }
-          - { name: noticeHeading, label: Page 4 heading, type: string, required: true }
-          - { name: offerText, label: Special offer sentence (use {percent} for the number), type: text, required: true }
-          - { name: bookingNote, label: Booking note, type: text, required: true }
-          - { name: invitation, label: Contact invitation, type: text, required: true }
-          - { name: thanks, label: Thank-you line, type: string, required: true }
-
-  - name: services
+          - name: services
             label: Services section
             type: object
             fields:
@@ -322,10 +276,65 @@ content:
           - { name: formHeading, label: Form heading, type: string, required: true }
           - { name: formText, label: Form intro, type: text, required: true }
 
+      - name: quote
+        label: Quote builder defaults
+        type: file
+        path: src/content/pages/quote.yaml
+        format: yaml
+        description: Starting values for the /quote/ tool and the wording of the quotation PDF.
+        fields:
+          - { name: seo, component: seo }
+          - { name: heading, label: Page heading (*word* is set in italic), type: string, required: true }
+          - { name: lead, label: Page introduction, type: text, required: true }
+          - name: items
+            label: Starting line items
+            type: object
+            list: true
+            fields:
+              - { name: description, label: Description, type: string, required: true, options: { maxlength: 140 } }
+              - { name: price, label: Price in pounds (ignored when Free is ticked), type: number }
+              - { name: free, label: Free (prints FREE instead of a price), type: boolean }
+          - name: discount
+            label: Discount
+            type: object
+            fields:
+              - { name: enabled, label: Start with the discount switched on, type: boolean }
+              - { name: percent, label: Discount percentage, type: number, required: true }
+          - name: vat
+            label: VAT
+            type: object
+            fields:
+              - { name: enabled, label: Start with VAT switched on, type: boolean }
+              - { name: rate, label: VAT rate percentage, type: number, required: true }
+          - name: pdf
+            label: Wording in the PDF
+            type: object
+            fields:
+              - { name: aboutHeading, label: Page 2 heading, type: string, required: true }
+              - { name: aboutBody, label: Page 2 text (blank line between paragraphs), type: text, required: true }
+              - { name: quoteHeading, label: Page 3 heading, type: string, required: true }
+              - { name: quoteSubheading, label: Page 3 subheading, type: string, required: true }
+              - { name: packageLabel, label: Page 3 section label, type: string, required: true }
+              - { name: noticeHeading, label: Page 4 heading, type: string, required: true }
+              - { name: offerText, label: "Special offer sentence (use {percent} for the number)", type: text, required: true }
+              - { name: bookingNote, label: Booking note, type: text, required: true }
+              - { name: invitation, label: Contact invitation, type: text, required: true }
+              - { name: thanks, label: Thank-you line, type: string, required: true }
+
       - name: privacy
         label: Privacy
         type: file
         path: src/content/pages/privacy.md
+        format: yaml-frontmatter
+        fields:
+          - { name: seo, component: seo }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: body, label: Text, type: rich-text, options: { media: false } }
+
+      - name: terms
+        label: Terms & Conditions
+        type: file
+        path: src/content/pages/terms.md
         format: yaml-frontmatter
         fields:
           - { name: seo, component: seo }
