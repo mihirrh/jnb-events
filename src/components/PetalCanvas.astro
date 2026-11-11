@@ -147,9 +147,9 @@ const { class: className = '' } = Astro.props;
 
         function getPetalCount() {
           const w = window.innerWidth;
-          if (w < 640) return 16;
-          if (w < 1024) return 26;
-          return 36;
+          if (w < 640) return 8;
+          if (w < 1024) return 13;
+          return 19;
         }
 
         function pickPalette() {
@@ -221,7 +221,7 @@ const { class: className = '' } = Astro.props;
             const initialY = Math.random() * (height || window.innerHeight);
             const petal = createPetal(initialY);
 
-            if (i > 0 && Math.random() < 0.15 && !petals[i - 1].isClusterLeader) {
+            if (i > 0 && Math.random() < 0.08 && !petals[i - 1].isClusterLeader) {
               petal.isClusterLeader = true;
               petal.clusterOffsetX = 12 + Math.random() * 16;
               petal.clusterOffsetY = 8 + Math.random() * 14;
