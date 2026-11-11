@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Img from '../components/Img.astro';
+import PetalCanvas from '../components/PetalCanvas.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Testimonials from '../components/Testimonials.astro';
@@ -51,7 +52,10 @@ const rowServices = services.slice(3);
       <div class="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-night/55 to-transparent"></div>
     </div>
 
-    <div class="wrap relative mt-auto w-full pb-16 pt-32 md:pb-12 md:pt-36">
+    <!-- Floating Luxury Rose Petal Canvas (subtle blush, ivory & gold drift) -->
+    <PetalCanvas />
+
+    <div class="wrap relative z-10 mt-auto w-full pb-16 pt-32 md:pb-12 md:pt-36">
       <p class="eyebrow hero-in" style="--d:100ms">{home.hero.eyebrow}</p>
       <h1 class="display hero-in mt-4 max-w-[11ch] md:mt-6 md:max-w-[12ch] lg:max-w-[14ch]" style="--d:220ms" aria-label={plain(home.hero.headline)} set:html={emphasis(home.hero.headline)} />
 
