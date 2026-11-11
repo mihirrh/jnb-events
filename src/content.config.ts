@@ -88,23 +88,17 @@ const home = defineCollection({
           eyebrow: z.string().optional(),
           heading: z.string().optional(),
           intro: z.string().optional(),
-          inclusionsHeading: z.string().optional(),
-          inclusionsSummary: z.string().optional(),
           serviceLinkText: z.string().optional(),
           galleryLinkText: z.string().optional(),
           items: z
             .array(
               z.object({
                 id: z.string(),
-                projectSlug: z.string().optional(),
                 title: z.string(),
                 subtitle: z.string(),
                 image: image().optional(),
                 imageAlt: z.string().min(3).optional(),
                 description: z.string().optional(),
-                designHighlights: z.string(),
-                ceremonyInclusions: z.string(),
-                lightingProduction: z.string(),
                 whatsappMessage: z.string().optional(),
               }),
             )

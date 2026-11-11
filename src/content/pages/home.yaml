@@ -34,54 +34,36 @@ mandaps:
   eyebrow: Signature Staging Collection
   heading: Explore the *artistry of our mandaps*
   intro: Every mandap is crafted as a bespoke ceremonial stage, tailored to your venue's architecture and your cultural heritage.
-  inclusionsHeading: What's Included in Your Mandap Setup
-  inclusionsSummary: Every full ceremony mandap package is comprehensively equipped with all essential ceremonial and aesthetic elements.
-  serviceLinkText: View Full Mandap Service & Staging Inclusions
-  galleryLinkText: Browse Mandaps & Stages in Gallery
+  serviceLinkText: Service Details
+  galleryLinkText: Category Gallery
   items:
     - id: traditional-carved-wooden-mandap
-      projectSlug: traditional-carved-wooden-mandap
       title: The Royal Carved Mandap
       subtitle: Traditional Artisanship & Sacred Warmth
       image: /src/assets/media/gallery/marquee_carved_wooden_mandap.jpg
       imageAlt: Traditional hand-carved wooden Hindu wedding mandap with red and orange floral canopy in Leicestershire marquee
       description: Intricately carved wooden pillars and ornamental arches crowned with a rich canopy of fresh crimson, amber, and ivory florals. Complete with matching carved bridal thrones and sacred havan kund.
-      designHighlights: Solid hand-carved teak pillars, ornamental domed arches, multi-tier floral canopy headers, custom carved entrance toran.
-      ceremonyInclusions: 4 Choris, 2 Bajots, 2 Patlas, 6 Carved Bridal Chairs, Sacred Copper Havan Kund, Red/Ivory Aisle Runner.
-      lightingProduction: Warm amber base uplighting, dedicated havan smoke ventilation setup, pin-spotting on bridal seating.
       whatsappMessage: "Hello JNB Events, I am interested in checking availability for your Royal Carved Wooden Mandap setup."
     - id: modern-gold-geometric-mandap
-      projectSlug: modern-gold-geometric-mandap
       title: Modern Gold Geometric
       subtitle: Contemporary Glamour & Open-Frame Elegance
       image: /src/assets/media/gallery/modern_gold_mandap_blush_florals.jpg
       imageAlt: Luxury modern gold geometric wedding mandap with mirrored gold aisle runner and blush florals in Leicester hall
       description: Sleek, architectural metallic gold frames paired with lavish blush, plum, and cream floral runners. Accompanied by our radiant gold aisle runner and soft ambient spotlighting.
-      designHighlights: High-polish reflective gold framing, open-concept geometric pillars, asymmetric luxury blush & ivory floral headers.
-      ceremonyInclusions: Minimalist luxury bridal thrones, matching gold ceremonial stools (Choris & Bajots), mirrored gold aisle runner.
-      lightingProduction: DMX-controlled perimeter wash lights, overhead warm pin-spots, mirrored aisle under-glow reflection.
       whatsappMessage: "Hello JNB Events, I am interested in checking availability for your Modern Gold Geometric Mandap setup."
     - id: archway-mandap
-      projectSlug: archway-mandap
       title: Historic Archway & Brick
       subtitle: Heritage Character Meets Romantic Festoons
       image: /src/assets/media/gallery/historic_archway_mandap_setup.jpg
       imageAlt: Grand luxury mandap setup inside a historic brick archway venue with lime wash Chiavari chairs and festoon lights
       description: A breathtaking juxtaposition of rustic heritage brickwork with delicate cascading floral garlands, warm overhead festoon canopies, and pristine lime wash Chiavari ceremony seating.
-      designHighlights: Architectural integration with exposed heritage brickwork, cascading organic eucalyptus & ivory rose garlands, bespoke floral arches.
-      ceremonyInclusions: Lime wash Chiavari guest seating, carved Ganesh foyer sentinels, ceremonial bajot suite, natural woven aisle runner.
-      lightingProduction: Suspended warm filament festoon canopy, warm architectural stone uplighters, soft foreground ceremony glow.
       whatsappMessage: "Hello JNB Events, I am interested in checking availability for your Historic Archway Mandap setup."
     - id: modern-gold-aisle-mandap
-      projectSlug: modern-gold-aisle-mandap
       title: Grand Symmetrical Floral
       subtitle: Monumental Scale & Mirrored Runway
       image: /src/assets/media/gallery/grand_mandap_modern_venue.jpg
       imageAlt: Grand luxury Asian wedding ceremony setup with symmetrical white seating, gold aisle, and carved Ganesh pillars in UK venue
       description: Engineered for high-capacity luxury celebrations. Features grand floral canopy pillars, carved Ganesh walkway sentinels, full room mood lighting, and flawless symmetrical seating layout.
-      designHighlights: Monumental 6-pillar grand structure, 360-degree dense floral crown, dual elevated carved Ganesh sentinel columns at aisle threshold.
-      ceremonyInclusions: Complete 8-piece royal throne ensemble, ceremonial havan enclosure, symmetrical auditorium ceremony seating, mirrored gold central runway.
-      lightingProduction: Full-venue computerized intelligent lighting, synchronized aisle entrance spotlights, atmospheric haze dispersion.
       whatsappMessage: "Hello JNB Events, I am interested in checking availability for your Grand Symmetrical Floral Mandap setup."
 featured:
   eyebrow: Selected work
