@@ -83,6 +83,28 @@ const home = defineCollection({
         ctaText: z.string(),
         ctaMessage: z.string().optional(),
       }),
+      mandaps: z
+        .object({
+          eyebrow: z.string().optional(),
+          heading: z.string().optional(),
+          intro: z.string().optional(),
+          serviceLinkText: z.string().optional(),
+          galleryLinkText: z.string().optional(),
+          items: z
+            .array(
+              z.object({
+                id: z.string(),
+                title: z.string(),
+                subtitle: z.string(),
+                image: image().optional(),
+                imageAlt: z.string().min(3).optional(),
+                description: z.string().optional(),
+                whatsappMessage: z.string().optional(),
+              }),
+            )
+            .optional(),
+        })
+        .optional(),
       featured: z.object({
         eyebrow: z.string(),
         heading: z.string(),

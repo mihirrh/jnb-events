@@ -1,0 +1,517 @@
+---
+/**
+ * PetalCanvas.astro
+ * Luxury Falling Rose Petals Canvas Effect for JNB Events Hero.
+ *
+ * Simulates delicate Indian wedding rose petals (blush pink, warm ivory/champagne,
+ * and antique gold accents) falling with realistic 3D tumbling, organic cupped silhouettes,
+ * and natural sine-wave wind drift.
+ *
+ * - Zero external animation libraries (native Canvas 2D + requestAnimationFrame).
+ * - Multi-depth parallax layers (foreground, midground, background).
+ * - Automatic pause when scrolled out of viewport (IntersectionObserver).
+ * - Responsive petal density based on viewport size and DPR.
+ * - Respects `prefers-reduced-motion`.
+ * - Pointer-events: none, aria-hidden, completely non-blocking.
+ * - Fully inlined via `is:inline` (0 extra network requests / JS bundle overhead).
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={['petal-canvas-container absolute inset-0 pointer-events-none overflow-hidden select-none z-0', className]}
+  aria-hidden="true"
+  role="presentation"
+>
+  <canvas class="petal-canvas block h-full w-full" tabindex="-1"></canvas>
+</div>
+
+<style>
+  .petal-canvas-container {
+    contain: layout size paint;
+  }
+  .petal-canvas {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.22, 0.7, 0.2, 1);
+  }
+  .petal-canvas.is-ready {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .petal-canvas-container {
+      display: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    /**
+     * =========================================================================
+     * 🌸 1. COLOR PALETTES (Tuning Petal Colors & Highlights)
+     * =========================================================================
+     * Modify RGB / alpha values below to adjust petal shades:
+     * - `frontTop` / `frontBase`: Linear gradient colors for front facing petal.
+     * - `frontHighlight`: Edge rim light stroke color.
+     * - `backTop` / `backBase`: Colors shown when the petal flips in 3D.
+     * - `vein`: Color of the central organic spine line.
+     * - `isGold`: If true, activates an extra radial specular shimmer highlight.
+     */
+    const PALETTES = [
+      // 0: Soft Blush Rose (delicate romantic pink with warm coral undertone)
+      {
+        frontTop: 'rgba(248, 202, 196, 0.94)',
+        frontBase: 'rgba(202, 94, 102, 0.92)',
+        frontHighlight: 'rgba(255, 244, 242, 0.65)',
+        backTop: 'rgba(244, 220, 216, 0.88)',
+        backBase: 'rgba(186, 106, 112, 0.84)',
+        vein: 'rgba(218, 118, 126, 0.4)',
+        isGold: false,
+      },
+      // 1: Warm Rose / Velvet Rose (richer petal tone for depth)
+      {
+        frontTop: 'rgba(240, 172, 166, 0.94)',
+        frontBase: 'rgba(176, 62, 74, 0.92)',
+        frontHighlight: 'rgba(255, 235, 232, 0.6)',
+        backTop: 'rgba(230, 184, 178, 0.86)',
+        backBase: 'rgba(158, 68, 78, 0.82)',
+        vein: 'rgba(194, 88, 98, 0.4)',
+        isGold: false,
+      },
+      // 2: Warm Ivory & Champagne (luxurious Indian bridal mandap florals)
+      {
+        frontTop: 'rgba(255, 253, 248, 0.96)',
+        frontBase: 'rgba(232, 212, 182, 0.9)',
+        frontHighlight: 'rgba(255, 255, 255, 0.8)',
+        backTop: 'rgba(250, 244, 235, 0.9)',
+        backBase: 'rgba(220, 198, 166, 0.85)',
+        vein: 'rgba(214, 190, 156, 0.38)',
+        isGold: false,
+      },
+      // 3: Antique Gold Accent (subtle royal shimmer, ~12% frequency)
+      {
+        frontTop: 'rgba(246, 222, 148, 0.96)',
+        frontBase: 'rgba(190, 154, 78, 0.94)',
+        frontHighlight: 'rgba(255, 248, 216, 0.85)',
+        backTop: 'rgba(224, 190, 118, 0.92)',
+        backBase: 'rgba(164, 116, 22, 0.88)',
+        vein: 'rgba(255, 240, 174, 0.55)',
+        isGold: true,
+      },
+    ];
+
+    /**
+     * =========================================================================
+     * 🍃 2. ORGANIC PETAL SILHOUETTES
+     * =========================================================================
+     * Uses Bézier curves to create natural organic silhouettes.
+     * Shape 0: Classical Cupped Rose Petal (indented tip, wide body)
+     * Shape 1: Elongated Ruffled Petal (asymmetrical drift)
+     * Shape 2: Broad Velvet Petal (round, full luxury mandap petal)
+     */
+    function drawPetalPath(ctx, shape, w, h) {
+      ctx.beginPath();
+      if (shape === 0) {
+        // Classical Cupped Rose Petal
+        ctx.moveTo(0, h * 0.48);
+        ctx.bezierCurveTo(-w * 0.54, h * 0.32, -w * 0.58, -h * 0.12, -w * 0.36, -h * 0.44);
+        ctx.bezierCurveTo(-w * 0.2, -h * 0.54, -w * 0.05, -h * 0.46, 0, -h * 0.4);
+        ctx.bezierCurveTo(w * 0.05, -h * 0.46, w * 0.2, -h * 0.54, w * 0.36, -h * 0.44);
+        ctx.bezierCurveTo(w * 0.58, -h * 0.12, w * 0.54, h * 0.32, 0, h * 0.48);
+      } else if (shape === 1) {
+        // Elongated Ruffled Petal
+        ctx.moveTo(-w * 0.04, h * 0.48);
+        ctx.bezierCurveTo(-w * 0.46, h * 0.28, -w * 0.62, -h * 0.18, -w * 0.28, -h * 0.48);
+        ctx.bezierCurveTo(-w * 0.08, -h * 0.55, w * 0.16, -h * 0.48, w * 0.36, -h * 0.4);
+        ctx.bezierCurveTo(w * 0.56, -h * 0.06, w * 0.42, h * 0.34, -w * 0.04, h * 0.48);
+      } else {
+        // Broad Velvet Petal
+        ctx.moveTo(0, h * 0.46);
+        ctx.bezierCurveTo(-w * 0.58, h * 0.22, -w * 0.52, -h * 0.26, -w * 0.26, -h * 0.46);
+        ctx.bezierCurveTo(-w * 0.1, -h * 0.52, w * 0.1, -h * 0.52, w * 0.26, -h * 0.46);
+        ctx.bezierCurveTo(w * 0.52, -h * 0.26, w * 0.58, h * 0.22, 0, h * 0.46);
+      }
+      ctx.closePath();
+    }
+
+    function initPetalEngine() {
+      const containers = document.querySelectorAll('.petal-canvas-container');
+      if (!containers.length) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (prefersReducedMotion.matches) return;
+
+      containers.forEach(function (container) {
+        if (container.dataset.initialized === 'true') return;
+        container.dataset.initialized = 'true';
+
+        const canvas = container.querySelector('canvas.petal-canvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d', { alpha: true });
+        if (!ctx) return;
+
+        let animationFrameId = null;
+        let isVisible = false;
+        let width = 0;
+        let height = 0;
+        let dpr = 1;
+        let petals = [];
+        let lastTime = performance.now();
+
+        /**
+         * =====================================================================
+         * 🔢 3. PETAL COUNT / DENSITY BY SCREEN SIZE
+         * =====================================================================
+         * Adjust these values to increase or decrease how many petals appear:
+         * - Mobile (< 640px): Lower number to keep hero copy readable.
+         * - Tablet (< 1024px): Balanced density for mid-size screens.
+         * - Desktop (>= 1024px): High-end cinematic density with negative space.
+         */
+        function getPetalCount() {
+          const w = window.innerWidth;
+          if (w < 640) return 8;    // Mobile petal count
+          if (w < 1024) return 13;  // Tablet petal count
+          return 19;                // Desktop petal count
+        }
+
+        /**
+         * =====================================================================
+         * 🎨 4. PALETTE PROBABILITY DISTRIBUTION
+         * =====================================================================
+         * 45% Soft Blush Pink, 25% Warm Rose, 18% Ivory/Champagne, 12% Antique Gold
+         */
+        function pickPalette() {
+          const rand = Math.random();
+          if (rand < 0.45) return PALETTES[0]; // 45% Soft Blush Rose
+          if (rand < 0.70) return PALETTES[1]; // 25% Warm Velvet Rose
+          if (rand < 0.88) return PALETTES[2]; // 18% Warm Ivory / Champagne
+          return PALETTES[3];                  // 12% Antique Gold shimmer
+        }
+
+        /**
+         * =====================================================================
+         * ⚙️ 5. PETAL INITIALIZATION & PHYSICS PARAMETERS
+         * =====================================================================
+         * Creates an individual petal with depth, scale, speed, sway, and tumble.
+         */
+        function createPetal(initialY) {
+          // Depth layer: 0 = Background (35%), 1 = Midground (40%), 2 = Foreground (25%)
+          const depth = Math.random() < 0.35 ? 0 : Math.random() < 0.75 ? 1 : 2;
+
+          let scale = 1;
+          let vy = 1;      // Base vertical falling speed (px per frame at 60fps)
+          let opacity = 0.8;
+
+          if (depth === 0) {
+            // Layer 0 - Background: smaller, softer, gentler fall
+            scale = 0.5 + Math.random() * 0.2;
+            vy = 0.75 + Math.random() * 0.45;
+            opacity = 0.48 + Math.random() * 0.2;
+          } else if (depth === 1) {
+            // Layer 1 - Midground: standard size, crisp elegant fall
+            scale = 0.78 + Math.random() * 0.25;
+            vy = 1.35 + Math.random() * 0.65;
+            opacity = 0.72 + Math.random() * 0.2;
+          } else {
+            // Layer 2 - Foreground: larger, rich detail, dynamic flutter
+            scale = 1.08 + Math.random() * 0.28;
+            vy = 1.95 + Math.random() * 0.85;
+            opacity = 0.85 + Math.random() * 0.14;
+          }
+
+          // Base dimensions (pixels) before scaling
+          const baseW = 18 + Math.random() * 6; // Petal width: 18 - 24px
+          const baseH = 24 + Math.random() * 8; // Petal height: 24 - 32px
+
+          return {
+            x: Math.random() * (width || window.innerWidth),
+            y: initialY !== undefined ? initialY : -40 - Math.random() * 80,
+            depth: depth,
+            baseW: baseW,
+            baseH: baseH,
+            scale: scale,
+            opacity: opacity,
+            shape: Math.floor(Math.random() * 3), // Pick one of 3 organic shapes
+            palette: pickPalette(),
+
+            // Vertical & horizontal velocities
+            vy: vy,
+            vx: (Math.random() - 0.5) * 0.35,
+
+            // Sine-wave sway settings (side-to-side oscillation)
+            swayAmp: 24 + Math.random() * 28 + depth * 10, // Amplitude in pixels
+            swayFreq: 0.0016 + Math.random() * 0.001,      // Frequency (oscillation speed)
+            swayPhase: Math.random() * Math.PI * 2,        // Random starting phase
+
+            // 3D rotation / tumbling speeds (radians per frame)
+            yaw: Math.random() * Math.PI * 2,              // Heading rotation (Z-axis)
+            yawSpeed: (Math.random() - 0.5) * 0.012,       // Heading speed
+            pitch: Math.random() * Math.PI * 2,            // Forward/backward flip (X-axis)
+            pitchSpeed: 0.012 + Math.random() * 0.02,      // Flip speed
+            roll: Math.random() * Math.PI * 2,             // Side-to-side roll (Y-axis)
+            rollSpeed: 0.014 + Math.random() * 0.024,      // Roll speed
+          };
+        }
+
+        /**
+         * =====================================================================
+         * 👥 6. COMPANION CLUSTER SETTINGS
+         * =====================================================================
+         * Occasionally pairs two petals together (like natural falling clusters).
+         * Probability: 0.08 (8% chance of pairing).
+         */
+        function setupPetals() {
+          const count = getPetalCount();
+          petals = [];
+
+          for (let i = 0; i < count; i++) {
+            const initialY = Math.random() * (height || window.innerHeight);
+            const petal = createPetal(initialY);
+
+            // Pair with companion petal with 8% probability
+            if (i > 0 && Math.random() < 0.08 && !petals[i - 1].isClusterLeader) {
+              petal.isClusterLeader = true;
+              petal.clusterOffsetX = 12 + Math.random() * 16;
+              petal.clusterOffsetY = 8 + Math.random() * 14;
+            }
+
+            petals.push(petal);
+          }
+        }
+
+        function resize() {
+          const rect = container.getBoundingClientRect();
+          width = rect.width || window.innerWidth;
+          height = rect.height || window.innerHeight;
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+          canvas.width = Math.floor(width * dpr);
+          canvas.height = Math.floor(height * dpr);
+
+          if (!petals.length) {
+            setupPetals();
+          } else {
+            const targetCount = getPetalCount();
+            while (petals.length < targetCount) {
+              petals.push(createPetal(-20 - Math.random() * 50));
+            }
+            if (petals.length > targetCount) {
+              petals.length = targetCount;
+            }
+          }
+        }
+
+        function render(now) {
+          if (!isVisible) return;
+
+          const delta = Math.min((now - lastTime) / 1000, 0.1);
+          lastTime = now;
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.save();
+          ctx.scale(dpr, dpr);
+
+          /**
+           * ===================================================================
+           * 🌬️ 7. GLOBAL WIND & FLUID DYNAMICS (Render Loop)
+           * ===================================================================
+           * - `globalWind`: Multi-harmonic gentle breeze shifting left/right.
+           * - `dragFactor`: Aerodynamic lift — petals fall slower when facing flat
+           *                 and slice down quicker when edge-on.
+           * - `rollGlide`: Lateral drift generated when the petal banks/rolls.
+           */
+          const globalWind = Math.sin(now * 0.0005) * 0.4 + Math.sin(now * 0.0013) * 0.2;
+
+          // Render back layers first (background -> midground -> foreground)
+          petals.sort(function (a, b) {
+            return a.depth - b.depth;
+          });
+
+          for (let i = 0; i < petals.length; i++) {
+            const p = petals[i];
+
+            // Update 3D rotations
+            p.yaw += p.yawSpeed;
+            p.pitch += p.pitchSpeed;
+            p.roll += p.rollSpeed;
+
+            const cosRoll = Math.cos(p.roll);
+            const cosPitch = Math.cos(p.pitch);
+            const isBack = cosRoll * cosPitch < 0; // True when showing underside of petal
+
+            // Aerodynamic drag & lift calculation
+            const orientation = Math.abs(cosRoll * cosPitch);
+            const dragFactor = 0.72 + 0.55 * (1 - orientation * 0.6);
+            p.y += (p.vy * dragFactor + 0.25) * 60 * delta;
+
+            // Lateral glide when rolling + dual sine wave sway + global wind
+            const rollGlide = Math.sin(p.roll) * 0.5 * (p.depth + 1);
+            const sway = Math.sin(now * p.swayFreq + p.swayPhase) * p.swayAmp;
+            const currentX = p.x + sway + globalWind * (p.depth + 1) * 24 + rollGlide;
+
+            if (p.y > height + 50 || currentX < -80 || currentX > width + 80) {
+              p.y = -35 - Math.random() * 60;
+              p.x = Math.random() * width;
+              p.swayPhase = Math.random() * Math.PI * 2;
+              p.palette = pickPalette();
+            }
+
+            const scaleX = Math.abs(cosRoll) * p.scale;
+            const scaleY = Math.abs(cosPitch) * p.scale;
+
+            if (scaleX < 0.04 || scaleY < 0.04) continue;
+
+            ctx.save();
+            ctx.translate(currentX, p.y);
+            ctx.rotate(p.yaw);
+            ctx.scale(scaleX, scaleY);
+            ctx.globalAlpha = p.opacity;
+
+            const w = p.baseW;
+            const h = p.baseH;
+
+            const grad = ctx.createLinearGradient(0, -h * 0.5, 0, h * 0.5);
+            grad.addColorStop(0, isBack ? p.palette.backTop : p.palette.frontTop);
+            grad.addColorStop(0.65, isBack ? p.palette.backTop : p.palette.frontTop);
+            grad.addColorStop(1, isBack ? p.palette.backBase : p.palette.frontBase);
+
+            ctx.fillStyle = grad;
+            drawPetalPath(ctx, p.shape, w, h);
+            ctx.fill();
+
+            if (!isBack) {
+              ctx.strokeStyle = p.palette.frontHighlight;
+              ctx.lineWidth = 0.85;
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.moveTo(0, h * 0.42);
+              ctx.quadraticCurveTo(w * 0.08, 0, 0, -h * 0.3);
+              ctx.strokeStyle = p.palette.vein;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            } else {
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+              ctx.lineWidth = 0.65;
+              ctx.stroke();
+            }
+
+            if (p.palette.isGold) {
+              const shineX = Math.sin(p.roll * 2) * w * 0.2;
+              const shineY = Math.cos(p.pitch * 2) * h * 0.2;
+              const goldGlow = ctx.createRadialGradient(shineX, shineY, 0, shineX, shineY, w * 0.45);
+              goldGlow.addColorStop(0, 'rgba(255, 248, 220, 0.55)');
+              goldGlow.addColorStop(1, 'rgba(255, 248, 220, 0)');
+              ctx.fillStyle = goldGlow;
+              ctx.fill();
+            }
+
+            ctx.restore();
+
+            if (p.isClusterLeader && p.clusterOffsetX && p.clusterOffsetY) {
+              const compX = currentX + p.clusterOffsetX;
+              const compY = p.y + p.clusterOffsetY;
+              const compScaleX = Math.abs(Math.cos(p.roll + 0.6)) * (p.scale * 0.85);
+              const compScaleY = Math.abs(Math.cos(p.pitch + 0.4)) * (p.scale * 0.85);
+
+              if (compScaleX > 0.04 && compScaleY > 0.04 && compY < height + 40) {
+                ctx.save();
+                ctx.translate(compX, compY);
+                ctx.rotate(p.yaw + 0.35);
+                ctx.scale(compScaleX, compScaleY);
+                ctx.globalAlpha = p.opacity * 0.9;
+
+                const cGrad = ctx.createLinearGradient(0, -w * 0.4, 0, h * 0.4);
+                cGrad.addColorStop(0, p.palette.frontTop);
+                cGrad.addColorStop(1, p.palette.frontBase);
+                ctx.fillStyle = cGrad;
+                drawPetalPath(ctx, (p.shape + 1) % 3, w * 0.85, h * 0.85);
+                ctx.fill();
+                ctx.restore();
+              }
+            }
+          }
+
+          ctx.restore();
+          animationFrameId = requestAnimationFrame(render);
+        }
+
+        function startAnimation() {
+          if (!isVisible) {
+            isVisible = true;
+            lastTime = performance.now();
+            animationFrameId = requestAnimationFrame(render);
+          }
+        }
+
+        function stopAnimation() {
+          isVisible = false;
+          if (animationFrameId !== null) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+        }
+
+        const observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                startAnimation();
+              } else {
+                stopAnimation();
+              }
+            });
+          },
+          { threshold: 0.01 }
+        );
+
+        observer.observe(container);
+
+        let resizeTimeout;
+        const onResize = function () {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = window.setTimeout(resize, 100);
+        };
+        window.addEventListener('resize', onResize, { passive: true });
+
+        resize();
+        canvas.classList.add('is-ready');
+
+        const onMotionChange = function (e) {
+          if (e.matches) {
+            stopAnimation();
+            canvas.classList.remove('is-ready');
+          } else {
+            setupPetals();
+            startAnimation();
+            canvas.classList.add('is-ready');
+          }
+        };
+        prefersReducedMotion.addEventListener('change', onMotionChange);
+
+        const cleanup = function () {
+          stopAnimation();
+          observer.disconnect();
+          window.removeEventListener('resize', onResize);
+          prefersReducedMotion.removeEventListener('change', onMotionChange);
+          container.dataset.initialized = 'false';
+        };
+        document.addEventListener('astro:before-swap', cleanup, { once: true });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPetalEngine);
+    } else {
+      initPetalEngine();
+    }
+    document.addEventListener('astro:page-load', initPetalEngine);
+  })();
+</script>
