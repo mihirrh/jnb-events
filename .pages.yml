@@ -189,6 +189,10 @@ content:
               - { name: eyebrow, label: Small line, type: string, required: true }
               - { name: heading, label: Heading, type: string, required: true }
               - { name: intro, label: Intro text, type: text, required: true }
+              - { name: inclusionsHeading, label: What's Included heading, type: string }
+              - { name: inclusionsSummary, label: What's Included summary, type: text }
+              - { name: serviceLinkText, label: Service page link text, type: string }
+              - { name: galleryLinkText, label: Gallery category link text, type: string }
               - name: items
                 label: Mandap Styles
                 type: object
@@ -198,12 +202,13 @@ content:
                     collapsed: true
                     summary: "{title}"
                 fields:
-                  - { name: id, label: Unique ID (slug), type: string, required: true }
+                  - { name: id, label: Unique ID, type: string, required: true }
+                  - { name: projectSlug, label: Gallery Project Slug (e.g. archway-mandap), type: string }
                   - { name: title, label: Mandap Name, type: string, required: true }
                   - { name: subtitle, label: Style Subtitle, type: string, required: true }
-                  - { name: image, label: Showcase Photo, type: image, required: true, options: { path: src/assets/media/gallery } }
-                  - { name: imageAlt, label: Photo description (alt text), type: string, required: true }
-                  - { name: description, label: Description, type: text, required: true }
+                  - { name: image, label: Showcase Photo (optional if linked to project), type: image, options: { path: src/assets/media/gallery } }
+                  - { name: imageAlt, label: Photo description (alt text), type: string }
+                  - { name: description, label: Description, type: text }
                   - { name: designHighlights, label: Architectural Highlights, type: text, required: true }
                   - { name: ceremonyInclusions, label: Ceremony Inclusions, type: text, required: true }
                   - { name: lightingProduction, label: Lighting & Production, type: text, required: true }
