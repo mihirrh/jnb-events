@@ -182,6 +182,32 @@ content:
               - { name: ctaHeading, label: WhatsApp prompt heading, type: string, required: true }
               - { name: ctaText, label: WhatsApp prompt text, type: text, required: true }
               - { name: ctaMessage, label: Pre-filled WhatsApp message, type: text }
+          - name: mandaps
+            label: Signature Mandap Collection section
+            type: object
+            fields:
+              - { name: eyebrow, label: Small line, type: string, required: true }
+              - { name: heading, label: Heading, type: string, required: true }
+              - { name: intro, label: Intro text, type: text, required: true }
+              - name: items
+                label: Mandap Styles
+                type: object
+                list:
+                  min: 1
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - { name: id, label: Unique ID (slug), type: string, required: true }
+                  - { name: title, label: Mandap Name, type: string, required: true }
+                  - { name: subtitle, label: Style Subtitle, type: string, required: true }
+                  - { name: image, label: Showcase Photo, type: image, required: true, options: { path: src/assets/media/gallery } }
+                  - { name: imageAlt, label: Photo description (alt text), type: string, required: true }
+                  - { name: description, label: Description, type: text, required: true }
+                  - { name: designHighlights, label: Architectural Highlights, type: text, required: true }
+                  - { name: ceremonyInclusions, label: Ceremony Inclusions, type: text, required: true }
+                  - { name: lightingProduction, label: Lighting & Production, type: text, required: true }
+                  - { name: whatsappMessage, label: WhatsApp pre-filled message, type: text }
           - name: featured
             label: Featured work section (projects ticked "Featured" appear here)
             type: object
