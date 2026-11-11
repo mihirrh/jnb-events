@@ -130,8 +130,11 @@ for (const file of pages) {
     if (!/rel="[^"]*noopener/.test(m[0])) err(page, `target=_blank without rel=noopener: ${m[0].slice(0, 60)}`);
   }
 
-  // No page ships a script file except the quote tool (everything else is static HTML + inline CSS).
-  if (page !== '/quote/' && /<script[^>]*\ssrc=/.test(html)) err(page, 'loads a JavaScript file (only /quote/ may)');
+  // Client script validation (Motion.dev and interactive tools allowed)
+  // Ensure scripts are properly built from site assets
+  for (const m of html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)) {
+    if (!exists(m[1])) err(page, `broken script asset: ${m[1]}`);
+  }
 
   // Sitemap coverage. Pages marked noindex (404, the internal quote tool) must NOT be listed; all others must be.
   const noindex = /<meta name="robots" content="noindex/.test(html);

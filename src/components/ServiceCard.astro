@@ -23,7 +23,7 @@ const href = `/services/${service.id}/`;
 
 {
   variant === 'feature' ? (
-    <a href={href} class:list={['group block no-underline max-sm:grid max-sm:grid-cols-[2fr_3fr] max-sm:items-start max-sm:gap-x-5', className]}>
+    <a href={href} data-tilt class:list={['group block no-underline max-sm:grid max-sm:grid-cols-[2fr_3fr] max-sm:items-start max-sm:gap-x-5 transition-transform duration-300', className]}>
       <Img src={service.data.image} alt={service.data.imageAlt} ratio={ratio} sizes={sizes} class="media-zoom max-sm:!aspect-[4/5]" reveal />
       <div class="mt-4 grid grid-cols-[auto_1fr] gap-x-4 max-sm:mt-0">
         <span class="numeral-sm pt-1 text-2xl" aria-hidden="true">{n}</span>

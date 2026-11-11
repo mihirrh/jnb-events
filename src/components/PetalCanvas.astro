@@ -1,0 +1,151 @@
+---
+/**
+ * PetalCanvas.astro
+ * Subtle floating luxury gold and blush rose petals for hero and ceremonial banners.
+ * Physics: fluid sinusoidal drift, gentle 3D rotation, and automatic viewport pause.
+ */
+interface Props {
+  class?: string;
+  count?: number;
+}
+const { class: className = '', count = 18 } = Astro.props;
+---
+
+<div class:list={['pointer-events-none absolute inset-0 z-10 overflow-hidden', className]} aria-hidden="true" data-petal-canvas data-petal-count={count}>
+  <canvas class="h-full w-full opacity-80"></canvas>
+</div>
+
+<script>
+  function initPetalCanvases() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const wrappers = document.querySelectorAll<HTMLElement>('[data-petal-canvas]');
+
+    wrappers.forEach((wrapper) => {
+      const canvas = wrapper.querySelector('canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let width = (canvas.width = wrapper.clientWidth);
+      let height = (canvas.height = wrapper.clientHeight);
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = wrapper.clientWidth;
+        height = canvas.height = wrapper.clientHeight;
+      });
+
+      type PetalHue = 'gold' | 'blush' | 'cream';
+
+      interface Petal {
+        x: number;
+        y: number;
+        size: number;
+        speedY: number;
+        speedX: number;
+        angle: number;
+        angularSpeed: number;
+        flip: number;
+        flipSpeed: number;
+        opacity: number;
+        hue: PetalHue;
+      }
+
+      const petals: Petal[] = [];
+      const configuredCount = parseInt(wrapper.getAttribute('data-petal-count') || '18', 10);
+      const petalCount = window.innerWidth < 768 ? Math.min(configuredCount, 10) : configuredCount;
+
+      const colors: Record<PetalHue, string> = {
+        gold: 'rgba(214, 179, 106, ',
+        blush: 'rgba(234, 215, 208, ',
+        cream: 'rgba(250, 247, 242, ',
+      };
+
+      for (let i = 0; i < petalCount; i++) {
+        petals.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: 6 + Math.random() * 8,
+          speedY: 0.4 + Math.random() * 0.6,
+          speedX: (Math.random() - 0.5) * 0.4,
+          angle: Math.random() * Math.PI * 2,
+          angularSpeed: (Math.random() - 0.5) * 0.02,
+          flip: Math.random() * Math.PI,
+          flipSpeed: 0.01 + Math.random() * 0.02,
+          opacity: 0.2 + Math.random() * 0.45,
+          hue: Math.random() > 0.4 ? 'gold' : Math.random() > 0.5 ? 'blush' : 'cream',
+        });
+      }
+
+      let animationFrameId: number;
+      let isVisible = true;
+
+      // Pause when out of view for maximum battery & GPU efficiency
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            isVisible = e.isIntersecting;
+            if (isVisible) {
+              render();
+            } else {
+              cancelAnimationFrame(animationFrameId);
+            }
+          });
+        },
+        { threshold: 0.05 }
+      );
+      observer.observe(wrapper);
+
+      function drawPetal(p: Petal) {
+        if (!ctx) return;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.scale(1, Math.sin(p.flip));
+
+        ctx.fillStyle = colors[p.hue] + p.opacity + ')';
+        ctx.beginPath();
+        // Luxury curved lotus/rose petal shape
+        ctx.moveTo(0, -p.size);
+        ctx.bezierCurveTo(p.size * 0.75, -p.size * 0.6, p.size * 0.75, p.size * 0.6, 0, p.size);
+        ctx.bezierCurveTo(-p.size * 0.75, p.size * 0.6, -p.size * 0.75, -p.size * 0.6, 0, -p.size);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      function render() {
+        if (!isVisible || !ctx) return;
+        ctx.clearRect(0, 0, width, height);
+
+        for (const p of petals) {
+          p.y += p.speedY;
+          p.x += p.speedX + Math.sin(p.angle) * 0.35;
+          p.angle += p.angularSpeed;
+          p.flip += p.flipSpeed;
+
+          // Recycle petals
+          if (p.y > height + 20) {
+            p.y = -20;
+            p.x = Math.random() * width;
+          }
+          if (p.x < -20) p.x = width + 20;
+          if (p.x > width + 20) p.x = -20;
+
+          drawPetal(p);
+        }
+
+        animationFrameId = requestAnimationFrame(render);
+      }
+
+      render();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPetalCanvases);
+  } else {
+    initPetalCanvases();
+  }
+</script>
