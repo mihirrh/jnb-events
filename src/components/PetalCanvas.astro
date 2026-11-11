@@ -52,6 +52,17 @@ const { class: className = '' } = Astro.props;
 
 <script is:inline>
   (function () {
+    /**
+     * =========================================================================
+     * 🌸 1. COLOR PALETTES (Tuning Petal Colors & Highlights)
+     * =========================================================================
+     * Modify RGB / alpha values below to adjust petal shades:
+     * - `frontTop` / `frontBase`: Linear gradient colors for front facing petal.
+     * - `frontHighlight`: Edge rim light stroke color.
+     * - `backTop` / `backBase`: Colors shown when the petal flips in 3D.
+     * - `vein`: Color of the central organic spine line.
+     * - `isGold`: If true, activates an extra radial specular shimmer highlight.
+     */
     const PALETTES = [
       // 0: Soft Blush Rose (delicate romantic pink with warm coral undertone)
       {
@@ -95,6 +106,15 @@ const { class: className = '' } = Astro.props;
       },
     ];
 
+    /**
+     * =========================================================================
+     * 🍃 2. ORGANIC PETAL SILHOUETTES
+     * =========================================================================
+     * Uses Bézier curves to create natural organic silhouettes.
+     * Shape 0: Classical Cupped Rose Petal (indented tip, wide body)
+     * Shape 1: Elongated Ruffled Petal (asymmetrical drift)
+     * Shape 2: Broad Velvet Petal (round, full luxury mandap petal)
+     */
     function drawPetalPath(ctx, shape, w, h) {
       ctx.beginPath();
       if (shape === 0) {
@@ -145,47 +165,70 @@ const { class: className = '' } = Astro.props;
         let petals = [];
         let lastTime = performance.now();
 
+        /**
+         * =====================================================================
+         * 🔢 3. PETAL COUNT / DENSITY BY SCREEN SIZE
+         * =====================================================================
+         * Adjust these values to increase or decrease how many petals appear:
+         * - Mobile (< 640px): Lower number to keep hero copy readable.
+         * - Tablet (< 1024px): Balanced density for mid-size screens.
+         * - Desktop (>= 1024px): High-end cinematic density with negative space.
+         */
         function getPetalCount() {
           const w = window.innerWidth;
-          if (w < 640) return 8;
-          if (w < 1024) return 13;
-          return 19;
+          if (w < 640) return 8;    // Mobile petal count
+          if (w < 1024) return 13;  // Tablet petal count
+          return 19;                // Desktop petal count
         }
 
+        /**
+         * =====================================================================
+         * 🎨 4. PALETTE PROBABILITY DISTRIBUTION
+         * =====================================================================
+         * 45% Soft Blush Pink, 25% Warm Rose, 18% Ivory/Champagne, 12% Antique Gold
+         */
         function pickPalette() {
           const rand = Math.random();
-          if (rand < 0.45) return PALETTES[0];
-          if (rand < 0.70) return PALETTES[1];
-          if (rand < 0.88) return PALETTES[2];
-          return PALETTES[3];
+          if (rand < 0.45) return PALETTES[0]; // 45% Soft Blush Rose
+          if (rand < 0.70) return PALETTES[1]; // 25% Warm Velvet Rose
+          if (rand < 0.88) return PALETTES[2]; // 18% Warm Ivory / Champagne
+          return PALETTES[3];                  // 12% Antique Gold shimmer
         }
 
+        /**
+         * =====================================================================
+         * ⚙️ 5. PETAL INITIALIZATION & PHYSICS PARAMETERS
+         * =====================================================================
+         * Creates an individual petal with depth, scale, speed, sway, and tumble.
+         */
         function createPetal(initialY) {
+          // Depth layer: 0 = Background (35%), 1 = Midground (40%), 2 = Foreground (25%)
           const depth = Math.random() < 0.35 ? 0 : Math.random() < 0.75 ? 1 : 2;
 
           let scale = 1;
-          let vy = 1;
+          let vy = 1;      // Base vertical falling speed (px per frame at 60fps)
           let opacity = 0.8;
 
           if (depth === 0) {
-            // Background: small, soft, gentle depth
+            // Layer 0 - Background: smaller, softer, gentler fall
             scale = 0.5 + Math.random() * 0.2;
             vy = 0.75 + Math.random() * 0.45;
             opacity = 0.48 + Math.random() * 0.2;
           } else if (depth === 1) {
-            // Midground: standard size, crisp elegant fall
+            // Layer 1 - Midground: standard size, crisp elegant fall
             scale = 0.78 + Math.random() * 0.25;
             vy = 1.35 + Math.random() * 0.65;
             opacity = 0.72 + Math.random() * 0.2;
           } else {
-            // Foreground: larger, rich detail, dynamic flutter
+            // Layer 2 - Foreground: larger, rich detail, dynamic flutter
             scale = 1.08 + Math.random() * 0.28;
             vy = 1.95 + Math.random() * 0.85;
             opacity = 0.85 + Math.random() * 0.14;
           }
 
-          const baseW = 18 + Math.random() * 6;
-          const baseH = 24 + Math.random() * 8;
+          // Base dimensions (pixels) before scaling
+          const baseW = 18 + Math.random() * 6; // Petal width: 18 - 24px
+          const baseH = 24 + Math.random() * 8; // Petal height: 24 - 32px
 
           return {
             x: Math.random() * (width || window.innerWidth),
@@ -195,24 +238,35 @@ const { class: className = '' } = Astro.props;
             baseH: baseH,
             scale: scale,
             opacity: opacity,
-            shape: Math.floor(Math.random() * 3),
+            shape: Math.floor(Math.random() * 3), // Pick one of 3 organic shapes
             palette: pickPalette(),
 
+            // Vertical & horizontal velocities
             vy: vy,
             vx: (Math.random() - 0.5) * 0.35,
-            swayAmp: 24 + Math.random() * 28 + depth * 10,
-            swayFreq: 0.0016 + Math.random() * 0.001,
-            swayPhase: Math.random() * Math.PI * 2,
 
-            yaw: Math.random() * Math.PI * 2,
-            yawSpeed: (Math.random() - 0.5) * 0.012,
-            pitch: Math.random() * Math.PI * 2,
-            pitchSpeed: 0.012 + Math.random() * 0.02,
-            roll: Math.random() * Math.PI * 2,
-            rollSpeed: 0.014 + Math.random() * 0.024,
+            // Sine-wave sway settings (side-to-side oscillation)
+            swayAmp: 24 + Math.random() * 28 + depth * 10, // Amplitude in pixels
+            swayFreq: 0.0016 + Math.random() * 0.001,      // Frequency (oscillation speed)
+            swayPhase: Math.random() * Math.PI * 2,        // Random starting phase
+
+            // 3D rotation / tumbling speeds (radians per frame)
+            yaw: Math.random() * Math.PI * 2,              // Heading rotation (Z-axis)
+            yawSpeed: (Math.random() - 0.5) * 0.012,       // Heading speed
+            pitch: Math.random() * Math.PI * 2,            // Forward/backward flip (X-axis)
+            pitchSpeed: 0.012 + Math.random() * 0.02,      // Flip speed
+            roll: Math.random() * Math.PI * 2,             // Side-to-side roll (Y-axis)
+            rollSpeed: 0.014 + Math.random() * 0.024,      // Roll speed
           };
         }
 
+        /**
+         * =====================================================================
+         * 👥 6. COMPANION CLUSTER SETTINGS
+         * =====================================================================
+         * Occasionally pairs two petals together (like natural falling clusters).
+         * Probability: 0.08 (8% chance of pairing).
+         */
         function setupPetals() {
           const count = getPetalCount();
           petals = [];
@@ -221,6 +275,7 @@ const { class: className = '' } = Astro.props;
             const initialY = Math.random() * (height || window.innerHeight);
             const petal = createPetal(initialY);
 
+            // Pair with companion petal with 8% probability
             if (i > 0 && Math.random() < 0.08 && !petals[i - 1].isClusterLeader) {
               petal.isClusterLeader = true;
               petal.clusterOffsetX = 12 + Math.random() * 16;
@@ -263,8 +318,18 @@ const { class: className = '' } = Astro.props;
           ctx.save();
           ctx.scale(dpr, dpr);
 
+          /**
+           * ===================================================================
+           * 🌬️ 7. GLOBAL WIND & FLUID DYNAMICS (Render Loop)
+           * ===================================================================
+           * - `globalWind`: Multi-harmonic gentle breeze shifting left/right.
+           * - `dragFactor`: Aerodynamic lift — petals fall slower when facing flat
+           *                 and slice down quicker when edge-on.
+           * - `rollGlide`: Lateral drift generated when the petal banks/rolls.
+           */
           const globalWind = Math.sin(now * 0.0005) * 0.4 + Math.sin(now * 0.0013) * 0.2;
 
+          // Render back layers first (background -> midground -> foreground)
           petals.sort(function (a, b) {
             return a.depth - b.depth;
           });
@@ -272,20 +337,21 @@ const { class: className = '' } = Astro.props;
           for (let i = 0; i < petals.length; i++) {
             const p = petals[i];
 
+            // Update 3D rotations
             p.yaw += p.yawSpeed;
             p.pitch += p.pitchSpeed;
             p.roll += p.rollSpeed;
 
             const cosRoll = Math.cos(p.roll);
             const cosPitch = Math.cos(p.pitch);
-            const isBack = cosRoll * cosPitch < 0;
+            const isBack = cosRoll * cosPitch < 0; // True when showing underside of petal
 
-            // Aerodynamic drag & lift: flat orientation floats, edge slices down
+            // Aerodynamic drag & lift calculation
             const orientation = Math.abs(cosRoll * cosPitch);
             const dragFactor = 0.72 + 0.55 * (1 - orientation * 0.6);
             p.y += (p.vy * dragFactor + 0.25) * 60 * delta;
 
-            // Lateral glide when rolling
+            // Lateral glide when rolling + dual sine wave sway + global wind
             const rollGlide = Math.sin(p.roll) * 0.5 * (p.depth + 1);
             const sway = Math.sin(now * p.swayFreq + p.swayPhase) * p.swayAmp;
             const currentX = p.x + sway + globalWind * (p.depth + 1) * 24 + rollGlide;
