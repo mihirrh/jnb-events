@@ -38,7 +38,7 @@ const { class: className = '' } = Astro.props;
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 1.4s cubic-bezier(0.22, 0.7, 0.2, 1);
+    transition: opacity 1.2s cubic-bezier(0.22, 0.7, 0.2, 1);
   }
   .petal-canvas.is-ready {
     opacity: 1;
@@ -55,42 +55,42 @@ const { class: className = '' } = Astro.props;
     const PALETTES = [
       // 0: Soft Blush Rose (delicate romantic pink with warm coral undertone)
       {
-        frontTop: 'rgba(247, 198, 192, 0.92)',
-        frontBase: 'rgba(196, 92, 100, 0.88)',
-        frontHighlight: 'rgba(255, 242, 240, 0.55)',
-        backTop: 'rgba(242, 216, 212, 0.85)',
-        backBase: 'rgba(182, 102, 108, 0.8)',
-        vein: 'rgba(215, 115, 122, 0.35)',
+        frontTop: 'rgba(248, 202, 196, 0.94)',
+        frontBase: 'rgba(202, 94, 102, 0.92)',
+        frontHighlight: 'rgba(255, 244, 242, 0.65)',
+        backTop: 'rgba(244, 220, 216, 0.88)',
+        backBase: 'rgba(186, 106, 112, 0.84)',
+        vein: 'rgba(218, 118, 126, 0.4)',
         isGold: false,
       },
       // 1: Warm Rose / Velvet Rose (richer petal tone for depth)
       {
-        frontTop: 'rgba(238, 168, 162, 0.9)',
-        frontBase: 'rgba(172, 60, 72, 0.88)',
-        frontHighlight: 'rgba(255, 232, 230, 0.5)',
-        backTop: 'rgba(228, 180, 174, 0.82)',
-        backBase: 'rgba(154, 66, 76, 0.78)',
-        vein: 'rgba(190, 85, 95, 0.35)',
+        frontTop: 'rgba(240, 172, 166, 0.94)',
+        frontBase: 'rgba(176, 62, 74, 0.92)',
+        frontHighlight: 'rgba(255, 235, 232, 0.6)',
+        backTop: 'rgba(230, 184, 178, 0.86)',
+        backBase: 'rgba(158, 68, 78, 0.82)',
+        vein: 'rgba(194, 88, 98, 0.4)',
         isGold: false,
       },
       // 2: Warm Ivory & Champagne (luxurious Indian bridal mandap florals)
       {
-        frontTop: 'rgba(255, 252, 246, 0.95)',
-        frontBase: 'rgba(228, 208, 178, 0.85)',
-        frontHighlight: 'rgba(255, 255, 255, 0.7)',
-        backTop: 'rgba(248, 242, 232, 0.88)',
-        backBase: 'rgba(216, 194, 162, 0.8)',
-        vein: 'rgba(210, 186, 152, 0.32)',
+        frontTop: 'rgba(255, 253, 248, 0.96)',
+        frontBase: 'rgba(232, 212, 182, 0.9)',
+        frontHighlight: 'rgba(255, 255, 255, 0.8)',
+        backTop: 'rgba(250, 244, 235, 0.9)',
+        backBase: 'rgba(220, 198, 166, 0.85)',
+        vein: 'rgba(214, 190, 156, 0.38)',
         isGold: false,
       },
       // 3: Antique Gold Accent (subtle royal shimmer, ~12% frequency)
       {
-        frontTop: 'rgba(244, 218, 142, 0.95)',
-        frontBase: 'rgba(184, 149, 74, 0.9)',
-        frontHighlight: 'rgba(255, 246, 210, 0.75)',
-        backTop: 'rgba(218, 184, 112, 0.88)',
-        backBase: 'rgba(158, 110, 18, 0.85)',
-        vein: 'rgba(255, 238, 168, 0.45)',
+        frontTop: 'rgba(246, 222, 148, 0.96)',
+        frontBase: 'rgba(190, 154, 78, 0.94)',
+        frontHighlight: 'rgba(255, 248, 216, 0.85)',
+        backTop: 'rgba(224, 190, 118, 0.92)',
+        backBase: 'rgba(164, 116, 22, 0.88)',
+        vein: 'rgba(255, 240, 174, 0.55)',
         isGold: true,
       },
     ];
@@ -147,9 +147,9 @@ const { class: className = '' } = Astro.props;
 
         function getPetalCount() {
           const w = window.innerWidth;
-          if (w < 640) return 14;
-          if (w < 1024) return 24;
-          return 34;
+          if (w < 640) return 16;
+          if (w < 1024) return 26;
+          return 36;
         }
 
         function pickPalette() {
@@ -168,17 +168,20 @@ const { class: className = '' } = Astro.props;
           let opacity = 0.8;
 
           if (depth === 0) {
-            scale = 0.48 + Math.random() * 0.2;
-            vy = 0.32 + Math.random() * 0.28;
-            opacity = 0.4 + Math.random() * 0.22;
+            // Background: small, soft, gentle depth
+            scale = 0.5 + Math.random() * 0.2;
+            vy = 0.75 + Math.random() * 0.45;
+            opacity = 0.48 + Math.random() * 0.2;
           } else if (depth === 1) {
-            scale = 0.75 + Math.random() * 0.25;
-            vy = 0.58 + Math.random() * 0.35;
-            opacity = 0.65 + Math.random() * 0.22;
+            // Midground: standard size, crisp elegant fall
+            scale = 0.78 + Math.random() * 0.25;
+            vy = 1.35 + Math.random() * 0.65;
+            opacity = 0.72 + Math.random() * 0.2;
           } else {
-            scale = 1.05 + Math.random() * 0.28;
-            vy = 0.85 + Math.random() * 0.45;
-            opacity = 0.8 + Math.random() * 0.18;
+            // Foreground: larger, rich detail, dynamic flutter
+            scale = 1.08 + Math.random() * 0.28;
+            vy = 1.95 + Math.random() * 0.85;
+            opacity = 0.85 + Math.random() * 0.14;
           }
 
           const baseW = 18 + Math.random() * 6;
@@ -196,17 +199,17 @@ const { class: className = '' } = Astro.props;
             palette: pickPalette(),
 
             vy: vy,
-            vx: (Math.random() - 0.5) * 0.25,
-            swayAmp: 22 + Math.random() * 26 + depth * 8,
-            swayFreq: 0.0012 + Math.random() * 0.0008,
+            vx: (Math.random() - 0.5) * 0.35,
+            swayAmp: 24 + Math.random() * 28 + depth * 10,
+            swayFreq: 0.0016 + Math.random() * 0.001,
             swayPhase: Math.random() * Math.PI * 2,
 
             yaw: Math.random() * Math.PI * 2,
-            yawSpeed: (Math.random() - 0.5) * 0.008,
+            yawSpeed: (Math.random() - 0.5) * 0.012,
             pitch: Math.random() * Math.PI * 2,
-            pitchSpeed: 0.006 + Math.random() * 0.012,
+            pitchSpeed: 0.012 + Math.random() * 0.02,
             roll: Math.random() * Math.PI * 2,
-            rollSpeed: 0.008 + Math.random() * 0.016,
+            rollSpeed: 0.014 + Math.random() * 0.024,
           };
         }
 
@@ -260,7 +263,7 @@ const { class: className = '' } = Astro.props;
           ctx.save();
           ctx.scale(dpr, dpr);
 
-          const globalWind = Math.sin(now * 0.0004) * 0.35 + Math.sin(now * 0.0011) * 0.15;
+          const globalWind = Math.sin(now * 0.0005) * 0.4 + Math.sin(now * 0.0013) * 0.2;
 
           petals.sort(function (a, b) {
             return a.depth - b.depth;
@@ -277,11 +280,15 @@ const { class: className = '' } = Astro.props;
             const cosPitch = Math.cos(p.pitch);
             const isBack = cosRoll * cosPitch < 0;
 
-            const dragFactor = 1 - 0.25 * Math.abs(cosRoll * cosPitch);
-            p.y += (p.vy * dragFactor + 0.15) * 60 * delta;
+            // Aerodynamic drag & lift: flat orientation floats, edge slices down
+            const orientation = Math.abs(cosRoll * cosPitch);
+            const dragFactor = 0.72 + 0.55 * (1 - orientation * 0.6);
+            p.y += (p.vy * dragFactor + 0.25) * 60 * delta;
 
+            // Lateral glide when rolling
+            const rollGlide = Math.sin(p.roll) * 0.5 * (p.depth + 1);
             const sway = Math.sin(now * p.swayFreq + p.swayPhase) * p.swayAmp;
-            const currentX = p.x + sway + globalWind * (p.depth + 1) * 20;
+            const currentX = p.x + sway + globalWind * (p.depth + 1) * 24 + rollGlide;
 
             if (p.y > height + 50 || currentX < -80 || currentX > width + 80) {
               p.y = -35 - Math.random() * 60;
@@ -315,18 +322,18 @@ const { class: className = '' } = Astro.props;
 
             if (!isBack) {
               ctx.strokeStyle = p.palette.frontHighlight;
-              ctx.lineWidth = 0.8;
+              ctx.lineWidth = 0.85;
               ctx.stroke();
 
               ctx.beginPath();
               ctx.moveTo(0, h * 0.42);
               ctx.quadraticCurveTo(w * 0.08, 0, 0, -h * 0.3);
               ctx.strokeStyle = p.palette.vein;
-              ctx.lineWidth = 0.75;
+              ctx.lineWidth = 0.8;
               ctx.stroke();
             } else {
-              ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
-              ctx.lineWidth = 0.6;
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+              ctx.lineWidth = 0.65;
               ctx.stroke();
             }
 
@@ -334,7 +341,7 @@ const { class: className = '' } = Astro.props;
               const shineX = Math.sin(p.roll * 2) * w * 0.2;
               const shineY = Math.cos(p.pitch * 2) * h * 0.2;
               const goldGlow = ctx.createRadialGradient(shineX, shineY, 0, shineX, shineY, w * 0.45);
-              goldGlow.addColorStop(0, 'rgba(255, 248, 220, 0.45)');
+              goldGlow.addColorStop(0, 'rgba(255, 248, 220, 0.55)');
               goldGlow.addColorStop(1, 'rgba(255, 248, 220, 0)');
               ctx.fillStyle = goldGlow;
               ctx.fill();
