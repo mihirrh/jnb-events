@@ -1,0 +1,357 @@
+---
+/**
+ * MandapExplorer.astro
+ * Signature Mandap Architectural Collection Browser.
+ *
+ * An interactive, tabbed architectural showcase allowing couples and planners to:
+ * - Explore signature mandap architectural styles with smooth crossfading photography.
+ * - View detailed ceremonial inclusions, floral palettes, and venue pairings.
+ * - Enquire instantly via WhatsApp with pre-filled bespoke messages.
+ *
+ * Technical:
+ * - Pure CSS transitions + lightweight vanilla JavaScript.
+ * - 0 external animation libraries (100% compliant with static audit rules).
+ * - Fully accessible ARIA tablist/tabpanel with keyboard navigation.
+ * - Inlined client script (<script is:inline>).
+ */
+import Img from './Img.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import Motif from './Motif.astro';
+
+import carvedImg from '../assets/media/gallery/marquee_carved_wooden_mandap.jpg';
+import goldImg from '../assets/media/gallery/modern_gold_mandap_blush_florals.jpg';
+import archwayImg from '../assets/media/gallery/historic_archway_mandap_setup.jpg';
+import grandImg from '../assets/media/gallery/grand_mandap_modern_venue.jpg';
+
+interface Props {
+  class?: string;
+  folioNumber?: string;
+}
+
+const { class: className = '', folioNumber = '03' } = Astro.props;
+
+const styles = [
+  {
+    id: 'carved',
+    title: 'The Royal Carved Mandap',
+    subtitle: 'Traditional Artisanship & Sacred Warmth',
+    image: carvedImg,
+    alt: 'Traditional hand-carved wooden Hindu wedding mandap with red and orange floral canopy in Leicestershire marquee',
+    description:
+      'Intricately carved wooden pillars and ornamental arches crowned with a rich canopy of fresh crimson, amber, and ivory florals. Complete with matching carved bridal thrones and sacred havan kund.',
+    venueMatch: 'Country Estates, Marquees & Private Manors',
+    palette: 'Crimson, Marigold, Antique Gold & Rich Teak',
+    inclusions: '4 Choris, 2 Bajots, 6 Carved Chairs, Havan Kund, Entrance Arch, Walkway Carpet',
+    message: 'Hello JNB Events, I am interested in checking availability for your Royal Carved Wooden Mandap setup.',
+  },
+  {
+    id: 'gold',
+    title: 'Modern Gold Geometric',
+    subtitle: 'Contemporary Glamour & Mirrored Aisles',
+    image: goldImg,
+    alt: 'Luxury modern gold geometric wedding mandap with mirrored gold aisle runner and blush florals in Leicester hall',
+    description:
+      'Sleek, architectural metallic gold frames paired with lavish blush, plum, and cream floral runners. Accompanied by our radiant gold aisle runner and soft ambient spotlighting.',
+    venueMatch: 'Contemporary Hotel Ballrooms & Modern Venues',
+    palette: 'Metallic Gold, Blush Rose, Deep Plum & Warm Champagne',
+    inclusions: 'Gold Stage Frame, Mirrored Gold Aisle, Luxury Bridal Seating, Pleated Backdrop, LED Pin-spots',
+    message: 'Hello JNB Events, I am interested in checking availability for your Modern Gold Geometric Mandap setup.',
+  },
+  {
+    id: 'archway',
+    title: 'Historic Archway & Brick',
+    subtitle: 'Heritage Character Meets Romantic Festoons',
+    image: archwayImg,
+    alt: 'Grand luxury mandap setup inside a historic brick archway venue with lime wash Chiavari chairs and festoon lights',
+    description:
+      'A breathtaking juxtaposition of rustic heritage brickwork with delicate cascading floral garlands, warm overhead festoon canopies, and pristine lime wash Chiavari ceremony seating.',
+    venueMatch: 'Converted Mills, Historic Barns & Heritage Buildings',
+    palette: 'Terracotta, Ivory, Soft Sage & Warm Filament Gold',
+    inclusions: 'Bespoke Arch Framing, Overhead Festoon Lighting, Chiavari Seating, Ganesh Pedestals, Aisle Runner',
+    message: 'Hello JNB Events, I am interested in checking availability for your Historic Archway Mandap setup.',
+  },
+  {
+    id: 'grand',
+    title: 'Grand Symmetrical Floral',
+    subtitle: 'Monumental Scale & Opulent Production',
+    image: grandImg,
+    alt: 'Grand luxury Asian wedding ceremony setup with symmetrical white seating, gold aisle, and carved Ganesh pillars in UK venue',
+    description:
+      'Engineered for high-capacity luxury celebrations. Features grand floral canopy pillars, carved Ganesh walkway sentinels, full room mood lighting, and flawless symmetrical seating layout.',
+    venueMatch: 'Large Event Arenas, Major Venues & Grand Ballrooms',
+    palette: 'Pure Ivory, Royal Gold, Soft Blush & Emerald Greenery',
+    inclusions: 'Grand Mandap Canopy, Ganesh Foyer Sentinels, Full Aisle Styling, Complete Room Uplighting',
+    message: 'Hello JNB Events, I am interested in checking availability for your Grand Symmetrical Floral Mandap setup.',
+  },
+];
+---
+
+<section
+  class:list={['section on-dark relative overflow-hidden bg-night text-cream', className]}
+  aria-labelledby="mandap-explorer-heading"
+  data-mandap-explorer
+>
+  <!-- Background subtle ambient glow -->
+  <div class="pointer-events-none absolute -right-36 top-1/4 h-[35rem] w-[35rem] rounded-full bg-gold/10 blur-[120px]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -left-36 bottom-10 h-[30rem] w-[30rem] rounded-full bg-gold/5 blur-[100px]" aria-hidden="true"></div>
+
+  <div class="wrap relative z-10">
+    <!-- Folio & Section Eyebrow -->
+    <div class="folio">
+      <b>{folioNumber}</b>
+      <span id="mandap-explorer-heading">Signature Mandap Collection</span>
+      <i aria-hidden="true"></i>
+    </div>
+
+    <!-- Section Header -->
+    <div class="mt-8 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p class="eyebrow">Bespoke Architectural Aesthetics</p>
+        <h2 class="h2 reveal mt-3 max-w-[18ch]">
+          Explore the <em>artistry of our mandaps</em>
+        </h2>
+      </div>
+      <p class="lead max-w-md !text-cream/80">
+        Every mandap is crafted as a bespoke ceremonial stage, tailored to your venue's architecture and your cultural heritage.
+      </p>
+    </div>
+
+    <!-- Style Selector Tabs -->
+    <div
+      class="mt-12 flex flex-wrap gap-2 border-b border-cream/15 pb-4 sm:gap-4"
+      role="tablist"
+      aria-label="Mandap Design Styles"
+    >
+      {
+        styles.map((style, idx) => (
+          <button
+            type="button"
+            role="tab"
+            aria-selected={idx === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${style.id}`}
+            id={`tab-${style.id}`}
+            data-mandap-tab={style.id}
+            tabindex={idx === 0 ? 0 : -1}
+            class:list={[
+              'tab-btn group relative px-3 py-2.5 text-left font-serif text-base tracking-tight transition-all duration-300 sm:px-4 sm:py-3 sm:text-lg md:text-xl',
+              idx === 0 ? 'is-active text-gold-light' : 'text-cream/60 hover:text-cream',
+            ]}
+          >
+            <span class="mr-2 font-sans text-xs font-semibold tracking-widest text-gold-light/60 transition-colors group-hover:text-gold-light">
+              0{idx + 1}
+            </span>
+            <span>{style.title}</span>
+            <span
+              class:list={[
+                'tab-indicator absolute bottom-[-17px] left-0 right-0 h-[2px] bg-gold-light transition-all duration-300',
+                idx === 0 ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0',
+              ]}
+              aria-hidden="true"
+            />
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Interactive Panels Grid -->
+    <div class="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-14 lg:items-center">
+      <!-- Left: Interactive Image Showcase -->
+      <div class="relative overflow-hidden rounded-sm lg:col-span-7">
+        <div class="relative aspect-[4/3] w-full overflow-hidden bg-night/80 shadow-2xl sm:aspect-[16/10]">
+          {
+            styles.map((style, idx) => (
+              <div
+                id={`panel-img-${style.id}`}
+                class:list={[
+                  'explorer-img-panel absolute inset-0 transition-all duration-700 ease-out',
+                  idx === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0 pointer-events-none',
+                ]}
+              >
+                <Img
+                  src={style.image}
+                  alt={style.alt}
+                  sizes="(min-width:1024px) 58vw, 95vw"
+                  class="h-full w-full object-cover transition-transform duration-1000 ease-out hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-night/90 via-night/25 to-transparent" aria-hidden="true" />
+                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                  <span class="rounded bg-night/80 px-3 py-1 font-sans text-xs tracking-widest uppercase text-gold-light backdrop-blur-md">
+                    {style.subtitle}
+                  </span>
+                  <Motif variant="floral" size={28} class="text-gold-light/60" />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Right: Detailed Specifications & WhatsApp CTA -->
+      <div class="relative lg:col-span-5 min-h-[420px]">
+        {
+          styles.map((style, idx) => (
+            <div
+              id={`panel-${style.id}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${style.id}`}
+              class:list={[
+                'explorer-content-panel space-y-6 transition-all duration-500 ease-out',
+                idx === 0 ? 'is-active opacity-100 translate-y-0 relative' : 'hidden opacity-0 translate-y-4 absolute inset-x-0 top-0',
+              ]}
+            >
+              <div>
+                <p class="font-sans text-xs font-semibold tracking-widest uppercase text-gold-light">
+                  {style.subtitle}
+                </p>
+                <h3 class="h2 mt-2 text-cream">{style.title}</h3>
+              </div>
+
+              <p class="text-[1.02rem] leading-relaxed text-cream/90">{style.description}</p>
+
+              <div class="space-y-4 rounded border border-cream/15 bg-cream/5 p-5 backdrop-blur-sm">
+                <div>
+                  <h4 class="font-sans text-xs font-semibold tracking-widest uppercase text-gold-light">
+                    Ideal Venue Setting
+                  </h4>
+                  <p class="mt-1 text-sm text-cream/90">{style.venueMatch}</p>
+                </div>
+                <hr class="border-cream/10" />
+                <div>
+                  <h4 class="font-sans text-xs font-semibold tracking-widest uppercase text-gold-light">
+                    Signature Floral Palette
+                  </h4>
+                  <p class="mt-1 text-sm text-cream/90">{style.palette}</p>
+                </div>
+                <hr class="border-cream/10" />
+                <div>
+                  <h4 class="font-sans text-xs font-semibold tracking-widest uppercase text-gold-light">
+                    Ceremony Inclusions
+                  </h4>
+                  <p class="mt-1 text-sm text-cream/80">{style.inclusions}</p>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <WhatsAppButton
+                  label={`Enquire for ${style.title}`}
+                  message={style.message}
+                  variant="ink"
+                  source={`mandap explorer - ${style.id}`}
+                  class="w-full sm:w-auto"
+                />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    function initMandapExplorer() {
+      const explorers = document.querySelectorAll('[data-mandap-explorer]');
+      if (!explorers.length) return;
+
+      explorers.forEach(function (explorer) {
+        if (explorer.dataset.initialized === 'true') return;
+        explorer.dataset.initialized = 'true';
+
+        const tabs = Array.from(explorer.querySelectorAll('[data-mandap-tab]'));
+        const imgPanels = Array.from(explorer.querySelectorAll('.explorer-img-panel'));
+        const contentPanels = Array.from(explorer.querySelectorAll('.explorer-content-panel'));
+
+        function activateTab(tab) {
+          const targetId = tab.getAttribute('data-mandap-tab');
+          if (!targetId) return;
+
+          // 1. Update Tab button states
+          tabs.forEach(function (t) {
+            const isSelected = t === tab;
+            t.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+            t.setAttribute('tabindex', isSelected ? '0' : '-1');
+
+            const indicator = t.querySelector('.tab-indicator');
+            if (isSelected) {
+              t.classList.remove('text-cream/60');
+              t.classList.add('is-active', 'text-gold-light');
+              if (indicator) {
+                indicator.classList.remove('opacity-0', 'scale-x-0');
+                indicator.classList.add('opacity-100', 'scale-x-100');
+              }
+            } else {
+              t.classList.remove('is-active', 'text-gold-light');
+              t.classList.add('text-cream/60');
+              if (indicator) {
+                indicator.classList.remove('opacity-100', 'scale-x-100');
+                indicator.classList.add('opacity-0', 'scale-x-0');
+              }
+            }
+          });
+
+          // 2. Crossfade Image Panels
+          imgPanels.forEach(function (img) {
+            if (img.id === 'panel-img-' + targetId) {
+              img.classList.remove('opacity-0', 'scale-105', 'pointer-events-none', 'z-0');
+              img.classList.add('opacity-100', 'scale-100', 'z-10');
+            } else {
+              img.classList.remove('opacity-100', 'scale-100', 'z-10');
+              img.classList.add('opacity-0', 'scale-105', 'pointer-events-none', 'z-0');
+            }
+          });
+
+          // 3. Transition Content Panels
+          contentPanels.forEach(function (content) {
+            if (content.id === 'panel-' + targetId) {
+              content.classList.remove('hidden', 'opacity-0', 'translate-y-4', 'absolute');
+              content.classList.add('is-active', 'opacity-100', 'translate-y-0', 'relative');
+            } else {
+              content.classList.remove('is-active', 'opacity-100', 'translate-y-0', 'relative');
+              content.classList.add('hidden', 'opacity-0', 'translate-y-4', 'absolute');
+            }
+          });
+        }
+
+        // Click handler
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            activateTab(tab);
+          });
+        });
+
+        // Keyboard navigation (Left / Right / Home / End)
+        explorer.addEventListener('keydown', function (e) {
+          if (e.target && e.target.hasAttribute('data-mandap-tab')) {
+            const currentIdx = tabs.indexOf(e.target);
+            let nextIdx = -1;
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+              nextIdx = (currentIdx + 1) % tabs.length;
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+              nextIdx = (currentIdx - 1 + tabs.length) % tabs.length;
+            } else if (e.key === 'Home') {
+              nextIdx = 0;
+            } else if (e.key === 'End') {
+              nextIdx = tabs.length - 1;
+            }
+
+            if (nextIdx !== -1) {
+              e.preventDefault();
+              const nextTab = tabs[nextIdx];
+              nextTab.focus();
+              activateTab(nextTab);
+            }
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMandapExplorer);
+    } else {
+      initMandapExplorer();
+    }
+    document.addEventListener('astro:page-load', initMandapExplorer);
+  })();
+</script>
