@@ -26,11 +26,11 @@
     "@fontsource-variable/instrument-sans": "^5.3.0",
     "@fontsource/bodoni-moda": "^5.3.0",
     "@fontsource/instrument-sans": "^5.3.0",
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.4.4",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.11",
     "pdfkit": "^0.20.2",
     "sharp": "^0.35.5",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
