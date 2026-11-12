@@ -6,10 +6,10 @@ logoAlt: JNB Events - Décor, DJ, Mandaps
 contact:
   whatsappNumber: 07872 340258
   whatsappMessage: "Hello JNB Events, I'd like to enquire about your wedding and event services."
-  # Add the business email here when it is ready. Until then the contact form opens WhatsApp instead.
-  email: ""
-  # Optional: paste a form-service URL (Formspree, Web3Forms etc.) to receive enquiry forms by email.
-  formEndpoint: ""
+  # Business email, shown on the site and used for the quote PDF. Enquiries are forwarded to the owner's inbox.
+  email: "contact@jnbevents.co.uk"
+  # The contact form posts to our own Cloudflare Function (functions/api/enquiry.ts), which sends the email.
+  formEndpoint: "/api/enquiry"
 location:
   locality: Leicester
   region: Leicestershire

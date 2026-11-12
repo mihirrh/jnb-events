@@ -85,11 +85,11 @@ content:
           - name: email
             label: Business email
             type: string
-            description: Leave blank until you have one. While blank, the contact form sends enquiries to WhatsApp.
+            description: Shown on the site. Leave blank to hide it.
           - name: formEndpoint
-            label: Form service URL (optional)
+            label: Form endpoint
             type: string
-            description: Paste a Formspree / Web3Forms style URL here to receive form enquiries by email.
+            description: Keep as /api/enquiry (emails enquiries to the owner). Clear it to make the form open WhatsApp/email instead.
       - name: location
         label: Business location
         type: object

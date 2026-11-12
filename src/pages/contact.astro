@@ -86,8 +86,8 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
             <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
           </div>
           <div class="field sm:col-span-2">
-            <label for="f-email">Email (optional)</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" />
+            <label for="f-email">{mode === 'endpoint' ? 'Email' : 'Email (optional)'}</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required={mode === 'endpoint'} />
           </div>
           <div class="field">
             <label for="f-date">Event date</label>
@@ -165,6 +165,13 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
         return;
       }
       const mode = form.dataset.mode;
+      // When enquiries are emailed to us, a valid reply address is required.
+      if (mode === 'endpoint' && !(form.querySelector('#f-email') as HTMLInputElement).checkValidity()) {
+        e.preventDefault();
+        show('Please enter a valid email address so we can reply to you.');
+        (form.querySelector('#f-email') as HTMLElement).focus();
+        return;
+      }
       if (mode === 'whatsapp') {
         e.preventDefault();
         window.open(`${form.dataset.wa}?text=${encodeURIComponent(summary(d))}`, '_blank', 'noopener');
