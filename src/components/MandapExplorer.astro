@@ -190,6 +190,92 @@ const galleryLinkText = data?.galleryLinkText ?? 'Category Gallery';
       </div>
     </div>
 
+    <!-- ======================= MOBILE (<768px): swipeable carousel =======================
+         One slide per style: image card with number, title and subtitle overlaid, then the
+         description, inclusions and WhatsApp CTA directly beneath. No tab list on phones. -->
+    <div
+      class="mt-6 md:hidden"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Signature mandap styles. Swipe sideways to see more."
+      data-mandap-carousel
+    >
+      <div
+        class="-mx-5 flex snap-x snap-mandatory items-start gap-3 overflow-x-auto overscroll-x-contain px-5 pb-2 scroll-px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-8 sm:px-8 sm:scroll-px-8"
+        tabindex="0"
+        data-mandap-track
+      >
+        {
+          styles.map((style, idx) => (
+            <article
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${idx + 1} of ${styles.length}: ${style.title}`}
+              data-active={idx === 0 ? 'true' : 'false'}
+              class="w-[86%] shrink-0 snap-start opacity-60 transition-opacity duration-500 ease-out data-[active=true]:opacity-100 sm:w-[70%]"
+            >
+              <div class="relative overflow-hidden rounded-sm bg-night/80 shadow-2xl">
+                <Img
+                  src={style.image}
+                  alt={style.imageAlt}
+                  sizes="(min-width:640px) 70vw, 86vw"
+                  class="!aspect-square h-full w-full"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-night/95 via-night/35 to-transparent" aria-hidden="true" />
+                <Motif variant="floral" size={28} class="absolute right-4 top-4 text-gold-light/60" />
+                <div class="absolute inset-x-0 bottom-0 p-5">
+                  <p class="font-sans text-xs font-semibold tracking-widest text-gold-light">0{idx + 1}</p>
+                  <h3 class="mt-1 font-serif text-2xl leading-tight tracking-tight text-cream">{style.title}</h3>
+                  <p class="mt-2 font-sans text-xs tracking-widest uppercase text-gold-light/90">{style.subtitle}</p>
+                </div>
+              </div>
+
+              {style.description && <p class="mt-4 text-[0.98rem] leading-relaxed text-cream/90">{style.description}</p>}
+
+              <details class="group mt-4 rounded border border-cream/15 bg-cream/5 p-4 backdrop-blur-sm">
+                <summary class="flex cursor-pointer list-none items-center justify-between font-sans text-xs font-semibold tracking-widest uppercase text-gold-light [&::-webkit-details-marker]:hidden">
+                  <span>What's Included in Your Mandap Setup</span>
+                  <span aria-hidden="true" class="ml-3 transition-transform duration-300 group-open:rotate-45">+</span>
+                </summary>
+                <div class="mt-3 grid grid-cols-1 gap-2.5 text-xs text-cream/90">
+                  {standardInclusions.map((inc) => (
+                    <div class="flex items-start gap-2">
+                      <span class="mt-0.5 text-sm font-bold leading-none text-gold-light">•</span>
+                      <div>
+                        <strong class="block font-medium text-cream">{inc.item}</strong>
+                        <span class="block text-[0.72rem] leading-tight text-cream/70">{inc.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </details>
+
+              <WhatsAppButton
+                label={`Enquire for ${style.title}`}
+                message={style.whatsappMessage ?? `Hello JNB Events, I am interested in checking availability for your ${style.title} setup.`}
+                variant="ink"
+                source={`mandap explorer - ${style.id}`}
+                class="mt-4 w-full"
+              />
+            </article>
+          ))
+        }
+      </div>
+
+      <!-- Pagination dots -->
+      <div class="mt-3 flex items-center justify-center" data-mandap-dots>
+        {
+          styles.map((style, idx) => (
+            <button type="button" data-mandap-dot={idx} aria-label={`Show ${style.title}, ${idx + 1} of ${styles.length}`} aria-current={idx === 0 ? 'true' : undefined} class="group flex h-8 w-6 items-center justify-center">
+              <span class:list={['dot block h-1.5 rounded-full transition-all duration-300', idx === 0 ? 'w-6 bg-gold-light' : 'w-1.5 bg-cream/30']} />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- ======================= DESKTOP (≥768px): tabs + crossfading image ======================= -->
+    <div class="hidden md:block">
     <!-- Style Selector Tabs -->
     <div
       class="mt-10 flex flex-wrap gap-2 border-b border-cream/15 pb-4 sm:gap-4"
@@ -321,6 +407,7 @@ const galleryLinkText = data?.galleryLinkText ?? 'Category Gallery';
         }
       </div>
     </div>
+    </div>
   </div>
 </section>
 
@@ -386,6 +473,69 @@ const galleryLinkText = data?.galleryLinkText ?? 'Category Gallery';
               content.classList.remove('is-active', 'opacity-100', 'translate-y-0', 'relative');
               content.classList.add('hidden', 'opacity-0', 'translate-y-4', 'absolute');
             }
+          });
+        }
+
+        // Mobile carousel: keep the pagination dots and active slide in sync with the swipe position.
+        const track = explorer.querySelector('[data-mandap-track]');
+        if (track) {
+          const slides = Array.from(track.children);
+          const dots = Array.from(explorer.querySelectorAll('[data-mandap-dot]'));
+          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+          let current = 0;
+          let frame = 0;
+
+          const setActive = function (index) {
+            if (index === current) return;
+            current = index;
+            slides.forEach(function (s, k) {
+              s.setAttribute('data-active', k === index ? 'true' : 'false');
+            });
+            dots.forEach(function (d, k) {
+              const dot = d.querySelector('.dot');
+              if (k === index) {
+                d.setAttribute('aria-current', 'true');
+                if (dot) { dot.classList.remove('w-1.5', 'bg-cream/30'); dot.classList.add('w-6', 'bg-gold-light'); }
+              } else {
+                d.removeAttribute('aria-current');
+                if (dot) { dot.classList.remove('w-6', 'bg-gold-light'); dot.classList.add('w-1.5', 'bg-cream/30'); }
+              }
+            });
+          };
+
+          const startEdge = function () {
+            return track.getBoundingClientRect().left + (parseFloat(getComputedStyle(track).paddingLeft) || 0);
+          };
+
+          const update = function () {
+            frame = 0;
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2) {
+              setActive(slides.length - 1);
+              return;
+            }
+            const edge = startEdge();
+            let best = 0;
+            let bestDist = Infinity;
+            slides.forEach(function (s, k) {
+              const dist = Math.abs(s.getBoundingClientRect().left - edge);
+              if (dist < bestDist) { bestDist = dist; best = k; }
+            });
+            setActive(best);
+          };
+
+          track.addEventListener('scroll', function () {
+            if (!frame) frame = requestAnimationFrame(update);
+          }, { passive: true });
+
+          dots.forEach(function (d, k) {
+            d.addEventListener('click', function () {
+              const target = slides[k];
+              if (!target) return;
+              track.scrollTo({
+                left: track.scrollLeft + target.getBoundingClientRect().left - startEdge(),
+                behavior: reduceMotion.matches ? 'auto' : 'smooth',
+              });
+            });
           });
         }
 
