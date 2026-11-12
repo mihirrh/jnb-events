@@ -86,8 +86,8 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
             <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
           </div>
           <div class="field sm:col-span-2">
-            <label for="f-email">{mode === 'endpoint' ? 'Email' : 'Email (optional)'}</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" required={mode === 'endpoint'} />
+            <label for="f-email">{mode === 'endpoint' ? 'Email (optional if you use WhatsApp)' : 'Email (optional)'}</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" />
           </div>
           <div class="field">
             <label for="f-date">Event date</label>
@@ -111,9 +111,18 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
 
           <div class="sm:col-span-2">
             <p id="form-status" class="mb-4 hidden text-[0.95rem]" role="status" aria-live="polite"></p>
-            <button type="submit" class="btn btn-ink w-full sm:w-auto">
-              {mode === 'whatsapp' ? 'Continue in WhatsApp' : mode === 'mailto' ? 'Send by email' : 'Send enquiry'}
-            </button>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <button type="submit" class="btn btn-ink w-full sm:w-auto">
+                {mode === 'whatsapp' ? 'Continue in WhatsApp' : mode === 'mailto' ? 'Send by email' : 'Send enquiry by email'}
+              </button>
+              {
+                mode === 'endpoint' && (
+                  <button type="button" class="btn btn-line w-full sm:w-auto" data-send-whatsapp>
+                    <Icon name="whatsapp" size={18} /> <span>Send via WhatsApp</span>
+                  </button>
+                )
+              }
+            </div>
             <p class="mt-5 max-w-md text-sm text-muted">
               {
                 mode === 'whatsapp'
@@ -154,28 +163,43 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
         .filter((l): l is string => typeof l === 'string')
         .join('\n');
 
+    const openWhatsApp = (d: FormData) => {
+      window.open(`${form.dataset.wa}?text=${encodeURIComponent(summary(d))}`, '_blank', 'noopener');
+      show('Opening WhatsApp with your details. Just press send.', true);
+    };
+
+    /** Name and message are needed on every route. Returns false (and shows why) if they are missing. */
+    const hasBasics = (d: FormData) => {
+      if (String(d.get('name') ?? '').trim() && String(d.get('message') ?? '').trim()) return true;
+      show('Please add your name and a few details about your event.');
+      (form.querySelector(!String(d.get('name') ?? '').trim() ? '#f-name' : '#f-message') as HTMLElement).focus();
+      return false;
+    };
+
+    // "Send via WhatsApp" button (only rendered when the form can also email).
+    form.querySelector('[data-send-whatsapp]')?.addEventListener('click', () => {
+      const d = new FormData(form);
+      if (d.get('website')) { show('Thank you.', true); return; }
+      if (hasBasics(d)) openWhatsApp(d);
+    });
+
     form.addEventListener('submit', async (e) => {
       const d = new FormData(form);
       // Spam trap filled in: pretend success, send nothing.
       if (d.get('website')) { e.preventDefault(); show('Thank you.', true); return; }
-      if (!String(d.get('name') ?? '').trim() || !String(d.get('message') ?? '').trim()) {
-        e.preventDefault();
-        show('Please add your name and a few details about your event.');
-        (form.querySelector(!String(d.get('name') ?? '').trim() ? '#f-name' : '#f-message') as HTMLElement).focus();
-        return;
-      }
+      if (!hasBasics(d)) { e.preventDefault(); return; }
       const mode = form.dataset.mode;
-      // When enquiries are emailed to us, a valid reply address is required.
-      if (mode === 'endpoint' && !(form.querySelector('#f-email') as HTMLInputElement).checkValidity()) {
+      // Emailing the enquiry needs a valid reply address (WhatsApp does not, we get their number).
+      const emailInput = form.querySelector('#f-email') as HTMLInputElement;
+      if (mode === 'endpoint' && (!emailInput.value.trim() || !emailInput.checkValidity())) {
         e.preventDefault();
-        show('Please enter a valid email address so we can reply to you.');
-        (form.querySelector('#f-email') as HTMLElement).focus();
+        show('Please enter a valid email address so we can reply, or use "Send via WhatsApp".');
+        emailInput.focus();
         return;
       }
       if (mode === 'whatsapp') {
         e.preventDefault();
-        window.open(`${form.dataset.wa}?text=${encodeURIComponent(summary(d))}`, '_blank', 'noopener');
-        show('Opening WhatsApp with your details. Just press send.', true);
+        openWhatsApp(d);
       } else if (mode === 'mailto') {
         e.preventDefault();
         window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Website enquiry')}&body=${encodeURIComponent(summary(d))}`;
