@@ -93,5 +93,33 @@ const site = Astro.site!.toString();
     </div>
   </section>
 
+  <!-- FAQ: native <details> so it works without JavaScript and every answer is in the HTML for search engines. -->
+  <section id="faq" class="section-tight bg-cream-deep" aria-labelledby="faq-heading">
+    <div class="wrap grid gap-10 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-4">
+        <div class="lg:sticky lg:top-32">
+          <div class="folio"><span>FAQ</span><i aria-hidden="true"></i></div>
+          <h2 id="faq-heading" class="h2 mt-8" set:html={emphasis(page.faqHeading)} />
+        </div>
+      </div>
+      <div class="lg:col-span-7 lg:col-start-6">
+        {
+          page.faq.map((item) => (
+            <details class="group border-t border-line last:border-b">
+              <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden">
+                <h3 class="font-serif text-[clamp(1.2rem,1vw+1rem,1.55rem)] leading-snug">{item.question}</h3>
+                <span aria-hidden="true" class="shrink-0 text-2xl text-gold-deep transition-transform duration-300 group-open:rotate-45">+</span>
+              </summary>
+              <p class="max-w-prose pb-6 pr-10 text-ink-soft">{item.answer}</p>
+            </details>
+          ))
+        }
+        <a href="/terms/" class="link-arrow mt-8">
+          <span>Read our full terms</span><span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <CtaBand heading={page.ctaHeading} text={page.ctaText} source="about page" />
 </BaseLayout>
