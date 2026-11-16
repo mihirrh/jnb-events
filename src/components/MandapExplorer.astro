@@ -207,7 +207,7 @@ const galleryLinkText = data?.galleryLinkText ?? 'Category Gallery';
       >
         {
           styles.map((style, idx) => (
-            <article
+            <div
               role="group"
               aria-roledescription="slide"
               aria-label={`${idx + 1} of ${styles.length}: ${style.title}`}
@@ -257,7 +257,7 @@ const galleryLinkText = data?.galleryLinkText ?? 'Category Gallery';
                 source={`mandap explorer - ${style.id}`}
                 class="mt-4 w-full"
               />
-            </article>
+            </div>
           ))
         }
       </div>

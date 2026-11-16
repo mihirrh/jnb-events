@@ -21,7 +21,6 @@
     "check:quote": "node scripts/check-quote.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/bodoni-moda": "^5.3.0",
     "@fontsource-variable/instrument-sans": "^5.3.0",
     "@fontsource/bodoni-moda": "^5.3.0",
@@ -34,6 +33,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@types/node": "^24.19.2",
     "playwright": "^1.64.1",
     "typescript": "^6.0.3"
   },

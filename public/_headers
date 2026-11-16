@@ -9,3 +9,11 @@
 # Hashed build assets never change: cache for a year
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Keep the Cloudflare preview hostnames (jnb-events.pages.dev and per-deploy previews) out of search results.
+# The live site is https://jnbevents.co.uk/ only; these rules do not apply to the custom domain.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
