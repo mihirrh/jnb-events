@@ -15,7 +15,7 @@ keyPoints:
 relatedCategory: Décor
 whatsappMessage: "Hello JNB Events, I'd like to enquire about Haldi and Mehndi décor."
 seo:
-  title: Haldi & Mehndi Decor Leicester | Pre-Wedding Styling | JNB Events
+  title: Haldi & Mehndi Decor Leicester | Pre-Wedding | JNB Events
   description: Luxury Haldi and Mehndi decor in Leicester & the Midlands. Custom yellow & marigold Haldi setups, floral jhoola swings, low seating, and vibrant backdrops.
 ---
 
