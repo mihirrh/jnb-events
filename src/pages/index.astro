@@ -158,7 +158,7 @@ const rowServices = services.slice(3);
   {
     opener && (
       <section class="bg-cream pb-[clamp(4rem,8vw,8rem)]" aria-labelledby="featured-heading">
-        <a href={`/gallery/${opener.id}/`} class="group relative block no-underline" aria-label={`${opener.data.title} - ${opener.data.category}`}>
+        <a href={`/gallery/${opener.id}/`} class="group relative block no-underline" aria-label={`${opener.data.category} — ${opener.data.title}`}>
           <Img
             src={opener.data.images[0].image}
             alt={opener.data.images[0].alt}

@@ -35,7 +35,7 @@ JNB Events is a Leicester-based wedding and events company offering mandaps, DJ,
 | CMS | Pages CMS (`.pages.yml`) | Git-backed, no database, edits commit to GitHub and trigger an automatic rebuild |
 | PDF | PDFKit (browser bundle) | Quote PDFs generated client-side; nothing uploaded or stored |
 | Hosting | Cloudflare Pages | Automatic deploys from GitHub, global CDN, free tier sufficient |
-| Sitemap | `@astrojs/sitemap` | Auto-generated, `/quote/` and `/404` excluded |
+| Sitemap | `src/pages/sitemap.xml.ts` | Generated at build time, `/quote/` and `/404` excluded |
 | Type checking | TypeScript + `astro check` | Strict mode; content collections are fully typed via Zod |
 
 ---

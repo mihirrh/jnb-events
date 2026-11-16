@@ -25,7 +25,7 @@ const url = `${site}gallery/category/${slugify(category)}/`;
 
 <BaseLayout
   title={`${category} Gallery | ${settings.siteName} ${settings.location.locality}`}
-  description={`Browse ${category.toLowerCase()} projects by ${settings.siteName} in ${settings.location.locality}, ${settings.location.region} and across the UK.`}
+  description={`Photos of ${category.toLowerCase()} work by ${settings.siteName} in ${settings.location.locality}, ${settings.location.region} and across the UK. Browse ${projects.length} ${projects.length === 1 ? 'project' : 'projects'} and enquire on WhatsApp.`}
   image={projects[0].data.images[0].image}
   imageAlt={projects[0].data.images[0].alt}
   jsonLd={[

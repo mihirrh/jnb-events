@@ -6,15 +6,26 @@ import { toInternational } from './contact';
  * founding dates, awards or price ranges are invented.
  */
 
+const UK = { '@type': 'Country', name: 'United Kingdom' };
+
 const AREA_TYPES: Record<string, string> = {
   'United Kingdom': 'Country',
   UK: 'Country',
   Leicestershire: 'AdministrativeArea',
   Leicester: 'City',
+  London: 'City',
+  'East Midlands': 'AdministrativeArea',
+  'West Midlands': 'AdministrativeArea',
+  Yorkshire: 'AdministrativeArea',
+  'North West': 'AdministrativeArea',
 };
 
+/** "Nationwide" is not a place, so it is published as the United Kingdom. */
 function areaServed(settings: Settings) {
-  return settings.serviceAreas.map((name) => ({ '@type': AREA_TYPES[name] ?? 'Place', name }));
+  const seen = new Set<string>();
+  return settings.serviceAreas
+    .map((name) => (name === 'Nationwide' ? UK : { '@type': AREA_TYPES[name] ?? 'Place', name }))
+    .filter((a) => !seen.has(a.name) && seen.add(a.name));
 }
 
 export function localBusiness(

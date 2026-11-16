@@ -6,7 +6,7 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import WhatsAppButton from '../../components/WhatsAppButton.astro';
 import Icon from '../../components/Icon.astro';
-import { getProjects, getSettings, slugify } from '../../lib/content';
+import { getProjects, getServices, getSettings, slugify } from '../../lib/content';
 import { breadcrumbs, imageGallery } from '../../lib/schema';
 import { getImage } from 'astro:assets';
 
@@ -28,6 +28,8 @@ const settings = await getSettings();
 const site = Astro.site!.toString();
 const url = `${site}gallery/${entry.id}/`;
 const hasBody = Boolean(entry.body?.trim());
+// The service page that matches this project's category, so every gallery page links back to the service it shows.
+const relatedService = (await getServices()).find((s) => s.data.relatedCategory === data.category);
 
 const full_ = await Promise.all(data.images.map((im) => getImage({ src: im.image, width: 2400, format: 'webp', quality: 88 })));
 const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new URL((await getImage({ src: im.image, width: 1600, format: 'jpg', quality: 85 })).src, site).toString()));
@@ -115,7 +117,14 @@ const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new
       {hasBody && <div class="prose-jnb mt-16 text-[1.08rem] text-ink-soft lg:ml-[calc(100%/12*4)]"><Content /></div>}
 
       <div class="mt-20 grid items-end gap-8 border-t border-line pt-10 lg:grid-cols-12">
-        <p class="font-serif text-[clamp(1.8rem,2.4vw+1rem,3rem)] leading-tight lg:col-span-8">Like this style? <em>Tell us about your event.</em></p>
+        <div class="lg:col-span-8">
+          <p class="font-serif text-[clamp(1.8rem,2.4vw+1rem,3rem)] leading-tight">Like this style? <em>Tell us about your event.</em></p>
+          {relatedService && (
+            <a href={`/services/${relatedService.id}/`} class="link-arrow mt-6">
+              <span>About our {relatedService.data.title} service</span><span aria-hidden="true">&rarr;</span>
+            </a>
+          )}
+        </div>
         <div class="lg:col-span-4 lg:text-right">
           <WhatsAppButton label="Ask about this look" message={`Hello JNB Events, I like your "${data.title}" project and would like something similar.`} variant="ink" source={`gallery: ${data.title}`} class="w-full sm:w-auto" />
         </div>
