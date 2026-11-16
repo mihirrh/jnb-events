@@ -194,10 +194,9 @@ src/
 
 - Every page has a unique title and description, one `<h1>`, canonical URL, Open Graph and Twitter tags.
 - JSON-LD: `LocalBusiness` and `WebSite` on every page, plus `Service`, `ItemList`, `ImageGallery` and `BreadcrumbList` where relevant. Only facts supplied by the owner are included (name, number, area served, location). There are no ratings, review counts, awards or years in business.
-- `sitemap-index.xml` and `robots.txt` are generated automatically from the configured site URL.
-- `/sitemap.xml` is served as a rewrite to the generated sitemap via `public/_redirects`, so crawlers that try that URL first still find it.
+- `/sitemap.xml` is generated at build time by `src/pages/sitemap.xml.ts` (with `lastmod` dates), and `public/robots.txt` points to it. Do not add a `public/_redirects` rule for it: that file would shadow the real page.
 - All content is static and identical for every visitor - nothing is personalised by cookies.
-- **After launch:** add the site to Google Search Console and submit `https://<your-domain>/sitemap-index.xml`; create or claim a Google Business Profile for the Leicester business and keep name/phone consistent with the site.
+- **After launch:** add the site to Google Search Console and submit `https://<your-domain>/sitemap.xml`; create or claim a Google Business Profile for the Leicester business and keep name/phone consistent with the site.
 
 ---
 

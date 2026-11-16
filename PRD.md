@@ -222,7 +222,7 @@ All content is validated by Zod schemas in `src/content.config.ts`. The CMS conf
   - `Service` (individual) on each service detail page.
   - `BreadcrumbList` on all inner pages.
   - `ImageGallery` on gallery project pages.
-- **Sitemap:** auto-generated at `/sitemap-index.xml`. `/quote/` and `/404` are excluded.
+- **Sitemap:** generated at `/sitemap.xml`. `/quote/` and `/404` are excluded.
 - **Robots:** `/robots.txt` is generated at build time; `/quote/` is marked `noindex` via the `<meta name="robots">` tag.
 - URL structure: all URLs use trailing slashes (`trailingSlash: 'always'`). Links must include the trailing slash.
 - **Keywords** should appear naturally in page titles and descriptions. "Leicester" appears in business schema even though displayed service areas are now regional (Midlands, London etc.).
