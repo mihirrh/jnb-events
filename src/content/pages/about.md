@@ -38,9 +38,7 @@ faq:
   - question: How do I book, and how much is the deposit?
     answer: "A booking is confirmed once you accept your quotation and pay the agreed deposit, which is set out in your quotation. Our terms set a minimum of 25% of the total booking price or £500. The remaining balance is due 14 days before your event."
   - question: How early do you need access to the venue?
-    answer: "For mandap and stage set-ups we typically need access 3 to 4 hours before your guests arrive, with clear loading, parking and lift facilities. Tell us your venue and we will plan the timings with you."
-  - question: Are you insured?
-    answer: "Yes. JNB Events holds full public liability insurance."
+    answer: "It depends on your package and set-up, and on your venue's policies. For mandap and stage set-ups we typically need access around 3 to 4 hours before your guests arrive, with clear loading, parking and lift facilities. If your venue allows it, we can also set up the evening or night before a morning event. Tell us your venue and we will plan the timings with you."
 ctaHeading: Ready to talk about *your event?*
 ctaText: Send us a WhatsApp message with your date, venue and ideas.
 ---
