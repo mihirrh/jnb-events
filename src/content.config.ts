@@ -142,6 +142,8 @@ const about = defineCollection({
       secondImageAlt: z.string().min(3),
       highlightsHeading: z.string(),
       highlights: z.array(z.object({ title: z.string(), text: z.string() })).min(1),
+      faqHeading: z.string(),
+      faq: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
       ctaHeading: z.string(),
       ctaText: z.string(),
     }),

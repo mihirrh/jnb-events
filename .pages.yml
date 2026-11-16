@@ -259,6 +259,18 @@ content:
             fields:
               - { name: title, label: Title, type: string, required: true }
               - { name: text, label: Text, type: text, required: true }
+          - { name: faqHeading, label: FAQ heading (wrap a phrase in *asterisks* to italicise it), type: string, required: true }
+          - name: faq
+            label: Frequently asked questions
+            type: object
+            list:
+              min: 1
+              collapsible:
+                collapsed: true
+                summary: "{question}"
+            fields:
+              - { name: question, label: Question, type: string, required: true }
+              - { name: answer, label: Answer (plain text, keep it factual and consistent with your Terms), type: text, required: true }
           - { name: ctaHeading, label: Closing heading, type: string, required: true }
           - { name: ctaText, label: Closing text, type: text, required: true }
 
