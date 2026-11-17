@@ -82,7 +82,9 @@ for (const vp of [{ name: 'phone', width: 390, height: 844 }, { name: 'desktop',
   await page.fill('#q-venue', 'The Grand Hall, Leicester');
   const [download] = await Promise.all([page.waitForEvent('download', { timeout: 20000 }), page.click('#q-download')]);
   const name = download.suggestedFilename();
-  expect(name === 'JNB-Events-Quotation-priya-raj-patel-2027-06-14.pdf', tag(`filename (${name})`));
+  const d = new Date();
+  const today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  expect(name === `JNB-Events-Quotation-priya-raj-patel-${today}.pdf`, tag(`filename has generated date (${name})`));
   const path = await download.path();
   const bytes = readFileSync(path);
   expect(bytes.subarray(0, 5).toString() === '%PDF-', tag('file is a PDF'));

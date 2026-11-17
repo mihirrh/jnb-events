@@ -401,10 +401,12 @@ function notice(doc: PDFDocument, d: QuotePdfData, pageNo: number) {
   footer(doc, pageNo);
 }
 
-export function filenameFor(d: Pick<QuotePdfData, 'clientName' | 'eventDate'>): string {
+export function filenameFor(d: Pick<QuotePdfData, 'clientName'>, now: Date = new Date()): string {
   const who = clean(d.clientName).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
-  const when = /^\d{4}-\d{2}-\d{2}$/.test(d.eventDate) ? d.eventDate : '';
-  return ['JNB-Events-Quotation', who, when].filter(Boolean).join('-') + '.pdf';
+  // Date the PDF was generated (local time), as YYYY-MM-DD
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const generated = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  return ['JNB-Events-Quotation', who, generated].filter(Boolean).join('-') + '.pdf';
 }
 
 export function drawQuote(doc: PDFDocument, d: QuotePdfData): void {
