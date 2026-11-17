@@ -403,7 +403,9 @@ function notice(doc: PDFDocument, d: QuotePdfData, pageNo: number) {
 
 export function filenameFor(d: Pick<QuotePdfData, 'clientName' | 'eventDate'>): string {
   const who = clean(d.clientName).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
-  const when = /^\d{4}-\d{2}-\d{2}$/.test(d.eventDate) ? d.eventDate : '';
+  // Event date as DD-MM-YYYY (UK format); the form value is YYYY-MM-DD
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d.eventDate);
+  const when = m ? `${m[3]}-${m[2]}-${m[1]}` : '';
   return ['JNB-Events-Quotation', who, when].filter(Boolean).join('-') + '.pdf';
 }
 

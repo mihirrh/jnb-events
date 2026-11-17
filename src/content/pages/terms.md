@@ -23,11 +23,11 @@ These Terms & Conditions govern all bookings, hire items, and bespoke event styl
 
 All cancellations must be submitted in writing via email or written communication.
 
-Because event styling involves reserving bespoke inventory, custom floral planning, and turning away other clients for the same date, cancellation charges apply as follows:
+Because event styling involves reserving bespoke inventory, custom décor planning, and turning away other clients for the same date, cancellation charges apply as follows:
 
 - **More than 90 days before the event date**: The initial deposit is retained. Any additional balance payments made are refunded in full.
 - **30 to 90 days before the event date**: The deposit is retained, plus **50% of the remaining balance** to cover committed stock, supplier reservations, and administrative costs.
-- **Fewer than 30 days before the event date**: **100% of the total booking price** is payable and non-refundable, as all florals, materials, transport, and crew will have been committed.
+- **Fewer than 30 days before the event date**: **100% of the total booking price** is payable and non-refundable, as all materials, transport, and crew will have been committed.
 
 *If JNB Events is able to rebook the identical date and service with another client, we will reasonably assess any partial refund or credit towards future services.*
 
@@ -41,11 +41,11 @@ Because event styling involves reserving bespoke inventory, custom floral planni
 
 ---
 
-## 4. Décor Specifications, Fresh Florals & Variations
+## 4. Décor Specifications & Variations
 
 1. **Agreed Scope**: JNB Events will deliver the mandap, stages, backdrop styling, and décor agreed in the confirmed quotation.
-2. **Organic Variations**: As fresh flowers, foliage, and natural fabrics are organic products, minor variations in shade, bloom size, and foliage density from inspiration images are natural and to be expected.
-3. **Substitutions**: Where a specific flower, fabric, prop, or material becomes unavailable due to seasonal shortages, grower failure, or supplier discontinuation, JNB Events reserves the right to provide a suitable alternative of equivalent or greater luxury quality and aesthetic match.
+2. **Minor Variations**: Fabrics, props, and finishes can differ slightly between batches and suppliers, so minor variations in shade, texture, and detailing from inspiration images are to be expected.
+3. **Substitutions**: Where a specific fabric, prop, or material becomes unavailable due to stock shortages or supplier discontinuation, JNB Events reserves the right to provide a suitable alternative of equivalent or greater luxury quality and aesthetic match.
 
 ---
 
@@ -60,7 +60,7 @@ Because event styling involves reserving bespoke inventory, custom floral planni
 ## 6. Hire Equipment, Care & Damage
 
 1. **Ownership**: All mandaps, stages, furniture, Chiavari chairs, aisle runners, plinths, backdrop frames, LED lighting, and decorative accessories remain the exclusive property of JNB Events or our appointed partners.
-2. **Care & Safety**: The Client and their guests must not move, dismantle, alter, or remove hired structures, floral arches, or electrical setups without prior permission.
+2. **Care & Safety**: The Client and their guests must not move, dismantle, alter, or remove hired structures, arches, or electrical setups without prior permission.
 3. **Damage & Loss**: The Client is responsible for the safe custody of hired items from completion of set-up until collection. The Client agrees to pay reasonable repair or replacement costs for any equipment or décor that is lost, stolen, or damaged by guests or persons under the Client's responsibility (fair wear and tear excepted).
 
 ---
