@@ -298,7 +298,68 @@ function smoke(r, w, h, p) {
   return o;
 }
 
-const SCENES = { mandap, reception, civil, lighting, dj, dancefloor, sparklers, smoke };
+// A house front at night outlined in string lights, fairy-light curtains and lit gate pillars.
+function outdoorLights(r, w, h, p) {
+  const gY = h * 0.82; // ground line
+  let o = `<rect width="${w}" height="${h}" fill="url(#bg)"/>`;
+  o += bokeh(r, w, h, 10, p.glow, 0.05, 0.35);
+  // Side trees (soft dark masses with a few lit dots)
+  for (const [cx, rx] of [[w * 0.06, w * 0.14], [w * 0.94, w * 0.14]]) {
+    o += `<ellipse cx="${f(cx)}" cy="${f(h * 0.5)}" rx="${f(rx)}" ry="${f(h * 0.36)}" fill="${p.dark}" opacity="0.85" filter="url(#b1)"/>`;
+  }
+  // House: body, roof, windows, door
+  const x0 = w * 0.22, x1 = w * 0.78, yEave = h * 0.4;
+  o += `<rect x="${f(x0)}" y="${f(yEave)}" width="${f(x1 - x0)}" height="${f(gY - yEave)}" fill="#140f19"/>`;
+  o += `<polygon points="${f(w * 0.18)},${f(yEave)} ${f(w * 0.5)},${f(h * 0.15)} ${f(w * 0.82)},${f(yEave)}" fill="#0d0a11"/>`;
+  for (const wx of [0.29, 0.4, 0.6, 0.71]) {
+    const ww = w * 0.065, wy = h * 0.5, wh = h * 0.13;
+    o += `<rect x="${f(w * wx - ww / 2 - 14)}" y="${f(wy - 14)}" width="${f(ww + 28)}" height="${f(wh + 28)}" fill="${p.glow}" opacity="0.28" filter="url(#b2)"/>`;
+    o += `<rect x="${f(w * wx - ww / 2)}" y="${f(wy)}" width="${f(ww)}" height="${f(wh)}" fill="${p.glow}" opacity="0.8"/>`;
+    o += `<rect x="${f(w * wx - 2)}" y="${f(wy)}" width="4" height="${f(wh)}" fill="#140f19"/>`;
+  }
+  o += `<rect x="${f(w * 0.47)}" y="${f(h * 0.6)}" width="${f(w * 0.06)}" height="${f(gY - h * 0.6)}" fill="#07050a"/>`;
+  // Gate pillars
+  for (const px of [0.1, 0.9]) {
+    o += `<rect x="${f(w * px - 26)}" y="${f(h * 0.62)}" width="52" height="${f(gY - h * 0.62)}" fill="#0b0810"/>`;
+    o += `<circle cx="${f(w * px)}" cy="${f(h * 0.6)}" r="${f(w * 0.03)}" fill="${p.glow}" opacity="0.4" filter="url(#b2)"/>`;
+    o += `<circle cx="${f(w * px)}" cy="${f(h * 0.6)}" r="9" fill="${p.glow}"/>`;
+  }
+  // Ground
+  o += `<rect y="${f(gY)}" width="${w}" height="${f(h - gY)}" fill="${p.floor}"/>`;
+  o += `<ellipse cx="${f(w * 0.5)}" cy="${f(gY + h * 0.03)}" rx="${f(w * 0.36)}" ry="${f(h * 0.05)}" fill="${p.glow}" opacity="0.2" filter="url(#b2)"/>`;
+  // A strand of bulbs along a sagging line, each with a soft halo
+  const strand = (ax, ay, bx, by, sag, gap = 30) => {
+    const n = Math.max(3, Math.round(Math.hypot(bx - ax, by - ay) / gap));
+    let line = '', halo = '', dots = '';
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      const x = ax + (bx - ax) * t;
+      const y = ay + (by - ay) * t + Math.sin(Math.PI * t) * sag;
+      if (i === 0) line = `M${f(x)} ${f(y)}`; else line += ` L${f(x)} ${f(y)}`;
+      halo += `<circle cx="${f(x)}" cy="${f(y)}" r="${f(13 + r() * 5)}" fill="${p.glow}" opacity="0.5"/>`;
+      dots += `<circle cx="${f(x)}" cy="${f(y)}" r="${f(4.2 + r() * 1.4)}" fill="#FFF6DC"/>`;
+    }
+    return `<path d="${line}" stroke="#05040a" stroke-width="1.6" fill="none" opacity="0.8"/><g filter="url(#b1)">${halo}</g>${dots}`;
+  };
+  // Roof outline, eave swags, fairy-light curtains, entrance swags
+  o += strand(w * 0.18, yEave, w * 0.5, h * 0.15, 0, 26);
+  o += strand(w * 0.5, h * 0.15, w * 0.82, yEave, 0, 26);
+  for (let i = 0; i < 6; i++) {
+    const a = x0 - w * 0.04 + (i * (x1 - x0 + w * 0.08)) / 6;
+    o += strand(a, yEave, a + (x1 - x0 + w * 0.08) / 6, yEave, h * 0.035, 26);
+  }
+  for (let i = 0; i < 22; i++) {
+    const cx = x0 + ((x1 - x0) * (i + 0.5)) / 22;
+    o += strand(cx, yEave + h * 0.02, cx + (r() - 0.5) * 8, yEave + h * (0.08 + r() * 0.2), 0, 24);
+  }
+  o += strand(w * 0.1, h * 0.6, x0, yEave + h * 0.02, h * 0.07, 28);
+  o += strand(w * 0.9, h * 0.6, x1, yEave + h * 0.02, h * 0.07, 28);
+  o += strand(w * 0.1, h * 0.64, w * 0.9, h * 0.64, h * 0.1, 30);
+  o += bokeh(r, w, h, 14, p.glow, 0.3, 0.85);
+  return o;
+}
+
+const SCENES = { mandap, reception, civil, lighting, dj, dancefloor, sparklers, smoke, outdoorLights };
 
 async function render({ out, scene, pal, w, h, seed, wide }) {
   const p = PAL[pal];
@@ -344,6 +405,7 @@ const jobs = [
   { out: 'services/placeholder-dj.jpg', scene: 'dj', pal: 'night', ...L, seed: 45 },
   { out: 'services/placeholder-effects.jpg', scene: 'sparklers', pal: 'noir', ...L, seed: 46 },
   { out: 'services/placeholder-dancefloor.jpg', scene: 'dancefloor', pal: 'night', ...L, seed: 47 },
+  { out: 'services/placeholder-outdoor-lights.jpg', scene: 'outdoorLights', pal: 'night', ...L, seed: 49 },
   { out: 'services/placeholder-packages.jpg', scene: 'mandap', pal: 'sage', ...L, seed: 48, wide: 0.9 },
 
   // Project 1 - Ivory & gold mandap

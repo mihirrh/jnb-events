@@ -26,7 +26,7 @@ faq:
   - question: Where do you work?
     answer: "We are based in Leicester and cover Leicestershire and the wider East and West Midlands, including Birmingham, Nottingham, Derby and Coventry. We also work in London, Yorkshire and the North West, and can travel to venues elsewhere in the UK. Message us your venue and we will confirm."
   - question: What services do you offer?
-    answer: "Mandap hire and stage styling, civil ceremony décor, reception décor and table centrepieces, Haldi and Mehndi décor for homes, marquees and banquet halls, wedding DJ and entertainment, LED dance floor and lighting hire, and cold sparklers and dry ice low fog. They can be booked individually or combined into one bespoke package."
+    answer: "Mandap hire and stage styling, civil ceremony décor, reception décor and table centrepieces, Haldi and Mehndi décor for homes, marquees and banquet halls, wedding DJ and entertainment, LED dance floor and lighting hire, outdoor house and shopfront lighting, and cold sparklers and dry ice low fog. They can be booked individually or combined into one bespoke package."
   - question: What is included in a mandap hire package?
     answer: "A full ceremony mandap setup includes 4 choris, 2 bajots and patlas, 6 chairs, a havan kund, a Ganesh statue for the foyer, an entrance gate, a pleated backdrop for the mandap, and carpet for the mandap and walkway. We design traditional carved wooden and modern gold geometric mandaps, so tell us your style and venue."
   - question: Do you style Hindu, Sikh, Muslim and civil weddings?
