@@ -5,11 +5,12 @@ summary: Festive string-light décor for the outside of the bride's or groom's h
 lead: Before the wedding day, the house comes alive. We light the front of the bride's or groom's home, the gate, the driveway and the garden with warm string lights and fairy-light curtains, so the celebration is seen from the street.
 image: /src/assets/media/services/placeholder-outdoor-lights.jpg
 imageAlt: Placeholder illustration of a house front outlined with warm string lights and fairy-light curtains at night, the style of outdoor lighting for an Asian wedding at home in Leicester.
+keyPointsHeading: What we offer
 keyPoints:
   - String-light outlines for rooflines, windows, doors and gates
   - Fairy-light curtains and swags across the front of the house
   - Garden, driveway, marquee and entrance lighting
-  - Shops, restaurants and business frontages for festivals and celebrations
+  - Shops and business frontages for festivals and celebrations
   - Designed around your property, installed and taken down for you
 whatsappMessage: "Hello JNB Events, I'd like to enquire about outdoor lighting for my home or event."
 seo:
