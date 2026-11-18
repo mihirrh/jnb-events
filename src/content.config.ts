@@ -229,6 +229,8 @@ const services = defineCollection({
       secondImage: image().optional(),
       secondImageAlt: z.string().optional(),
       keyPoints: z.array(z.string()).min(1),
+      /** Optional heading above the key points. Defaults to "What is included". */
+      keyPointsHeading: z.string().optional(),
       /** Shows projects from this gallery category on the service page. */
       relatedCategory: z.enum(PROJECT_CATEGORIES).optional(),
       /** Pre-filled WhatsApp message for this service. */

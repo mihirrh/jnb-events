@@ -407,6 +407,7 @@ content:
         list:
           min: 1
         required: true
+      - { name: keyPointsHeading, label: Key points heading (optional, default is "What is included"), type: string }
       - name: relatedCategory
         label: Show gallery projects from this category
         type: select
