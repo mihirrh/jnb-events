@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { chromium } from 'playwright';
+import { renderSVG } from 'uqr';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, 'brand', 'business-card');
@@ -28,6 +29,9 @@ const email = pick(/^\s*email:\s*(.+)/m);
 const insta = pick(/instagram\.com\/([^\s"']+)/);
 if (!phone || !email || !insta) throw new Error('Could not read contact details from site.yaml');
 
+const SITE_URL = 'https://jnbevents.co.uk/';
+// Dark modules on a cream tile (1-module quiet zone, built in) so it scans reliably against the dark card.
+const qr = renderSVG(SITE_URL, { ecc: 'M', border: 1, blackColor: '#14110e', whiteColor: '#faf7f2' });
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const font = (pkg, file) => `data:font/woff2;base64,${readFileSync(join(root, 'node_modules/@fontsource', pkg, 'files', file)).toString('base64')}`;
 const bodoni = font('bodoni-moda', 'bodoni-moda-latin-500-normal.woff2');
@@ -87,6 +91,8 @@ html,body{background:#fff}
 .head{display:flex;justify-content:space-between;align-items:center}
 .area{font-size:5.2pt;letter-spacing:.18em;text-transform:uppercase;line-height:1.7;color:#d9d0c1;text-align:right}
 .title{font-family:Bodoni,serif;font-weight:500;font-size:15pt;line-height:1;color:#d6b36a;letter-spacing:.14em;text-transform:uppercase}
+.qr{position:absolute;right:0;bottom:7mm;width:12.5mm;height:12.5mm;border-radius:0.6mm;overflow:hidden;line-height:0}
+.qr svg{width:100%;height:100%;display:block}
 .person{position:absolute;right:0;bottom:0;font-family:Bodoni,serif;font-style:italic;font-size:13pt;line-height:1;color:#d6b36a}
 .rule{height:0.25mm;width:100%;background:rgba(214,179,106,.45);margin:1.6mm 0 1.6mm}
 .svc{list-style:none;display:grid;grid-template-columns:1fr 1fr;column-gap:4mm;row-gap:0.9mm;font-family:Bodoni,serif;font-style:italic;font-size:7.4pt;line-height:1.3;color:#e9dfcc}
@@ -103,6 +109,7 @@ html,body{background:#fff}
     <div class="rule"></div>
     <ul class="svc">${SERVICES.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
   </div>
+  <div class="qr" role="img" aria-label="QR code for jnbevents.co.uk">${qr}</div>
   <p class="person">${NAME}</p>
   <dl class="rows">
     <dt>Contact number</dt><dd>${phone}</dd>
