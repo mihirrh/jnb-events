@@ -18,8 +18,8 @@ const SERVICES = [
   'Wedding & Reception D\u00e9cor',
   'Haldi & Mehndi',
   'DJ & Entertainment',
-  'Dance Floor & Lighting',
   'Sparklers & Special Effects',
+  'Dance Floor & Outdoor Lighting',
 ];
 
 const yaml = readFileSync(join(root, 'src/content/settings/site.yaml'), 'utf8');
@@ -95,7 +95,7 @@ html,body{background:#fff}
 .qr svg{width:100%;height:100%;display:block}
 .person{position:absolute;right:0;bottom:0;font-family:Bodoni,serif;font-style:italic;font-size:13pt;line-height:1;color:#d6b36a}
 .rule{height:0.25mm;width:100%;background:rgba(214,179,106,.45);margin:1.6mm 0 1.6mm}
-.svc{list-style:none;display:grid;grid-template-columns:1fr 1fr;column-gap:4mm;row-gap:0.9mm;font-family:Bodoni,serif;font-style:italic;font-size:7.4pt;line-height:1.3;color:#e9dfcc}
+.svc{list-style:none;display:grid;grid-template-columns:max-content max-content;column-gap:3.5mm;row-gap:1mm;font-family:Bodoni,serif;font-style:italic;font-size:7pt;line-height:1.3;color:#e9dfcc}
 .svc li{white-space:nowrap;position:relative;padding-left:2.6mm}
 .svc li::before{content:"";position:absolute;left:0;top:0.72em;width:0.9mm;height:0.9mm;background:#d6b36a;transform:translateY(-50%) rotate(45deg)}
 .rows{display:grid;grid-template-columns:auto 1fr;column-gap:3mm;row-gap:1.1mm;align-items:baseline}
