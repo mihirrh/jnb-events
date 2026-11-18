@@ -84,9 +84,10 @@ html,body{background:#fff}
 .back{background:#14110e;color:#faf7f2;font-family:Sans}
 .back .frame{border:0.2mm solid rgba(214,179,106,.55)}
 .back .safe{display:flex;flex-direction:column;justify-content:space-between}
-.head{display:flex;justify-content:space-between;align-items:baseline}
-.name{font-family:Bodoni,serif;font-weight:500;font-size:17pt;line-height:1;color:#d6b36a;letter-spacing:.01em}
-.brand{font-size:5.5pt;letter-spacing:.2em;text-transform:uppercase;color:#d9d0c1;text-align:right}
+.head{display:flex;justify-content:space-between;align-items:center}
+.area{font-size:5.2pt;letter-spacing:.18em;text-transform:uppercase;line-height:1.7;color:#d9d0c1;text-align:right}
+.title{font-family:Bodoni,serif;font-weight:500;font-size:15pt;line-height:1;color:#d6b36a;letter-spacing:.14em;text-transform:uppercase}
+.person{position:absolute;right:0;bottom:0;font-family:Bodoni,serif;font-style:italic;font-size:13pt;line-height:1;color:#d6b36a}
 .rule{height:0.25mm;width:100%;background:rgba(214,179,106,.45);margin:1.6mm 0 1.6mm}
 .svc{list-style:none;display:grid;grid-template-columns:1fr 1fr;column-gap:4mm;row-gap:0.9mm;font-family:Bodoni,serif;font-style:italic;font-size:7.4pt;line-height:1.3;color:#e9dfcc}
 .svc li{white-space:nowrap;position:relative;padding-left:2.6mm}
@@ -98,10 +99,11 @@ html,body{background:#fff}
 <section class="card front"><div class="frame"></div><div class="safe"><img src="${logo.url}" alt="JNB Events, Decor, DJ, Mandaps" width="${logo.w}" height="${logo.h}"></div></section>
 <section class="card back"><div class="frame"></div><div class="safe">
   <div>
-    <div class="head"><div class="name">${NAME}</div><div class="brand">JNB Events</div></div>
+    <div class="head"><div class="title">JNB Events</div><div class="area">Leicester &middot; Midlands<br>London &middot; UK-wide</div></div>
     <div class="rule"></div>
     <ul class="svc">${SERVICES.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
   </div>
+  <p class="person">${NAME}</p>
   <dl class="rows">
     <dt>Contact number</dt><dd>${phone}</dd>
     <dt>Email</dt><dd>${email}</dd>
