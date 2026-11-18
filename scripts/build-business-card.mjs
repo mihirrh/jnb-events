@@ -125,9 +125,18 @@ for (const [name, bleed] of [['print-with-bleed', 3], ['trim-size', 0]]) {
   await page.evaluate(() => document.fonts.ready);
   await page.pdf({ path: join(out, `${name}.pdf`), preferCSSPageSize: true, printBackground: true });
   if (bleed === 0) {
-    await page.setViewportSize({ width: Math.ceil(85 * 3.7795), height: Math.ceil(55 * 3.7795) });
-    for (const [i, side] of ['front', 'back'].entries()) {
-      await page.locator('.card').nth(i).screenshot({ path: join(out, `${side}.png`) });
+    // PNG previews: render one side at a time on a page coloured like the card, clipped to exactly 85 x 55 mm,
+    // so rounding at the edge can never pick up the other side or white page.
+    const w = (85 / 25.4) * 96, h = (55 / 25.4) * 96;
+    await page.setViewportSize({ width: Math.ceil(w), height: Math.ceil(h) });
+    for (const [i, [side, bg]] of [['front', '#faf7f2'], ['back', '#14110e']].entries()) {
+      await page.setContent(html(0), { waitUntil: 'load' });
+      await page.evaluate(([keep, color]) => {
+        document.querySelectorAll('.card').forEach((c, j) => { if (j !== keep) c.remove(); });
+        document.documentElement.style.background = document.body.style.background = color;
+      }, [i, bg]);
+      await page.evaluate(() => document.fonts.ready);
+      await page.screenshot({ path: join(out, `${side}.png`), clip: { x: 0, y: 0, width: w, height: h } });
     }
   }
 }
