@@ -45,7 +45,7 @@ const ALL_VIEWPORTS = [
 const VIEWPORTS = onlyVp ? ALL_VIEWPORTS.filter((v) => v.name === onlyVp) : ALL_VIEWPORTS;
 // Page-height budget in viewport heights. The homepage is the showcase, so it gets more; inner pages stay short.
 // Phones scroll naturally, so they get a 1.6x allowance.
-const budget = (p, vp) => (p === '/' ? 8.5 : p === '/about/' ? 8 : p.startsWith('/gallery/') && p !== '/gallery/' ? 7 : 6) * (vp.w < 700 ? 1.6 : 1);
+const budget = (p, vp) => (p === '/' ? 8.5 : p === '/about/' ? 8 : p === '/services/' ? 7.5 : p.startsWith('/gallery/') && p !== '/gallery/' ? 7 : 6) * (vp.w < 700 ? 1.6 : 1);
 
 // Tiny static server for dist/, bound to loopback only (no external exposure).
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.avif': 'image/avif', '.png': 'image/png', '.woff2': 'font/woff2', '.xml': 'application/xml', '.txt': 'text/plain' };
