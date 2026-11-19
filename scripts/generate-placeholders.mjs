@@ -298,7 +298,7 @@ function smoke(r, w, h, p) {
   return o;
 }
 
-// A house front at night outlined in string lights, fairy-light curtains and lit gate pillars.
+// A house front at night with fairy-light curtains hanging across the front, and lit gate pillars.
 function outdoorLights(r, w, h, p) {
   const gY = h * 0.82; // ground line
   let o = `<rect width="${w}" height="${h}" fill="url(#bg)"/>`;
@@ -341,20 +341,12 @@ function outdoorLights(r, w, h, p) {
     }
     return `<path d="${line}" stroke="#05040a" stroke-width="1.6" fill="none" opacity="0.8"/><g filter="url(#b1)">${halo}</g>${dots}`;
   };
-  // Roof outline, eave swags, fairy-light curtains, entrance swags
-  o += strand(w * 0.18, yEave, w * 0.5, h * 0.15, 0, 26);
-  o += strand(w * 0.5, h * 0.15, w * 0.82, yEave, 0, 26);
-  for (let i = 0; i < 6; i++) {
-    const a = x0 - w * 0.04 + (i * (x1 - x0 + w * 0.08)) / 6;
-    o += strand(a, yEave, a + (x1 - x0 + w * 0.08) / 6, yEave, h * 0.035, 26);
+  // Fairy-light curtains only: dense vertical strands hanging across the front of the house
+  const nCurtain = 26;
+  for (let i = 0; i < nCurtain; i++) {
+    const cx = x0 - w * 0.01 + ((x1 - x0 + w * 0.02) * (i + 0.5)) / nCurtain;
+    o += strand(cx, yEave, cx + (r() - 0.5) * 4, yEave + h * (0.3 + r() * 0.1), 0, 24);
   }
-  for (let i = 0; i < 22; i++) {
-    const cx = x0 + ((x1 - x0) * (i + 0.5)) / 22;
-    o += strand(cx, yEave + h * 0.02, cx + (r() - 0.5) * 8, yEave + h * (0.08 + r() * 0.2), 0, 24);
-  }
-  o += strand(w * 0.1, h * 0.6, x0, yEave + h * 0.02, h * 0.07, 28);
-  o += strand(w * 0.9, h * 0.6, x1, yEave + h * 0.02, h * 0.07, 28);
-  o += strand(w * 0.1, h * 0.64, w * 0.9, h * 0.64, h * 0.1, 30);
   o += bokeh(r, w, h, 14, p.glow, 0.3, 0.85);
   return o;
 }
@@ -434,4 +426,6 @@ const jobs = [
   { out: 'gallery/placeholder-sparklers-3.jpg', scene: 'smoke', pal: 'noir', ...L, seed: 153 },
 ];
 
-for (const j of jobs) await render(j);
+// Optional: `node scripts/generate-placeholders.mjs outdoor-lights` regenerates only matching files.
+const only = process.argv[2];
+for (const j of jobs) if (!only || j.out.includes(only)) await render(j);

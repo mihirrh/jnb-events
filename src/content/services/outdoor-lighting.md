@@ -4,11 +4,10 @@ order: 9
 summary: Festive string-light décor for the outside of the bride's or groom's home, marquees, shops and venues in Leicester and the Midlands.
 lead: Before the wedding day, the house comes alive. We light the front of the bride's or groom's home, the gate, the driveway and the garden with warm string lights and fairy-light curtains, so the celebration is seen from the street.
 image: /src/assets/media/services/placeholder-outdoor-lights.jpg
-imageAlt: Placeholder illustration of a house front outlined with warm string lights and fairy-light curtains at night, the style of outdoor lighting for an Asian wedding at home in Leicester.
+imageAlt: Placeholder illustration of a house front covered in warm fairy-light curtains at night, the style of outdoor lighting for an Asian wedding at home in Leicester.
 keyPointsHeading: What we offer
 keyPoints:
-  - String-light outlines for rooflines, windows, doors and gates
-  - Fairy-light curtains and swags across the front of the house
+  - Fairy-light curtains across the front of the house
   - Garden, driveway, marquee and entrance lighting
   - Shops and business frontages for festivals and celebrations
   - Designed around your property, installed and taken down for you
@@ -23,7 +22,6 @@ In many Asian families the celebrations begin well before the ceremony, with the
 ## House & Wedding Lighting
 
 We dress the outside of the home so the whole street knows there is a celebration:
-- **Roofline & Window Outlines**: Warm string lights following the shape of the house.
 - **Fairy-Light Curtains**: Cascading strands across the front of the property, porch or garden wall.
 - **Gates, Pillars & Driveways**: Lighting that welcomes your guests from the moment they arrive.
 - **Gardens & Marquees**: Soft lighting for outdoor seating, pathways and marquee entrances.
