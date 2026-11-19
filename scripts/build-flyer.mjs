@@ -771,8 +771,32 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3mm;
+  flex-wrap: nowrap;
+  gap: 2mm;
   color: var(--text-muted);
+  font-size: 6.2pt;
+}
+
+.back-contacts-row .footer-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9mm;
+}
+
+.back-contacts-row .footer-icon {
+  width: 2.8mm;
+  height: 2.8mm;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.back-contacts-row .footer-bullet {
+  color: var(--gold);
+  margin: 0 0.5mm;
 }
 </style>
 </head>
@@ -1068,13 +1092,25 @@ body {
     <footer class="back-footer-bar">
       <div class="back-coverage-text">Leicester · Leicestershire · East &amp; West Midlands · London · UK-Wide</div>
       <div class="back-contacts-row">
-        <span>${phone}</span>
-        <span>•</span>
-        <span>${email}</span>
-        <span>•</span>
-        <span>jnbevents.co.uk</span>
-        <span>•</span>
-        <span>@${insta}</span>
+        <div class="footer-item">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-label="Phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>${phone}</span>
+        </div>
+        <span class="footer-bullet">•</span>
+        <div class="footer-item">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-label="Email"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>${email}</span>
+        </div>
+        <span class="footer-bullet">•</span>
+        <div class="footer-item">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-label="Website"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>jnbevents.co.uk</span>
+        </div>
+        <span class="footer-bullet">•</span>
+        <div class="footer-item">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-label="Instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <span>@${insta}</span>
+        </div>
       </div>
     </footer>
 

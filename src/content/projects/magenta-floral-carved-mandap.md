@@ -19,7 +19,7 @@ images:
   - image: /src/assets/media/gallery/carved_ganesh_statue_detail.jpg
     alt: Detailed close-up of an intricately carved traditional Ganesh statue used as aisle decor for a luxury Hindu wedding in Leicestershire. Bespoke Asian wedding event props and styling in the UK.
   - image: /src/assets/media/gallery/welcome-decor-outdoor-ganesha-gazebo-pink-roses.jpeg
-    alt: An outdoor welcome display featuring a carved beige Ganesha statue seated on a grey paved patio underneath a wooden gazebo with a vibrant floral bed of hot pink, magenta, and blush roses overlooking a scenic pond and fountain.
+    alt: An outdoor welcome display featuring a carved beige Ganesha statue seated on a grey paved patio underneath a wooden gazebo. A vibrant floral bed of hot pink, magenta, and blush roses sits at the base, overlooking a scenic pond with a fountain, lawn, and trees in the background.
   - image: /src/assets/media/gallery/outdoor_ganesh_welcome_sign.jpg
     alt: Elegant outdoor welcome sign and a large traditional carved Ganesh statue greeting guests at a luxury Hindu wedding ceremony in Leicestershire. Premium Asian wedding signage and outdoor event styling in the UK.
   - image: /src/assets/media/gallery/outdoor_carved_ganesh_statue.jpg

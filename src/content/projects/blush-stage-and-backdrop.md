@@ -7,11 +7,11 @@ date: 2026-06-15
 featured: true
 images:
   - image: /src/assets/media/gallery/welcome-decor-ganesha-statue-pink-burgundy-floral-arch.jpeg
-    alt: An indoor welcome display featuring a carved beige Ganesha statue seated on a circular white plinth, framed by a full floral ring arch of blush pink, peach, and deep burgundy roses against white pleated drapery, with glass cylinder floating candles and scattered roses.
+    alt: An indoor welcome display featuring a carved beige Ganesha statue seated on a circular white plinth. It is framed by a full floral ring arch of blush pink, peach, and deep burgundy roses against white pleated drapery, with glass cylinder floating candles and scattered roses around the base.
   - image: /src/assets/media/gallery/entrance-decor-ganesha-statue-white-roses-lanterns.jpeg
-    alt: An outdoor venue entrance display on a stone-tiled patio featuring a carved beige Ganesha statue wearing a floral garland nestled inside dense arrangements of all-white roses and baby's breath, accented by white candle lanterns.
+    alt: An outdoor venue entrance display on a stone-tiled patio in front of timber-framed glass doors. A carved beige Ganesha statue wearing a garland is nestled inside dense arrangements of all-white roses and baby's breath, accented by three small white candle lanterns at the base.
   - image: /src/assets/media/gallery/welcome-decor-outdoor-ganesha-gazebo-pink-roses.jpeg
-    alt: An outdoor welcome display featuring a carved beige Ganesha statue seated on a paved patio underneath a wooden gazebo with a vibrant floral bed of hot pink, magenta, and blush roses overlooking a scenic pond and fountain.
+    alt: An outdoor welcome display featuring a carved beige Ganesha statue seated on a grey paved patio underneath a wooden gazebo. A vibrant floral bed of hot pink, magenta, and blush roses sits at the base, overlooking a scenic pond with a fountain, lawn, and trees in the background.
 seoDescription: Luxury Asian wedding welcome displays, entrance archways, and carved Ganesha foyer decor in Leicester and the Midlands.
 ---
 
