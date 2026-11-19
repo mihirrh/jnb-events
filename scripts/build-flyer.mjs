@@ -111,9 +111,9 @@ async function getBase64Image(filePath, maxWidth = 1600, quality = 96) {
 console.log('Optimizing high-res imagery for 300+ DPI print quality...');
 // Swapped images as requested:
 // Front Hero: Carved wooden mandap close
-// Front Secondary: Gold mandap ceremony seating
+// Front Secondary: White floral Indian wedding mandap
 const imgCarvedMandapClose = await getBase64Image('src/assets/media/gallery/carved_wooden_mandap_close.jpg', 1600, 96);
-const imgGoldMandapSeating = await getBase64Image('src/assets/media/gallery/gold_mandap_carved_seating.jpg', 1200, 96);
+const imgWhiteFloralMandap = await getBase64Image('src/assets/media/services/white_Floral_Indian_Wedding_Mandap.jpg', 1200, 96);
 const imgBackVisual = await getBase64Image('src/assets/media/gallery/floral_aisle_stand_mandap_backdrop.jpg', 1000, 96);
 
 const generateHtml = (bleed = 3, theme = 'dark') => {
@@ -409,7 +409,7 @@ body {
 
 .secondary-photo-wrap {
   width: 100%;
-  height: 25.5mm;
+  height: 29mm;
   border: 0.5px solid var(--gold-border);
   overflow: hidden;
   background-color: #0b0908;
@@ -419,7 +419,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
+  object-position: center 40%;
   display: block;
 }
 
@@ -827,10 +827,10 @@ body {
         </div>
       </div>
 
-      <!-- Right Column: Secondary Photo (Swapped to Gold Mandap Ceremony) + Consultation Call & QR -->
+      <!-- Right Column: Secondary Photo (White Floral Indian Wedding Mandap) + Consultation Call & QR -->
       <div class="visual-col">
         <div class="secondary-photo-wrap">
-          <img src="${imgGoldMandapSeating}" alt="Gold Mandap Ceremony Seating &amp; Aisle Runner" class="secondary-photo-img" />
+          <img src="${imgWhiteFloralMandap}" alt="White Floral Indian Wedding Mandap" class="secondary-photo-img" />
         </div>
 
         <div class="consult-card">
