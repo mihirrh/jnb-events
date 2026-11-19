@@ -6,6 +6,8 @@ location: Leicestershire
 date: 2026-05-15
 featured: true
 images:
+  - image: /src/assets/media/gallery/ceremony-aisle-archway-carved-wood-pastel-florals.jpeg
+    alt: An indoor ballroom ceremony view looking through a large carved entrance archway topped with pastel blush, cream, and dusty rose florals leading down a white aisle runner toward a warmly-lit carved mandap.
   - image: /src/assets/media/gallery/historic_archway_mandap_setup.jpg
     alt: Spectacular luxury Asian wedding ceremony featuring a grand carved archway mandap, pristine white aisle runner, and elegant lime wash Chiavari chairs. Bespoke Hindu wedding styling and event production in Leicestershire and the Midlands.
   - image: /src/assets/media/gallery/grand_brick_archway_mandap.jpg

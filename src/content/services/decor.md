@@ -3,10 +3,10 @@ title: Décor
 order: 2
 summary: Luxury Asian wedding decorations and full venue styling in Leicester and across the Midlands.
 lead: We transform wedding venues with cohesive, breathtaking styling. From grand entrance features and bespoke floral backdrops to stage draping and ambient lighting, every detail is curated to perfection.
-image: /src/assets/media/services/modern_gold_mandap_blush_florals.jpg
-imageAlt: Contemporary open-frame gold mandap decorated with blush pink and white roses for a luxury Hindu wedding in Leicester. Beautiful Asian ceremony stage with traditional carved seating and a modern white draped backdrop.
-secondImage: /src/assets/media/services/floral_arch_ganesh_mandap.jpg
-secondImageAlt: Exquisite carved wooden mandap seating framed by a vibrant pink and purple floral arch and a central Ganesh statue. Premium Asian wedding stage styling and traditional Hindu decor in the Midlands.
+image: /src/assets/media/gallery/welcome-decor-ganesha-statue-pink-burgundy-floral-arch.jpeg
+imageAlt: Indoor welcome display featuring a carved beige Ganesha statue seated on a circular white plinth framed by a blush pink, peach, and burgundy rose floral arch with floating candles and white pleated drapery.
+secondImage: /src/assets/media/gallery/entrance-decor-ganesha-statue-white-roses-lanterns.jpeg
+secondImageAlt: Outdoor venue entrance display featuring a carved beige Ganesha statue nestled in dense white roses and baby's breath accented by candle lanterns.
 keyPoints:
   - Luxury wedding stage decorations, sweetheart backdrops, and photo opportunities
   - Grand entrance arches, welcome mirrors, and foyer floral installations
