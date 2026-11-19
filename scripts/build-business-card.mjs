@@ -12,7 +12,6 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, 'brand', 'business-card');
 mkdirSync(out, { recursive: true });
 
-const NAME = 'Bhav';
 const SERVICES = [
   'Mandaps & Stages',
   'Wedding & Reception D\u00e9cor',
@@ -93,7 +92,6 @@ html,body{background:#fff}
 .title{font-family:Bodoni,serif;font-weight:500;font-size:15pt;line-height:1;color:#d6b36a;letter-spacing:.14em;text-transform:uppercase}
 .qr{position:absolute;right:0;bottom:7mm;width:12.5mm;height:12.5mm;border-radius:0.6mm;overflow:hidden;line-height:0}
 .qr svg{width:100%;height:100%;display:block}
-.person{position:absolute;right:0;bottom:0;font-family:Bodoni,serif;font-style:italic;font-size:13pt;line-height:1;color:#d6b36a}
 .rule{height:0.25mm;width:100%;background:rgba(214,179,106,.45);margin:1.6mm 0 1.6mm}
 .svc{list-style:none;display:grid;grid-template-columns:max-content max-content;column-gap:3.5mm;row-gap:1mm;font-family:Bodoni,serif;font-style:italic;font-size:7pt;line-height:1.3;color:#e9dfcc}
 .svc li{white-space:nowrap;position:relative;padding-left:2.6mm}
@@ -110,7 +108,6 @@ html,body{background:#fff}
     <ul class="svc">${SERVICES.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
   </div>
   <div class="qr" role="img" aria-label="QR code for jnbevents.co.uk">${qr}</div>
-  <p class="person">${NAME}</p>
   <dl class="rows">
     <dt>Contact number</dt><dd>${phone}</dd>
     <dt>Email</dt><dd>${email}</dd>
