@@ -6,6 +6,10 @@ location: Leicestershire
 date: 2026-06-01
 featured: true
 images:
+  - image: /src/assets/media/gallery/ceremony-mandap-aisle-gold-carved-pink-roses.jpeg
+    alt: An indoor ceremony setup beneath a crystal chandelier, showing a symmetrical white aisle runner bordered by continuous low runners and carved pedestals of bright pink, blush, and cream roses, leading up to an illuminated carved gold mandap wrapped in pink florals with Chiavari guest chairs.
+  - image: /src/assets/media/gallery/ceremony-aisle-archway-carved-wood-pastel-florals.jpeg
+    alt: An indoor ballroom ceremony view looking through a large carved entrance archway topped with pastel blush, cream, and dusty rose florals, with white chair covers and gold sashes leading down a white aisle to a carved mandap.
   - image: /src/assets/media/gallery/grand_mandap_modern_venue.jpg
     alt: Grand luxury wedding ceremony setup in a modern UK venue, featuring a radiant gold aisle runner, carved Ganesh pedestals, and a spectacular floral mandap. Premium Asian wedding decorators providing high-end styling across Leicester and the Midlands.
   - image: /src/assets/media/gallery/modern_hall_gold_aisle_mandap.jpg

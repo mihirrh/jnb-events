@@ -6,6 +6,8 @@ location: Leicestershire
 date: 2026-04-20
 featured: true
 images:
+  - image: /src/assets/media/gallery/ceremony-mandap-carved-wood-white-floral-setup.jpeg
+    alt: An indoor ceremony setup inside a bright, naturally lit hall featuring an intricately carved light-wood mandap heavily adorned with lush all-white floral arrangements, white backdrop draping, and smaller Ganesha statues, paired with a white floral-lined aisle and wooden Chiavari guest chairs.
   - image: /src/assets/media/gallery/marquee_carved_wooden_mandap.jpg
     alt: Intricately carved traditional Hindu wooden mandap set up inside a luxury white pleated marquee in Leicestershire. Bespoke Asian wedding decor featuring a vibrant red and orange floral canopy and elegant white drapes.
   - image: /src/assets/media/gallery/rustic_festoon_mandap.jpg

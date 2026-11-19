@@ -6,6 +6,8 @@ location: Leicestershire
 date: 2026-03-10
 featured: true
 images:
+  - image: /src/assets/media/gallery/ceremony-mandap-aisle-gold-carved-pink-roses.jpeg
+    alt: An indoor ceremony setup beneath a crystal chandelier, showing a symmetrical white aisle runner bordered by continuous low runners and carved pedestals of bright pink, blush, and cream roses, leading up to an illuminated carved gold mandap wrapped in pink florals.
   - image: /src/assets/media/gallery/modern_gold_geometric_mandap_wide.jpg
     alt: Modern luxury Asian wedding ceremony in a UK marquee featuring a sleek gold geometric mandap and a crisp white aisle. Elegant blush and white floral arrangements on tall gold stands for bespoke Midlands event styling.
   - image: /src/assets/media/gallery/modern_gold_mandap_blush_florals.jpg
