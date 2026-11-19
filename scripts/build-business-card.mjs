@@ -90,8 +90,10 @@ html,body{background:#fff}
 .head{display:flex;justify-content:space-between;align-items:center}
 .area{font-size:5.2pt;letter-spacing:.18em;text-transform:uppercase;line-height:1.7;color:#d9d0c1;text-align:right}
 .title{font-family:Bodoni,serif;font-weight:500;font-size:15pt;line-height:1;color:#d6b36a;letter-spacing:.14em;text-transform:uppercase}
-.qr{position:absolute;right:0;bottom:7mm;width:12.5mm;height:12.5mm;border-radius:0.6mm;overflow:hidden;line-height:0}
+.qr-wrap{position:absolute;right:0;bottom:0.5mm;display:flex;flex-direction:column;align-items:center;gap:0.7mm}
+.qr{width:12mm;height:12mm;border-radius:0.6mm;overflow:hidden;line-height:0}
 .qr svg{width:100%;height:100%;display:block}
+.qr-label{font-size:4.2pt;letter-spacing:.16em;text-transform:uppercase;color:#d6b36a;font-weight:600;text-align:center;line-height:1}
 .rule{height:0.25mm;width:100%;background:rgba(214,179,106,.45);margin:1.6mm 0 1.6mm}
 .svc{list-style:none;display:grid;grid-template-columns:max-content max-content;column-gap:3.5mm;row-gap:1mm;font-family:Bodoni,serif;font-style:italic;font-size:7pt;line-height:1.3;color:#e9dfcc}
 .svc li{white-space:nowrap;position:relative;padding-left:2.6mm}
@@ -107,7 +109,10 @@ html,body{background:#fff}
     <div class="rule"></div>
     <ul class="svc">${SERVICES.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
   </div>
-  <div class="qr" role="img" aria-label="QR code for jnbevents.co.uk">${qr}</div>
+  <div class="qr-wrap">
+    <div class="qr" role="img" aria-label="QR code for jnbevents.co.uk">${qr}</div>
+    <span class="qr-label">Scan Me</span>
+  </div>
   <dl class="rows">
     <dt>Contact number</dt><dd>${phone}</dd>
     <dt>Email</dt><dd>${email}</dd>

@@ -461,9 +461,17 @@ body {
   color: var(--text-dim);
 }
 
+.qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6mm;
+  flex-shrink: 0;
+}
+
 .qr-box {
-  width: 14mm;
-  height: 14mm;
+  width: 13.5mm;
+  height: 13.5mm;
   border: 0.5px solid var(--gold-border);
   background: ${isDark ? '#14110e' : '#ffffff'};
   padding: 0.8mm;
@@ -476,6 +484,16 @@ body {
 .qr-box svg {
   width: 100%;
   height: 100%;
+}
+
+.qr-label {
+  font-size: 4.6pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1;
 }
 
 /* Bottom Footer Bar */
@@ -839,8 +857,11 @@ body {
             <span class="consult-phone">${phone}</span>
             <span class="consult-site">jnbevents.co.uk</span>
           </div>
-          <div class="qr-box">
-            ${qr}
+          <div class="qr-wrap">
+            <div class="qr-box">
+              ${qr}
+            </div>
+            <span class="qr-label">Scan Me</span>
           </div>
         </div>
       </div>
@@ -1034,8 +1055,11 @@ body {
           <div class="back-cta-phone">Contact: ${phone}</div>
           <div class="back-cta-phone">${email}</div>
         </div>
-        <div class="qr-box">
-          ${qr}
+        <div class="qr-wrap">
+          <div class="qr-box">
+            ${qr}
+          </div>
+          <span class="qr-label">Scan Me</span>
         </div>
       </div>
     </div>
