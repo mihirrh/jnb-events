@@ -15,19 +15,20 @@ keyPoints:
 relatedCategory: Mandaps & Stages
 whatsappMessage: "Hello JNB Events, I'm interested in mandap hire and stage styling for my wedding."
 seo:
-  title: Mandap Hire Leicester | Luxury Wedding Mandaps | JNB Events
-  description: Premium mandap hire in Leicester, Leicestershire and the Midlands. Bespoke Hindu & Asian wedding mandaps, carved stages, floral aisles, and full ceremony styling.
+  title: Mandap Hire & Wedding Stages Leicester | JNB Events
+  description: Premium mandap hire and wedding stage decor in Leicester & the Midlands. Bespoke Hindu & Asian mandaps, carved stages, floral aisles, and full ceremony styling.
 ---
 
-At **JNB Events**, we understand that your wedding mandap is not merely a structure; it is the sacred focal point where sacred vows are exchanged and unforgettable memories are created. We specialise in luxury **mandap hire in Leicester**, providing bespoke ceremony styling across Leicestershire, Nottingham, Derby, Birmingham, Coventry, and venues throughout the UK.
+At **JNB Events**, we understand that your sacred wedding mandap is the spiritual and aesthetic heart of your ceremony. As specialists in **Asian wedding mandap hire in Leicester**, we deliver bespoke **wedding mandap hire and mandap decoration** across Leicestershire, Birmingham, London, Nottingham, Coventry, and venues throughout the UK.
 
-## Traditional & Contemporary Mandap Designs
+## Traditional & Modern Wedding Mandap Designs
 
-Every couple's vision is unique. Our collection includes:
+Whether you envision a time-honoured heritage setting or a sleek contemporary aesthetic, our extensive collection of **wedding mandap hire** structures includes:
 
-- **Traditional Hand-Carved Wooden Mandaps**: Intricately crafted pillars, grand arches, and ornamental detailing accented with rich floral canopies in vibrant reds, oranges, and ivories.
-- **Modern Gold Geometric & Open-Frame Mandaps**: Sleek, contemporary metallic structures paired with lush blush, plum, or botanical floral arrangements, perfect for modern venues and marquee weddings.
-- **Heritage & Marquee Setups**: Custom staging tailored to historic brick archways, countryside estates, and grand ballrooms with matching festoon or chandelier lighting.
+- **Traditional Hand-Carved Wooden Mandaps**: Intricately crafted carved pillars, ornamental domes, and handcrafted detailing accented with rich floral canopies in traditional auspicious reds, oranges, and ivories.
+- **Modern Gold Geometric Mandap Concepts**: Sleek, open-frame metallic structures paired with lush blush pink roses, plum florals, or botanical greenery, ideal for contemporary ballrooms and luxury marquee weddings.
+- **Floral Mandap Decoration & Walkway Features**: Tailored floral arrangements spanning the mandap header, aisle pillars, havan pedestals, and entrance gates for a cohesive aesthetic.
+- **Heritage & Marquee Staging**: Custom-engineered staging tailored to historic venues, hotel ballrooms, and outdoor marquees with coordinated ambient lighting.
 
 ## What's Included in Your Mandap Setup
 
