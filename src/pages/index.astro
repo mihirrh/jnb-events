@@ -213,9 +213,14 @@ const rowServices = services.slice(3);
   <section class="bg-cream-deep section-tight" aria-labelledby="areas-heading">
     <div class="wrap grid items-baseline gap-4 lg:grid-cols-12 lg:gap-8">
       <div class="folio lg:col-span-3"><b>05</b><span id="areas-heading">Where we work</span></div>
-      <p class="font-serif text-[clamp(1.6rem,2.4vw+0.8rem,3rem)] leading-tight tracking-[-0.02em] lg:col-span-9">
-        {settings.serviceAreas.join(' · ')}
-      </p>
+      <div class="lg:col-span-9">
+        <p class="font-serif text-[clamp(1.6rem,2.4vw+0.8rem,3rem)] leading-tight tracking-[-0.02em]">
+          {settings.serviceAreas.join(' · ')}
+        </p>
+        <a href="/areas/" class="link-arrow mt-4">
+          <span>Explore regional coverage &amp; venues</span><span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
     </div>
   </section>
 

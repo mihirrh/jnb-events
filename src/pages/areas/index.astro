@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Img from '../../components/Img.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getAreas } from '../../lib/content';
+import { breadcrumbs } from '../../lib/schema';
+
+const areas = await getAreas();
+const site = Astro.site!.toString();
+
+const title = 'Areas We Cover | Wedding Mandap Hire & Décor | JNB Events';
+const description = 'JNB Events provides bespoke Asian wedding decor, mandap hire, DJ and stage styling across Leicester, Birmingham, London, Nottingham, Coventry and the UK.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  jsonLd={[
+    breadcrumbs([
+      { name: 'Home', url: site },
+      { name: 'Areas', url: `${site}areas/` },
+    ]),
+  ]}
+>
+  <PageHero
+    folio="06"
+    eyebrow="Where we work"
+    heading="Areas we *cover across the UK.*"
+    lead="From our central Leicestershire headquarters, we deliver bespoke mandap hire, wedding stage decoration, DJ entertainment, and full venue styling across the East & West Midlands, Greater London, and nationwide."
+  />
+
+  <section class="bg-cream pb-[clamp(4rem,9vw,9rem)]" aria-label="Coverage Areas">
+    <div class="wrap">
+      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          areas.map((a) => (
+            <div class="group flex flex-col border border-line bg-cream transition-shadow hover:shadow-md">
+              <a href={`/areas/${a.id}/`} class="block overflow-hidden" tabindex="-1" aria-hidden="true">
+                <Img src={a.data.image} alt={a.data.imageAlt} ratio={16 / 10} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 94vw" class="media-zoom" />
+              </a>
+              <div class="flex flex-1 flex-col p-6 sm:p-7">
+                <p class="text-xs uppercase tracking-[0.2em] text-gold-deep">{a.data.region}</p>
+                <h2 class="h3 mt-2 !text-2xl">
+                  <a href={`/areas/${a.id}/`} class="no-underline">{a.data.city}</a>
+                </h2>
+                <p class="mt-2 text-sm font-medium text-ink">{a.data.serviceType}</p>
+                <p class="mt-3 flex-1 text-sm text-ink-soft">{a.data.summary}</p>
+                <div class="mt-6 border-t border-line pt-4">
+                  <a href={`/areas/${a.id}/`} class="link-arrow">
+                    <span>View {a.data.city} details</span>
+                    <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Nationwide note -->
+      <div class="mt-16 border border-line bg-cream-deep p-8 text-center sm:p-12">
+        <h3 class="font-serif text-2xl text-ink">Travelling to Venues Nationwide</h3>
+        <p class="mx-auto mt-4 max-w-2xl text-[1.02rem] text-ink-soft">
+          Don't see your city listed above? JNB Events regularly travels to wedding venues, stately homes, and private estates across Yorkshire, Manchester, the North West, and the South of England.
+        </p>
+        <div class="mt-8 flex justify-center">
+          <a href="/contact/" class="btn btn-ink">Enquire about your venue</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Check availability"
+    heading="Ready to discuss *your venue?*"
+    text="Message us on WhatsApp with your date and location for a bespoke proposal."
+    source="areas index page"
+  />
+</BaseLayout>

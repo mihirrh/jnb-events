@@ -40,6 +40,11 @@ export async function getPublishedTestimonials() {
   return all.filter((t) => t.data.published).sort((a, b) => a.data.order - b.data.order);
 }
 
+export async function getAreas() {
+  const all = await getCollection('areas');
+  return all;
+}
+
 async function must<C extends 'home' | 'about' | 'contact' | 'pages' | 'quote'>(collection: C, id: string) {
   const entry = await getEntry(collection, id);
   if (!entry) throw new Error(`Missing content entry: src/content/pages/${id}`);

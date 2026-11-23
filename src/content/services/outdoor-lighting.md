@@ -1,23 +1,31 @@
 ---
 title: Outdoor Lighting
+h1: Outdoor Wedding Lighting & House Lights
 order: 9
-summary: Festive string-light décor for the outside of the bride's or groom's home, marquees, shops and venues in Leicester and the Midlands.
+summary: Festive fairy-light curtains and outdoor wedding lighting for home fronts, gardens, marquees and venues in Leicester and the Midlands.
 lead: Before the wedding day, the house comes alive. We light the front of the bride's or groom's home, the gate, the driveway and the garden with warm string lights and fairy-light curtains, so the celebration is seen from the street.
 image: /src/assets/media/services/placeholder-outdoor-lights.jpg
-imageAlt: Placeholder illustration of a house front covered in warm fairy-light curtains at night, the style of outdoor lighting for an Asian wedding at home in Leicester.
+imageAlt: Outdoor fairy-light curtains lighting up a family home front for an Asian wedding in Leicester.
 keyPointsHeading: What we offer
 keyPoints:
-  - Fairy-light curtains across the front of the house
-  - Garden, driveway, marquee and entrance lighting
-  - Shops and business frontages for festivals and celebrations
-  - Designed around your property, installed and taken down for you
-whatsappMessage: "Hello JNB Events, I'd like to enquire about outdoor lighting for my home or event."
+  - "Fairy-light curtains across the front of the bride's or groom's house"
+  - "Garden, driveway, marquee, and entrance pillar lighting"
+  - "Commercial and shopfront decorative lighting for festivals and Diwali"
+  - "Custom designed around your property with professional installation and removal"
+whatsappMessage: "Hello JNB Events, I'd like to enquire about outdoor wedding lighting for my home or venue."
+faq:
+  - question: How long before the wedding do you install the house lights?
+    answer: "We usually install outdoor house lights 3 to 7 days before the wedding week kicks off, giving family and neighbours ample time to celebrate, and we return to dismantle everything promptly after the events."
+  - question: Are your outdoor fairy lights weatherproof?
+    answer: "Yes. All our commercial fairy-light curtains, festoon lighting, and outdoor transformers are IP65 weatherproof rated and rigorously tested for UK outdoor weather conditions."
+  - question: Which areas do you cover for home wedding lighting?
+    answer: "We install outdoor house lighting across Leicester (including Belgrave, Oadby, Evington, Hamilton), Loughborough, Leicestershire, Coventry, and Nottingham."
 seo:
   title: Outdoor Wedding Lighting Leicester | House Lights | JNB Events
-  description: Outdoor string-light décor for Asian weddings at home in Leicester, Leicestershire and the Midlands. House fronts, gates, gardens, marquees and shopfronts.
+  description: Festive outdoor wedding lighting and fairy-light curtains for Asian weddings at home in Leicester, Leicestershire & the Midlands. Full setup & takedown.
 ---
 
-In many Asian families the celebrations begin well before the ceremony, with the bride's or groom's house lit up for everyone to see. Along **Belgrave Road in Leicester**, shopfronts are lit up in just the same way for festivals and celebrations. At **JNB Events**, we provide **outdoor wedding lighting in Leicester** and across the Midlands, designed to suit your property.
+In many Asian families the celebrations begin well before the ceremony, with the bride's or groom's house lit up for everyone to see. Along **Belgrave Road in Leicester**, shopfronts and homes are lit up in just the same way for festivals and celebrations. At **JNB Events**, we provide **outdoor wedding lighting and Asian wedding house lights in Leicester** and across the Midlands, designed to suit your property.
 
 ## House & Wedding Lighting
 

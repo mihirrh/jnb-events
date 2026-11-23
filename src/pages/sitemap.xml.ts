@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getServices, getProjects, categoriesInUse, slugify } from '../lib/content';
+import { getServices, getProjects, getAreas, categoriesInUse, slugify } from '../lib/content';
 
 /**
  * Lists every indexable page. `/quote/` (private, noindex) and `/404/` are deliberately excluded.
@@ -11,6 +11,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   const services = await getServices();
   const projects = await getProjects();
+  const areas = await getAreas();
   const categories = categoriesInUse(projects);
 
   const urls: string[] = [
@@ -19,6 +20,8 @@ export const GET: APIRoute = async ({ site }) => {
     `${baseUrl}contact/`,
     `${baseUrl}services/`,
     ...services.map((s) => `${baseUrl}services/${s.id}/`),
+    `${baseUrl}areas/`,
+    ...areas.map((a) => `${baseUrl}areas/${a.id}/`),
     `${baseUrl}gallery/`,
     ...categories.map((cat) => `${baseUrl}gallery/category/${slugify(cat)}/`),
     ...projects.map((p) => `${baseUrl}gallery/${p.id}/`),

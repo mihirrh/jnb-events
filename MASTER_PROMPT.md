@@ -52,14 +52,18 @@
 ```text
 jnb-events/
 ├── .pages.yml                          # Pages CMS schema configuration
-├── astro.config.mjs                    # Astro configuration (site URL, sitemap, sharp image service)
-├── package.json                        # Scripts and dependencies
+├── astro.config.mjs                    # Astro configuration (site URL, sharp image service)
+├── package.json                        # Scripts, dependencies, IndexNow & verification scripts
 ├── tailwind.config.mjs                 # Tailwind CSS 4 configuration
 ├── tsconfig.json                       # TypeScript configuration
+├── scripts/
+│   ├── audit-dist.mjs                  # Post-build SEO, HTML, JSON-LD, heading, image & link audit
+│   └── indexnow.mjs                    # Direct IndexNow API batch submission script
 ├── public/
 │   ├── _headers                        # Cloudflare Pages security & caching headers
 │   ├── favicon.svg                     # Brand vector favicon
-│   └── robots.txt                      # Search engine crawl directives
+│   ├── llms.txt                        # AI crawler structured knowledge summary
+│   └── 3b9f4e2d8c1a7e506f349a8b1c2d3e4f.txt # IndexNow verification key file
 ├── src/
 │   ├── assets/
 │   │   ├── brand/                      # SVG logos (dark, light, horizontal, emblem)
@@ -83,7 +87,7 @@ jnb-events/
 │   │   ├── InstagramFeed.astro         # Visual social proof grid
 │   │   ├── Motif.astro                 # SVG ogee arch mandap emblem component
 │   │   └── Testimonials.astro          # Verified client review quotes
-│   ├── content.config.ts               # Astro 5/7 Content Collections schemas
+│   ├── content.config.ts               # Astro Content Collections schemas (services, areas, pages, projects)
 │   ├── content/
 │   │   ├── settings/
 │   │   │   └── site.yaml               # Global brand, phone, WhatsApp, email, areas, social
@@ -95,7 +99,14 @@ jnb-events/
 │   │   │   ├── contact.md              # Contact page metadata & directions
 │   │   │   ├── privacy.md              # GDPR-compliant Privacy Policy
 │   │   │   └── terms.md                # Terms of Service & Booking Conditions
-│   │   ├── services/
+│   │   ├── areas/                      # Dedicated Local SEO regional landing pages
+│   │   │   ├── leicester/mandap-hire.md
+│   │   │   ├── birmingham/mandap-hire.md
+│   │   │   ├── london/mandap-hire.md
+│   │   │   ├── nottingham/wedding-decor.md
+│   │   │   ├── coventry/wedding-decor.md
+│   │   │   └── milton-keynes/mandap-hire.md
+│   │   ├── services/                   # Service detail definitions with FAQs & keyword targeting
 │   │   │   ├── mandaps-and-stages.md   # Mandap designs, ceremony inclusions, setups
 │   │   │   ├── decor.md                # Foyer, aisle, entrance, and bespoke draping
 │   │   │   ├── haldi-and-mehndi-decor.md # Traditional pre-wedding vibrancy & seating
@@ -104,21 +115,27 @@ jnb-events/
 │   │   │   ├── dj-and-entertainment.md # Sound, Dhol players, live hosting, mixing
 │   │   │   ├── sparklers-smoke-effects.md # Cold-fall pyrotechnics, dry ice low fog
 │   │   │   ├── dance-floor-and-lighting.md # Seamless LED dancefloors, mood uplighting
+│   │   │   ├── outdoor-lighting.md     # Architectural exterior festoon & fairy lights
 │   │   │   └── packages.md             # Turnkey ceremony & reception bundles
 │   │   ├── projects/                   # Portfolio case studies with image galleries
 │   │   └── testimonials/               # Verified client review entries
 │   ├── lib/
 │   │   ├── content.ts                  # Type-safe content collection helper functions
-│   │   ├── schema.ts                   # Structured Data (JSON-LD) generators
+│   │   ├── schema.ts                   # Structured Data (JSON-LD) generators (LocalBusiness, FAQPage, Service)
 │   │   └── motif.ts                    # SVG brand path definitions
 │   └── pages/
 │       ├── index.astro                 # Homepage
 │       ├── about.astro                 # About page
 │       ├── contact.astro               # Contact & consultation page
 │       ├── quote.astro                 # Interactive live Quote Builder & PDF Generator
+│       ├── robots.txt.ts               # Dynamic robots.txt with search and AI crawler rules
+│       ├── sitemap.xml.ts              # Dynamic sitemap with changefreq, priority & clean absolute URLs
+│       ├── areas/
+│       │   ├── index.astro             # Regional coverage hub
+│       │   └── [...slug].astro         # Dynamic regional location landing page template
 │       ├── services/
 │       │   ├── index.astro             # All services directory
-│       │   └── [slug].astro            # Dynamic service detail pages
+│       │   └── [slug].astro            # Dynamic service detail pages with FAQ accordions & area cross-links
 │       ├── gallery/
 │       │   ├── index.astro             # Filterable portfolio gallery
 │       │   ├── [slug].astro            # Dynamic project gallery detail page
@@ -177,31 +194,26 @@ jnb-events/
 
 ---
 
-## 5. SEO & Structured Data Strategy
+## 5. SEO, Multi-Engine Indexing & Structured Data Strategy
 
-### 5.1 Local SEO Keywords
-- Head terms: *Luxury Asian Wedding Decor Leicester*, *Hindu Wedding Mandap Hire Leicestershire*, *Bespoke Indian Event Decor Midlands*, *Asian Wedding Stage Hire UK*.
-- Area targeting: Leicester, Oadby, Loughborough, Melton Mowbray, Nottingham, Derby, Birmingham, Solihull, Coventry, Wolverhampton, London.
+### 5.1 Local SEO Commercial Priority Themes
+- **Very High Priority**: *Mandap hire Leicester*, *Asian wedding decorators Leicester*, *Wedding mandap hire*, *Indian wedding mandap hire*, *Mandap hire Birmingham*.
+- **High Priority**: *Asian wedding decoration*, *Wedding stage decoration*, *Wedding reception decoration*, *Asian wedding DJ hire*, *Haldi and Mehndi decoration*, *Wedding special effects hire*, *LED dance floor hire*.
+- **Area Targeting**: Leicester (LE1–LE19), Birmingham, London, Nottingham, Coventry, Milton Keynes, Derby, Northampton.
 
 ### 5.2 Structured Data (JSON-LD)
-All pages must embed valid Schema.org JSON-LD:
-```json
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "LocalBusiness",
-      "@id": "https://jnbevents.co.uk/#business",
-      "name": "JNB Events",
-      "description": "Luxury Asian wedding decor, traditional carved mandaps, modern stages, and turnkey event production in Leicester, the Midlands, and across the UK.",
-      "url": "https://jnbevents.co.uk",
-      "telephone": "+447446890353",
-      "areaServed": ["Leicester", "Leicestershire", "East Midlands", "West Midlands", "United Kingdom"],
-      "priceRange": "££££"
-    }
-  ]
-}
-```
+All pages must embed valid, accurate Schema.org JSON-LD:
+- `LocalBusiness`: Central business entity (`@id: https://jnbevents.co.uk/#business`) located at Leicester, Leicestershire (`52.6369, -1.1398`) with `areaServed` (East Midlands, West Midlands, London, etc.), WhatsApp phone (`+447872340258`), and `OfferCatalog`. *Note: Never use `HomeAndConstructionBusiness` as it is inaccurate.*
+- `WebSite`: (`@id: https://jnbevents.co.uk/#website`) with `publisher` pointing to `#business`.
+- `Service`: Embedded on service and area landing pages with `provider: #business` and explicit `areaServed`.
+- `FAQPage`: Embedded on all service and regional pages, strictly reflecting visible on-page `<details><summary>` copy.
+- `BreadcrumbList`: Multi-level navigational breadcrumbs across all sub-pages.
+- `AboutPage` & `ContactPage`: Contextually linked to `#business`.
+
+### 5.3 Crawlers, IndexNow & AI Discovery
+- **Robots.txt** (`src/pages/robots.txt.ts`): Explicit rules welcoming search engines (`Googlebot`, `Bingbot`, `DuckDuckBot`, `Applebot`) and AI search/citation bots (`PerplexityBot`, `OAI-SearchBot`, `ChatGPT-User`, `ClaudeBot`, `Claude-Web`, `GPTBot`, `Google-Extended`).
+- **IndexNow Protocol**: Verification token deployed at root (`3b9f4e2d8c1a7e506f349a8b1c2d3e4f.txt`). Automated batch submission script (`scripts/indexnow.mjs`) submits all sitemap URLs to `https://api.indexnow.org/indexnow`.
+- **AI Knowledge File** (`public/llms.txt`): Structured markdown summary of business entities, service offerings, equipment kit specifications, and FAQs for LLM ingestion.
 
 ---
 
@@ -210,7 +222,7 @@ All pages must embed valid Schema.org JSON-LD:
 1. **Retina & High-DPI Guarantee**: Never hardcode maximum image widths lower than the source photo's native resolution. Always generate responsive widths up to `src.width` (e.g. 640px, 1100px, 1600px, 2400px).
 2. **Sharp Quality**: Set Astro Sharp build quality to at least `86` to avoid compression banding on dark gradients and gold florals.
 3. **Aspect Ratio Containers**: Always define explicit CSS aspect ratios (`ratio={3/2}`, `ratio={4/5}`, `ratio={16/9}`) to prevent layout shifts.
-4. **Descriptive SEO Alt Text**: Every image must carry rich descriptive alt text detailing the venue style, decor materials, floral palette, and Midlands/UK location.
+4. **Descriptive SEO Alt Text**: Every image must carry rich descriptive alt text detailing the venue style, decor materials, floral palette, and location.
 
 ---
 
@@ -224,13 +236,16 @@ npm install
 npm run dev
 
 # 3. Typecheck Astro and TypeScript
-npx astro check
+npm run check
 
 # 4. Production static build
 npm run build
 
-# 5. Local preview of static output
-npm run preview
+# 5. Full automated verification (types + build + audit)
+npm run verify
+
+# 6. IndexNow submission
+npm run indexnow
 ```
 
 ---
@@ -240,26 +255,29 @@ npm run preview
 To regenerate or rebuild this website from scratch, paste the following prompt into your AI assistant:
 
 ```markdown
-Create a high-end luxury website for "JNB Events" (Asian wedding decor, traditional carved mandaps, modern stages, and event production in Leicester and the UK) using Astro (static output), Tailwind CSS 4, and Pages CMS.
+Create a high-end luxury website for "JNB Events" (Asian wedding decor, traditional carved mandaps, modern stages, and event production in Leicester, Birmingham, London, and the UK) using Astro (static output), Tailwind CSS 4, and Pages CMS.
 
 Follow these strict requirements:
 1. DESIGN & PALETTE:
    - Palette: Night Obsidian (#0a0908), Royal Antique Gold (#b9975b, #d4af37), Warm Alabaster Cream (#fbf8f2), Ink text (#1a1918).
-   - Typography: Elegant serif for display headings, clean geometric sans-serif for UI/body, monospaced tabular numerals.
-   - Luxury aesthetic: Hairline gold borders, subtle ogee arch vector motifs (used sparingly), zero harsh stark whites.
+   - Typography: Bodoni Moda (editorial display headlines), Instrument Sans (clean body/UI), tabular numerals.
+   - Luxury aesthetic: Hairline gold borders, subtle ogee arch vector motifs, zero harsh stark whites.
 
-2. ARCHITECTURE & PAGES:
-   - Astro Content Collections for pages, services, projects, settings, and testimonials.
-   - Pages: Homepage (/), About (/about/), Services (/services/ and /services/[slug]/), Gallery (/gallery/ and /gallery/[slug]/), Interactive Quote Builder (/quote/), Contact (/contact/), Privacy, Terms, and 404.
-   - Include complete ceremonial package inclusions on the Mandaps & Stages page (Choris, Bajots, Patlas, Chairs, Havan Kund, Ganesh, Walkway, Backdrop, Carpet).
+2. ARCHITECTURE, PAGES & LOCAL SEO:
+   - Astro Content Collections for pages, services, areas, projects, settings, and testimonials.
+   - Pages: Homepage (/), About (/about/), Services index (/services/) & dynamic detail pages (/services/[slug]/), Regional Areas index (/areas/) & dynamic location landing pages (/areas/[...slug]/ for Leicester, Birmingham, London, Nottingham, Coventry, Milton Keynes), Gallery (/gallery/ and /gallery/[slug]/), Interactive Quote Builder (/quote/), Contact (/contact/), Privacy, Terms, and 404.
+   - Every service and area page must include comprehensive ceremonial FAQs rendered in visible HTML accordions and matching Schema.org FAQPage JSON-LD.
+   - Bidirectional cross-linking between service pages and regional area landing pages.
 
 3. INTERACTIVE & CONVERSION:
-   - Live Quote Builder on /quote/ with instant PDF download.
+   - Live Quote Builder on /quote/ with instant PDF download and edge password protection.
    - Floating WhatsApp / Inquiry button drawer with context-aware message URLs.
    - Sharp-powered responsive Img component outputting AVIF/WebP with retina srcset widths.
 
-4. SEO & ACCESSIBILITY:
-   - Full JSON-LD structured data (LocalBusiness, BreadcrumbList, Service).
-   - Targeted local SEO for Leicester, Leicestershire, Midlands, and UK.
+4. MULTI-ENGINE INDEXING & STRUCTURED DATA:
+   - Dynamic robots.txt.ts permitting Googlebot, Bingbot, DuckDuckBot, PerplexityBot, OAI-SearchBot, GPTBot, and ClaudeBot.
+   - IndexNow verification token and submission script (scripts/indexnow.mjs).
+   - llms.txt providing structured knowledge for AI search engines.
+   - Strict Schema.org JSON-LD: LocalBusiness (Leicester HQ, areaServed), Service, FAQPage, BreadcrumbList, WebSite. Never use HomeAndConstructionBusiness.
    - Zero layout shifts (CLS = 0) and 100% clean astro check & build.
 ```

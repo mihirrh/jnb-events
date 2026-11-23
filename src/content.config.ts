@@ -218,6 +218,8 @@ const services = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      /** Optional custom H1 heading. Defaults to title. */
+      h1: z.string().optional(),
       /** Lower numbers appear first. */
       order: z.number().int(),
       /** One-line summary used on cards and in meta descriptions. */
@@ -235,6 +237,8 @@ const services = defineCollection({
       relatedCategory: z.enum(PROJECT_CATEGORIES).optional(),
       /** Pre-filled WhatsApp message for this service. */
       whatsappMessage: z.string().optional(),
+      /** Optional FAQ items for on-page Q&A and FAQPage schema. */
+      faq: z.array(z.object({ question: z.string(), answer: z.string() })).optional(),
       seo,
     }),
 });
@@ -276,4 +280,29 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { settings, home, about, contact, pages, quote, services, projects, testimonials };
+/* -------------------------------- Location pages ------------------------------------- */
+const areas = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/areas' }),
+  schema: ({ image }) =>
+    z.object({
+      city: z.string(),
+      region: z.string(),
+      serviceType: z.string(),
+      h1: z.string(),
+      eyebrow: z.string(),
+      summary: z.string().max(220),
+      lead: z.string(),
+      distanceNote: z.string(),
+      image: image(),
+      imageAlt: z.string().min(3),
+      secondImage: image().optional(),
+      secondImageAlt: z.string().optional(),
+      venues: z.array(z.object({ name: z.string(), description: z.string() })).min(1),
+      keyFeatures: z.array(z.string()).min(1),
+      faq: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+      whatsappMessage: z.string(),
+      seo,
+    }),
+});
+
+export const collections = { settings, home, about, contact, pages, quote, services, projects, testimonials, areas };
