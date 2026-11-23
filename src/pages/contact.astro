@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import Icon from '../components/Icon.astro';
 import { getContact, getSettings, getServices } from '../lib/content';
-import { breadcrumbs } from '../lib/schema';
+import { breadcrumbs, contactPage } from '../lib/schema';
 import { emphasis } from '../lib/text';
 import { telUrl, toInternational } from '../lib/contact';
 
@@ -20,7 +20,10 @@ const mode = formEndpoint ? 'endpoint' : email ? 'mailto' : 'whatsapp';
 <BaseLayout
   title={page.seo.title}
   description={page.seo.description}
-  jsonLd={[breadcrumbs([{ name: 'Home', url: site }, { name: 'Contact', url: `${site}contact/` }])]}
+  jsonLd={[
+    contactPage({ siteUrl: site, name: page.seo.title, description: page.seo.description }),
+    breadcrumbs([{ name: 'Home', url: site }, { name: 'Contact', url: `${site}contact/` }]),
+  ]}
 >
   <PageHero folio="05" eyebrow={page.eyebrow} heading={page.heading} lead={page.lead} />
 

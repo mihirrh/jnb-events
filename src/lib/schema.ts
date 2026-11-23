@@ -34,23 +34,41 @@ export function localBusiness(
   imageUrl?: string,
   offers: { name: string; description: string; url: string }[] = [],
 ) {
+  const tel = `+${toInternational(settings.contact.whatsappNumber)}`;
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': `${siteUrl}#business`,
     name: settings.siteName,
+    legalName: settings.siteName,
+    alternateName: ['JNB Sounds & Events', 'JNB Events Leicester'],
     description: settings.description,
     slogan: settings.tagline,
     url: siteUrl,
-    telephone: `+${toInternational(settings.contact.whatsappNumber)}`,
+    telephone: tel,
     ...(settings.contact.email ? { email: settings.contact.email } : {}),
     ...(imageUrl ? { image: imageUrl } : {}),
     logo: `${siteUrl}logo.png`,
+    priceRange: '££',
+    currenciesAccepted: 'GBP',
+    paymentAccepted: 'Cash, Credit Card, Bank Transfer',
     address: {
       '@type': 'PostalAddress',
       addressLocality: settings.location.locality,
       addressRegion: settings.location.region,
       addressCountry: settings.location.country,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 52.6369,
+      longitude: -1.1398,
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: tel,
+      contactType: 'customer service',
+      areaServed: 'GB',
+      availableLanguage: ['en', 'gu', 'hi'],
     },
     areaServed: areaServed(settings),
     ...(offers.length
@@ -65,8 +83,63 @@ export function localBusiness(
           },
         }
       : {}),
-    knowsAbout: ['Wedding décor', 'Mandaps', 'Civil ceremony décor', 'Wedding DJ', 'Event lighting', 'Special effects'],
+    knowsAbout: [
+      'Asian wedding décor',
+      'Hindu wedding mandap hire',
+      'Mandap decoration',
+      'Civil ceremony styling',
+      'Indian wedding DJ & entertainment',
+      'LED dance floor and lighting hire',
+      'Dry ice low fog machine',
+      'Cold spark machine effects',
+      'Haldi and Mehndi ceremony decor',
+      'Reception decor and centrepieces',
+      'Outdoor house and shopfront lighting',
+    ],
     ...(settings.social.length ? { sameAs: settings.social.map((s) => s.url) } : {}),
+  };
+}
+
+export function faqPage(items: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((it) => ({
+      '@type': 'Question',
+      name: it.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: it.answer,
+      },
+    })),
+  };
+}
+
+export function aboutPage(opts: { siteUrl: string; name: string; description: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${opts.siteUrl}about/#webpage`,
+    url: `${opts.siteUrl}about/`,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: 'en-GB',
+    isPartOf: { '@id': `${opts.siteUrl}#website` },
+    about: { '@id': `${opts.siteUrl}#business` },
+  };
+}
+
+export function contactPage(opts: { siteUrl: string; name: string; description: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${opts.siteUrl}contact/#webpage`,
+    url: `${opts.siteUrl}contact/`,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: 'en-GB',
+    isPartOf: { '@id': `${opts.siteUrl}#website` },
+    about: { '@id': `${opts.siteUrl}#business` },
   };
 }
 
