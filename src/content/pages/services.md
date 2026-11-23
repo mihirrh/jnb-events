@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Wedding & Event Services Leicester | JNB Events
-  description: Mandaps and stages, civil ceremony décor, reception centrepieces, DJ, dancefloor, lighting and special effects in Leicester, Leicestershire and across the UK.
+  title: Asian Wedding Services & Mandap Hire Leicester | JNB Events
+  description: Luxury Asian wedding services in Leicester & the Midlands. Mandap hire, wedding stage decor, DJ entertainment, LED dance floors & cold spark special effects.
 eyebrow: Services
 heading: Everything your *celebration needs.*
 lead: Choose a single service or let us build a bespoke package across décor, DJ, dancefloor, lighting and effects.

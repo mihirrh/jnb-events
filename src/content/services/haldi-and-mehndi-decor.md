@@ -1,25 +1,33 @@
 ---
 title: Haldi & Mehndi Décor
+h1: Haldi & Mehndi Ceremony Decoration
 order: 3
-summary: Vibrant Haldi backdrops, floral swings, colourful Mehndi seating, and pre-wedding decor in Leicester and across the Midlands.
+summary: Vibrant Haldi decoration, yellow marigold backdrops, brass urli bowls, festive Mehndi swings (jhoolas), and floor seating in Leicester and the Midlands.
 lead: Bring your pre-wedding celebrations to life with lively colours, handcrafted backdrops, festive floral swings, and bespoke seating. From intimate home setups to grand banquet hall ceremonies, we craft unforgettable Haldi and Mehndi experiences.
 image: /src/assets/media/services/placeholder-haldi-mehndi.jpg
-imageAlt: Vibrant yellow and orange floral Haldi decor setup with bespoke seating, marigold garlands, and festive backdrop styling for an Asian pre-wedding ceremony in Leicester.
+imageAlt: Vibrant yellow and orange floral Haldi decoration setup with bespoke seating, marigold garlands, and festive backdrop styling in Leicester.
 secondImage: /src/assets/media/gallery/placeholder-mehndi-1.jpg
-secondImageAlt: Colourful Mehndi party decor featuring vibrant draped fabrics, cushion seating, floral arches, and festive props in the Midlands.
+secondImageAlt: Colourful Mehndi ceremony decor featuring vibrant draped fabrics, cushion seating, floral swings, and festive props in the Midlands.
 keyPoints:
-  - Bespoke Haldi backdrops, urli bowls, and marigold floral styling
-  - Festive Mehndi swings (jhoolas), floor seating, and colourful cushions
-  - Vibrant drape combinations, traditional umbrellas, and festive props
-  - Custom setups for both intimate home events and large venue celebrations
+  - "Bespoke Haldi backdrops, brass urli bowls, and marigold floral styling"
+  - "Festive Mehndi swings (jhoolas), floor seating lounges, and colourful cushions"
+  - "Vibrant fabric drapery, Rajasthani umbrellas, and photo opportunities"
+  - "Custom setups for intimate home events, garden marquees, and hotel venues"
 relatedCategory: Décor
-whatsappMessage: "Hello JNB Events, I'd like to enquire about Haldi and Mehndi décor."
+whatsappMessage: "Hello JNB Events, I'd like to enquire about Haldi and Mehndi decoration."
+faq:
+  - question: What does a Haldi ceremony decor setup include?
+    answer: "A complete Haldi setup typically includes a vibrant marigold or yellow floral backdrop, a polished brass or floral-decorated urli bowl, comfortable seating cushions, decorative brass props, and festive yellow drapery."
+  - question: Do you provide Mehndi swings (jhoolas) and low floor seating?
+    answer: "Yes. We hire ornate wooden and metal jhoola swings adorned with fresh or faux floral garlands, accompanied by colourful floor mattresses, bolsters, embroidered cushions, and low tables for guests getting henna applied."
+  - question: Can you set up Haldi and Mehndi decor in private homes or marquees?
+    answer: "Yes. We regularly install pre-wedding decor in living rooms, back garden marquees, community centres, and luxury wedding venues across Leicester, Birmingham, Nottingham, and the Midlands."
 seo:
   title: Haldi & Mehndi Decor Leicester | Pre-Wedding | JNB Events
-  description: Luxury Haldi and Mehndi decor in Leicester & the Midlands. Custom yellow & marigold Haldi setups, floral jhoola swings, low seating, and vibrant backdrops.
+  description: Vibrant Haldi decoration, urli bowls, Mehndi swings (jhoola) & floor seating in Leicester & the Midlands. Pre-wedding Asian wedding decor with full setup.
 ---
 
-Pre-wedding ceremonies set the joyful tone for your entire celebration. At **JNB Events**, we design vibrant, immersive **Haldi and Mehndi décor** in Leicester and across the East and West Midlands that turns traditional rituals into breathtaking, photo-worthy occasions.
+Pre-wedding ceremonies set the joyful tone for your entire celebration. At **JNB Events**, we design vibrant, immersive **Haldi decoration, Haldi ceremony decor, and Mehndi decoration** in Leicester and across the East and West Midlands that turns traditional pre-wedding rituals into breathtaking, photo-worthy occasions.
 
 Whether you are hosting an intimate Haldi ceremony at home, a marquee garden party, or a high-energy Mehndi night in a luxury ballroom, our styling team brings creativity, colour harmony, and precision setup to every space.
 

@@ -1,25 +1,33 @@
 ---
 title: Sparklers, Smoke & Special Effects
+h1: Wedding Special Effects & Cold Sparkler Hire
 order: 7
-summary: Cold spark fountains, dry ice low fog 'dancing on clouds', and wedding special effects hire in Leicester.
+summary: Indoor-safe cold spark machine hire, dry ice low fog 'dancing on clouds', and wedding special effects hire in Leicester and the Midlands.
 lead: Transform key wedding highlights into cinematic spectacles. We provide indoor-safe cold sparkler fountains, heavy dry ice low fog machines for your first dance, and atmospheric haze compliant with UK venue safety standards.
 image: /src/assets/media/services/placeholder-effects.jpg
-imageAlt: Indoor cold sparkler fountain machines framing a bride and groom during their luxury Asian wedding entrance in Leicester.
+imageAlt: Indoor cold sparkler machine hire framing a bride and groom during their luxury Asian wedding entrance in Leicester.
 secondImage: /src/assets/media/gallery/placeholder-sparklers-3.jpg
 secondImageAlt: Romantic first dance with thick dry ice low fog 'dancing on clouds' effect and ambient uplighting in Leicestershire.
 keyPoints:
-  - Indoor-safe cold sparkler fountains (non-pyrotechnic, zero smoke/smell)
-  - Dry ice low fog machines creating a genuine 'dancing on clouds' first dance
-  - Venue liaison and full risk assessment compliance
-  - Operated by trained on-site technicians for precision timing
+  - "Indoor-safe cold spark machine hire (non-pyrotechnic, zero smoke or burning odour)"
+  - "Genuine dry ice low fog machines creating a floor-hugging 'dancing on clouds' first dance"
+  - "Venue risk assessments, PAT test certificates, and venue liaison included"
+  - "Operated by trained on-site technicians for precision timing during entrances and first dances"
 relatedCategory: Special Effects
 whatsappMessage: "Hello JNB Events, I'd like to add cold sparklers and dry ice smoke effects to my wedding."
+faq:
+  - question: Are cold spark machines safe for indoor wedding venues?
+    answer: "Yes. Cold spark machines use titanium granular alloy rather than gunpowder. They are 100% non-pyrotechnic, cold to the touch, and produce zero smoke or hazardous burning odour, making them widely approved by UK wedding venues and hotel ballrooms."
+  - question: Will dry ice low fog trigger venue fire alarms?
+    answer: "No. Genuine dry ice low fog uses solid CO2 and heated water to create heavy, floor-hugging clouds that stay below knee height and dissipate naturally without rising to optical smoke detectors."
+  - question: Do you provide on-site technicians to fire the special effects?
+    answer: "Yes. All our special effects packages include an on-site technician who manages setup, safety checks, and precision timing during your grand entrance, cake cutting, or first dance."
 seo:
   title: Cold Sparklers & Dry Ice Low Fog Leicester | JNB Events
-  description: Hire cold sparkler machines and dry ice 'dancing on clouds' low fog in Leicester & Midlands. Indoor-safe wedding special effects for entrances and first dances.
+  description: Indoor cold spark machine hire & dry ice 'dancing on clouds' low fog in Leicester & Midlands. Safe wedding special effects for entrances and first dances.
 ---
 
-Few moments evoke pure magic like a couple stepping onto the dance floor surrounded by thick, billowing white clouds, or entering the reception banquet to radiant fountains of light. At **JNB Events**, we provide professional **wedding special effects hire in Leicester** and throughout the Midlands.
+Few moments evoke pure magic like a couple stepping onto the dance floor surrounded by thick, billowing white clouds, or entering the reception banquet to radiant fountains of light. At **JNB Events**, we provide professional **wedding special effects, cold spark machine hire, and dry ice low fog hire in Leicester** and throughout the Midlands.
 
 ## Indoor-Safe Cold Sparkler Fountains
 

@@ -218,6 +218,8 @@ const services = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      /** Optional custom H1 heading. Defaults to title. */
+      h1: z.string().optional(),
       /** Lower numbers appear first. */
       order: z.number().int(),
       /** One-line summary used on cards and in meta descriptions. */
@@ -235,6 +237,8 @@ const services = defineCollection({
       relatedCategory: z.enum(PROJECT_CATEGORIES).optional(),
       /** Pre-filled WhatsApp message for this service. */
       whatsappMessage: z.string().optional(),
+      /** Optional FAQ items for on-page Q&A and FAQPage schema. */
+      faq: z.array(z.object({ question: z.string(), answer: z.string() })).optional(),
       seo,
     }),
 });

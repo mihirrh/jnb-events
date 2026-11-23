@@ -1,10 +1,11 @@
 ---
 title: Reception Décor & Centrepieces
+h1: Wedding Reception Décor & Table Centrepieces
 order: 5
-summary: Luxury wedding reception styling and table centrepieces in Leicester, Leicestershire and the Midlands.
+summary: Luxury wedding reception decoration, statement table centrepieces, and bespoke sweetheart stage backdrops in Leicester and across the Midlands.
 lead: The evening reception is where celebration takes centre stage. We style banquet and round tables with elevated floral stands, crystal candelabras, low botanical arrangements, and bespoke sweetheart tables designed to captivate your guests.
 image: /src/assets/media/services/placeholder-reception.jpg
-imageAlt: Luxury wedding reception styling in Leicester featuring elevated floral table centrepieces, romantic candlelit banquet tables, and bespoke sweetheart stage decor.
+imageAlt: Luxury wedding reception decoration in Leicester featuring elevated floral table centrepieces, romantic candlelit banquet tables, and bespoke sweetheart stage decor.
 secondImage: /src/assets/media/gallery/placeholder-reception-2.jpg
 secondImageAlt: Close-up of elegant wedding table centrepieces with cascading roses, gold charger plates, and ambient votive candles in Leicestershire.
 keyPoints:
@@ -14,12 +15,19 @@ keyPoints:
   - "Coordinated seamlessly with your daytime ceremony colours and venue aesthetics"
 relatedCategory: Reception & Centrepieces
 whatsappMessage: "Hello JNB Events, I'm interested in reception décor and centrepiece hire."
+faq:
+  - question: What styles of wedding table centrepieces do you offer?
+    answer: "We supply tall gold floral risers, clear acrylic plinths, multi-arm crystal candelabras, antique brass candelabras with tapered candles, low botanical bowls, cascading floral runners, and floating cylinder candle clusters."
+  - question: Can you style the sweetheart and top table backdrops?
+    answer: "Yes. We create bespoke sweetheart stage backdrops, lush floral meadow skirts, personalised LED neon signs, starcloth draping, and ambient stage uplighting designed for stunning couple portraits and speeches."
+  - question: Do you provide charger plates and table stationery styling?
+    answer: "Yes. We supply gold beaded, silver, and clear glass charger plates, colour-matched linen napkins, velvet table runners, and easel displays for seating plans and welcome signage."
 seo:
-  title: Reception Décor & Table Centrepieces Leicester | JNB Events
-  description: Luxury wedding reception decor and table centrepieces in Leicester & Midlands. Tall floral stands, candelabras, sweetheart tables, and complete venue styling.
+  title: Wedding Reception Décor Leicester | Centrepieces | JNB Events
+  description: Luxury wedding reception decoration and table centrepieces in Leicester & Midlands. Tall floral stands, candelabras, sweetheart stage backdrops & venue styling.
 ---
 
-Your evening reception should feel like a magnificent celebration from the moment guests enter the dining room. At **JNB Events**, we provide luxury **wedding reception décor in Leicester** and across the Midlands, creating cohesive table landscapes and stunning room transformations.
+Your evening reception should feel like a magnificent celebration from the moment guests enter the dining room. At **JNB Events**, we provide luxury **wedding reception decoration and Asian wedding reception decor in Leicester** and across the Midlands, creating cohesive table landscapes and breathtaking room transformations.
 
 ## Statement Table Centrepieces & Ambient Table Scapes
 
