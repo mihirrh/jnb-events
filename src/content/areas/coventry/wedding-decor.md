@@ -32,7 +32,7 @@ faq:
   - question: What wedding styling services do you provide in Coventry?
     answer: "We supply traditional hand-carved and modern gold mandaps, civil ceremony arches, reception table centrepieces, Haldi & Mehndi backdrops, wedding DJs, LED dance floors, and special effects across Coventry and Warwickshire."
   - question: Can you coordinate directly with our Coventry venue and wedding planners?
-    answer: "Yes. We coordinate all logistics, insurance documentation, risk assessments, and load-in schedules directly with your Coventry venue management and event team."
+    answer: "Yes. We coordinate delivery, setup and load-in schedules directly with your Coventry venue management and event team."
   - question: How do we reserve our wedding date in Coventry?
     answer: "Message us on WhatsApp with your date, venue, and styling ideas. We provide a detailed 14-day quotation and confirm your date upon deposit acceptance."
 whatsappMessage: "Hello JNB Events, I'd like to enquire about wedding stage decoration and mandap hire in Coventry."

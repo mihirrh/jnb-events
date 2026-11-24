@@ -32,7 +32,7 @@ faq:
   - question: Do you style Hindu, Sikh, Muslim and civil weddings?
     answer: "Yes. Our styling covers Asian, Hindu, Sikh, Muslim and civil celebrations as well as multicultural weddings, and our DJs mix Bhangra, Bollywood, R&B, pop and more to suit your guests."
   - question: Are cold sparklers and dry ice fog safe indoors?
-    answer: "Our cold spark machines are non-pyrotechnic, with no flame, smoke or burning smell, and our dry ice low fog stays low to the floor for a dancing-on-clouds first dance. We liaise with your venue and complete a risk assessment, and trained technicians operate the effects on the day."
+    answer: "Our cold spark machines are non-pyrotechnic, with no flame, smoke or burning smell, and our dry ice low fog stays low to the floor for a dancing-on-clouds first dance. We agree setup and timings with your venue in advance, and the effects are operated on the day."
   - question: How do I get a quote?
     answer: "Message us on WhatsApp or send an enquiry through the contact form with your date, venue and ideas, and we will get back to you. Quotations stay valid for 14 days, and your date is not reserved until your booking is confirmed."
   - question: How do I book, and how much is the deposit?

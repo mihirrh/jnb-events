@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { SITE } from '../../site.config.mjs';
 import { getServices, getProjects, getAreas, categoriesInUse, slugify } from '../lib/content';
 
 /**
@@ -7,7 +8,7 @@ import { getServices, getProjects, getAreas, categoriesInUse, slugify } from '..
  * build date, and search engines ignore a lastmod that does not track real content changes.
  */
 export const GET: APIRoute = async ({ site }) => {
-  const baseUrl = (site?.toString() || 'https://jnbevents.co.uk/').replace(/\/+$/, '') + '/';
+  const baseUrl = (site?.toString() || SITE).replace(/\/+$/, '') + '/';
 
   const services = await getServices();
   const projects = await getProjects();

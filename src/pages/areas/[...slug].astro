@@ -26,8 +26,15 @@ const settings = await getSettings();
 const site = Astro.site!.toString();
 const url = `${site}areas/${entry.id}/`;
 
-// Show related featured mandap/decor projects
-const projects = (await getProjects()).slice(0, 3);
+// Only show work explicitly labelled for this area. Projects are tagged by area (currently
+// "Leicestershire"), so other location pages omit the section rather than implying local work.
+const projects = (await getProjects())
+  .filter((p) => {
+    const location = p.data.location?.trim();
+    if (!location) return false;
+    return location.includes(data.city) || location.includes(data.region) || data.region.includes(location);
+  })
+  .slice(0, 3);
 const ogImg = await getImage({ src: data.image, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
 ---
 
@@ -185,7 +192,7 @@ const ogImg = await getImage({ src: data.image, width: 1200, height: 630, format
           <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
             <div class="lg:col-span-8">
               <div class="folio"><span>Portfolio</span><i aria-hidden="true"></i></div>
-              <h2 id="work-heading" class="h2 mt-6">Recent <em>mandap & stage</em> styling</h2>
+              <h2 id="work-heading" class="h2 mt-6">Recent <em>{data.city}</em> styling</h2>
             </div>
             <div class="lg:col-span-4 lg:text-right">
               <a href="/gallery/" class="link-arrow"><span>Explore full gallery</span><span aria-hidden="true">&rarr;</span></a>

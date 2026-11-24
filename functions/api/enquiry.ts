@@ -4,21 +4,28 @@
  * Receives the enquiry form from /contact/ and emails it to the owner through the Cloudflare Email
  * Sending REST API. Sending to a verified Email Routing destination address (the Gmail inbox) is free.
  *
- * Secrets (Cloudflare Pages -> Settings -> Variables and Secrets, or `wrangler pages secret put`;
- * for local testing put them in `.dev.vars`, which is git-ignored):
- *  - CF_ACCOUNT_ID:     the Cloudflare account ID
- *  - EMAIL_API_TOKEN:   API token with the "Email Sending: Edit" permission
+ * Secrets and variables (Cloudflare Pages -> Settings -> Variables and Secrets, or `wrangler pages
+ * secret put`; for local testing put them in `.dev.vars`, which is git-ignored):
+ *  - CF_ACCOUNT_ID:     the Cloudflare account ID (secret)
+ *  - EMAIL_API_TOKEN:   API token with the "Email Sending: Edit" permission (secret)
+ *  - ENQUIRY_TO:        optional inbox for enquiries (variable or secret). Defaults to the
+ *                       verified Email Routing destination below, so no code edit is needed when
+ *                       the owner wants enquiries delivered somewhere else.
  *
- * Fails closed: without both values it returns 503 and the form tells the visitor to use WhatsApp.
+ * The From address uses the domain in site.config.mjs, the single source of truth for the live site.
+ * Fails closed: without the two required secrets it returns 503 and the form tells the visitor to
+ * use WhatsApp.
  */
+import { SITE } from '../../site.config.mjs';
 
 interface Env {
   CF_ACCOUNT_ID?: string;
   EMAIL_API_TOKEN?: string;
+  ENQUIRY_TO?: string;
 }
 
-const FROM = { address: 'contact@jnbevents.co.uk', name: 'JNB Events Website' };
-const TO = 'event.jnb@gmail.com';
+const FROM = { address: `contact@${new URL(SITE).hostname}`, name: 'JNB Events Website' };
+const DEFAULT_TO = 'event.jnb@gmail.com';
 
 const LIMITS = { name: 120, phone: 40, email: 254, date: 20, service: 120, venue: 200, message: 5000 } as const;
 
@@ -49,6 +56,12 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
 
   if (!env.CF_ACCOUNT_ID || !env.EMAIL_API_TOKEN) {
     console.error('enquiry: CF_ACCOUNT_ID or EMAIL_API_TOKEN is not configured');
+    return json({ ok: false }, 503);
+  }
+
+  const to = env.ENQUIRY_TO?.trim() || DEFAULT_TO;
+  if (!EMAIL_RE.test(to)) {
+    console.error('enquiry: ENQUIRY_TO is not a valid email address');
     return json({ ok: false }, 503);
   }
 
@@ -95,7 +108,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
       headers: { Authorization: `Bearer ${env.EMAIL_API_TOKEN}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: FROM,
-        to: TO,
+        to,
         reply_to: email,
         subject: `Website enquiry from ${name}`,
         text,

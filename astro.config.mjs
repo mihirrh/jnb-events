@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import { SITE } from './site.config.mjs';
 
-// Keep in sync with the live domain. Used for canonical URLs, sitemap and JSON-LD.
-// Change it here when the domain is final - it is the only place the domain is defined.
-const SITE = 'https://jnbevents.co.uk';
+// SITE lives in site.config.mjs so Astro, the IndexNow script, llms.txt, robots.txt, the sitemap
+// and the contact-form Function all read exactly the same domain. See README, "Site domain".
 
 export default defineConfig({
   site: SITE,

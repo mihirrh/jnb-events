@@ -11,7 +11,7 @@ secondImageAlt: Romantic first dance with thick dry ice low fog 'dancing on clou
 keyPoints:
   - "Indoor-safe cold spark machine hire (non-pyrotechnic, zero smoke or burning odour)"
   - "Genuine dry ice low fog machines creating a floor-hugging 'dancing on clouds' first dance"
-  - "Venue risk assessments, PAT test certificates, and venue liaison included"
+  - "Venue liaison and load-in timings coordinated in advance"
   - "Operated by trained on-site technicians for precision timing during entrances and first dances"
 relatedCategory: Special Effects
 whatsappMessage: "Hello JNB Events, I'd like to add cold sparklers and dry ice smoke effects to my wedding."
@@ -43,4 +43,4 @@ Unlike standard smoke machines that rise and trigger smoke alarms, our genuine d
 - Dissipates quickly without leaving damp residue on footwear or formal clothing.
 - Produces breathtaking, fairy-tale first dance photography and video footage.
 
-All special effects are delivered, set up, and operated by our trained technicians with full public liability insurance. Message us on WhatsApp to include special effects in your wedding package.
+All special effects are delivered, set up, and operated by our team on the day. Message us on WhatsApp to include special effects in your wedding package.
