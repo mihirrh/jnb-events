@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { SITE } from '../../site.config.mjs';
 
 /**
  * Robots.txt configuration for search engines and AI discovery.
@@ -9,7 +10,7 @@ export const GET: APIRoute = ({ site }) => {
   const sitemap = new URL('sitemap.xml', site).toString();
 
   const body = `# JNB Events Robots.txt
-# https://jnbevents.co.uk/
+# ${new URL(SITE).host}/
 
 # Primary search engine crawlers (Google, Bing, DuckDuckGo, Yahoo, Apple)
 User-agent: Googlebot

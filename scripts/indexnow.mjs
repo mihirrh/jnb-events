@@ -1,6 +1,7 @@
 /**
- * IndexNow submission script for JNB Events (https://jnbevents.co.uk).
+ * IndexNow submission script for JNB Events.
  * Submits all sitemap URLs to IndexNow (Bing, DuckDuckGo, Yandex, Seznam, etc.)
+ * The live hostname comes from site.config.mjs, the single source of truth for the domain.
  *
  * Usage:
  *   node scripts/indexnow.mjs [--dry-run]
@@ -9,10 +10,11 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SITE } from '../site.config.mjs';
 
 const DIST = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const SITEMAP_PATH = join(DIST, 'sitemap.xml');
-const HOST = 'jnbevents.co.uk';
+const HOST = new URL(SITE).hostname;
 const KEY = '3b9f4e2d8c1a7e506f349a8b1c2d3e4f';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';

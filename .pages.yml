@@ -394,6 +394,7 @@ content:
         order: asc
     fields:
       - { name: title, label: Service name, type: string, required: true }
+      - { name: h1, label: H1 heading (optional, defaults to the service name), type: string }
       - { name: order, label: Order on site (1 = first), type: number, required: true }
       - { name: summary, label: Short summary (cards and search results), type: text, required: true, options: { maxlength: 220 } }
       - { name: lead, label: Intro paragraph (top of the service page), type: text, required: true }
@@ -423,6 +424,17 @@ content:
       - { name: whatsappMessage, label: Pre-filled WhatsApp message, type: text }
       - { name: seo, component: seo }
       - { name: body, label: Page text, type: rich-text, options: { media: false } }
+      - name: faq
+        label: Frequently asked questions (also added to Google's FAQ data)
+        type: object
+        list:
+          min: 1
+          collapsible:
+            collapsed: true
+            summary: "{question}"
+        fields:
+          - { name: question, label: Question, type: string, required: true }
+          - { name: answer, label: Answer (plain text, keep it factual), type: text, required: true }
 
   # -------------------------------------------------------------- Portfolio
   - name: projects
@@ -493,3 +505,90 @@ content:
       - { name: source, label: Where it was left (e.g. Google review), type: string }
       - { name: order, label: Order (1 = first), type: number, default: 100 }
       - { name: published, label: Published (show on the website), type: boolean, default: false }
+
+  # ---------------------------------------------------------- Location pages
+  # These are files, not a collection, so the existing nested paths and URLs stay exactly as they are.
+  # The YAML anchor shares the same field list across all six pages.
+  - name: areas
+    label: Location pages
+    type: group
+    items:
+      - name: leicester
+        label: Leicester - Mandap Hire
+        type: file
+        path: src/content/areas/leicester/mandap-hire.md
+        format: yaml-frontmatter
+        fields: &areaFields
+          - { name: city, label: City, type: string, required: true }
+          - { name: region, label: Region, type: string, required: true }
+          - { name: serviceType, label: Service type, type: string, required: true }
+          - { name: h1, label: H1 heading, type: string, required: true }
+          - { name: eyebrow, label: Small line above the heading, type: string, required: true }
+          - { name: summary, label: Short summary (cards and search results), type: text, required: true, options: { maxlength: 220 } }
+          - { name: lead, label: Opening paragraph, type: text, required: true }
+          - { name: distanceNote, label: Travel / distance note, type: text, required: true }
+          - { name: image, label: Main photo, type: image, required: true, options: { path: src/assets/media/gallery } }
+          - { name: imageAlt, label: Main photo description (alt text), type: string, required: true }
+          - { name: secondImage, label: Second photo (optional), type: image, options: { path: src/assets/media/gallery } }
+          - { name: secondImageAlt, label: Second photo description (alt text), type: string }
+          - name: venues
+            label: Prominent venues
+            type: object
+            list:
+              min: 1
+              collapsible:
+                collapsed: true
+                summary: "{name}"
+            fields:
+              - { name: name, label: Venue name, type: string, required: true }
+              - { name: description, label: Venue description, type: text, required: true }
+          - name: keyFeatures
+            label: Key features
+            type: string
+            list:
+              min: 1
+            required: true
+          - name: faq
+            label: Frequently asked questions (also added to Google's FAQ data)
+            type: object
+            list:
+              min: 1
+              collapsible:
+                collapsed: true
+                summary: "{question}"
+            fields:
+              - { name: question, label: Question, type: string, required: true }
+              - { name: answer, label: Answer (plain text, keep it factual), type: text, required: true }
+          - { name: whatsappMessage, label: Pre-filled WhatsApp message, type: text, required: true }
+          - { name: seo, component: seo }
+          - { name: body, label: Page text, type: rich-text, options: { media: false } }
+      - name: birmingham
+        label: Birmingham - Mandap Hire
+        type: file
+        path: src/content/areas/birmingham/mandap-hire.md
+        format: yaml-frontmatter
+        fields: *areaFields
+      - name: coventry
+        label: Coventry - Wedding Decor
+        type: file
+        path: src/content/areas/coventry/wedding-decor.md
+        format: yaml-frontmatter
+        fields: *areaFields
+      - name: london
+        label: London - Mandap Hire
+        type: file
+        path: src/content/areas/london/mandap-hire.md
+        format: yaml-frontmatter
+        fields: *areaFields
+      - name: milton-keynes
+        label: Milton Keynes - Mandap Hire
+        type: file
+        path: src/content/areas/milton-keynes/mandap-hire.md
+        format: yaml-frontmatter
+        fields: *areaFields
+      - name: nottingham
+        label: Nottingham - Wedding Decor
+        type: file
+        path: src/content/areas/nottingham/wedding-decor.md
+        format: yaml-frontmatter
+        fields: *areaFields
