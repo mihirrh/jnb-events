@@ -4,30 +4,38 @@ import PageHero from '../../../components/PageHero.astro';
 import ProjectCard from '../../../components/ProjectCard.astro';
 import GalleryFilter from '../../../components/GalleryFilter.astro';
 import CtaBand from '../../../components/CtaBand.astro';
-import { getProjects, categoriesInUse, slugify, getSettings } from '../../../lib/content';
+import { getAllProjects, isProjectPublished, categoriesInUse, slugify, getSettings, getServices } from '../../../lib/content';
 import { breadcrumbs } from '../../../lib/schema';
 import { plate } from '../../../lib/plates';
+import { PROJECT_CATEGORY_COPY } from '../../../lib/categories';
 
 export async function getStaticPaths() {
-  const projects = await getProjects();
-  const cats = categoriesInUse(projects);
+  const allProjects = await getAllProjects();
+  const projects = allProjects.filter(isProjectPublished);
+  const cats = categoriesInUse(allProjects);
+  const publicCats = categoriesInUse(projects);
   return cats.map((category) => ({
     params: { category: slugify(category) },
-    props: { category, all: cats, projects: projects.filter((p) => p.data.category === category) },
+    props: { category, all: publicCats, projects: projects.filter((p) => p.data.category === category) },
   }));
 }
 
 const { category, all, projects } = Astro.props;
 const settings = await getSettings();
+const services = await getServices();
+const relatedService = services.find((service) => service.data.relatedCategory === category);
 const site = Astro.site!.toString();
 const url = `${site}gallery/category/${slugify(category)}/`;
+const indexable = projects.length >= 2;
+const copy = PROJECT_CATEGORY_COPY[category];
 ---
 
 <BaseLayout
   title={`${category} Gallery | ${settings.siteName} ${settings.location.locality}`}
-  description={`Photos of ${category.toLowerCase()} work by ${settings.siteName} in ${settings.location.locality}, ${settings.location.region} and across the UK. Browse ${projects.length} ${projects.length === 1 ? 'project' : 'projects'} and enquire on WhatsApp.`}
-  image={projects[0].data.images[0].image}
-  imageAlt={projects[0].data.images[0].alt}
+  description={copy.description}
+  image={projects[0]?.data.images[0].image}
+  imageAlt={projects[0]?.data.images[0].alt}
+  noindex={!indexable}
   jsonLd={[
     breadcrumbs([
       { name: 'Home', url: site },
@@ -36,19 +44,33 @@ const url = `${site}gallery/category/${slugify(category)}/`;
     ]),
   ]}
 >
-  <PageHero folio="03" eyebrow="Gallery" heading={category} />
+  <PageHero
+    folio="03"
+    eyebrow="Gallery"
+    heading={category}
+    lead={copy.introduction}
+  />
 
   <section class="bg-cream pb-[clamp(4rem,9vw,9rem)]" aria-label={`${category} projects`}>
     <div class="wrap">
       <h2 class="sr-only">{category} projects</h2>
       <GalleryFilter active={category} available={all} />
-      <div class="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-12 lg:gap-y-14">
-        {projects.map((p, i) => {
-          const lone = i === projects.length - 1 && i % 5 === 0 && projects.length > 1;
+      {projects.length > 0 ? (
+        <div class="mt-14 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:mt-20 lg:grid-cols-12 lg:gap-y-14">
+          {projects.map((p, i) => {
+            const lone = i === projects.length - 1 && i % 5 === 0 && projects.length > 1;
             const pl = lone ? { cls: 'lg:col-span-12', ratio: 21 / 9 } : plate(i);
-          return <ProjectCard project={p} index={i} ratio={pl.ratio} class={pl.cls} delay={(i % 2) * 120} sizes="(min-width:1024px) 52vw, (min-width:640px) 48vw, 94vw" />;
-        })}
-      </div>
+            return <ProjectCard project={p} index={i} ratio={pl.ratio} class={pl.cls} delay={(i % 2) * 120} sizes="(min-width:1024px) 52vw, (min-width:640px) 48vw, 94vw" />;
+          })}
+        </div>
+      ) : (
+        <p class="mt-12 max-w-2xl text-ink-soft">There are no published projects in this category yet. Visit the <a class="underline" href="/gallery/">full gallery</a> to see current work.</p>
+      )}
+      {relatedService && (
+        <a href={`/services/${relatedService.id}/`} class="link-arrow mt-12">
+          <span>Explore our {relatedService.data.title} service</span><span aria-hidden="true">&rarr;</span>
+        </a>
+      )}
     </div>
   </section>
 

@@ -1,16 +1,18 @@
 ---
 title: Evening Dancefloor & Lighting
 category: Dance Floor & Lighting
-summary: Sample project - replace with a real event. A dancefloor with stage lighting for the evening party.
+summary: An evening reception scene centred on a lit dance floor, DJ setup and layered party lighting.
 date: 2026-03-10
 featured: true
 images:
   - image: /src/assets/media/gallery/placeholder-night-1.jpg
-    alt: Placeholder image - dancefloor under coloured stage lights
+    alt: Dance floor illuminated by coloured stage lighting.
   - image: /src/assets/media/gallery/placeholder-night-2.jpg
-    alt: Placeholder image - DJ decks and lighting
+    alt: DJ decks framed by event lighting.
   - image: /src/assets/media/gallery/placeholder-night-3.jpg
-    alt: Placeholder image - haze and atmospheric lighting
+    alt: Evening room with atmospheric haze and layered lighting.
 ---
 
-This is placeholder content. Replace this text with a short description of the real project.
+Layered lighting brings focus to the dance floor and DJ area as the reception moves into the evening. Colour, beams and a light atmospheric haze create depth across the room.
+
+The lighting can be adjusted to suit the venue and the feel of the celebration, from a warm arrival atmosphere to a more energetic party setting.

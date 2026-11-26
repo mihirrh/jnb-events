@@ -257,6 +257,8 @@ const projects = defineCollection({
       date: z.coerce.date(),
       /** Featured projects appear on the homepage. */
       featured: z.boolean().default(false),
+      /** Hide drafts/sample work from public listings and search until real project material is ready. */
+      published: z.boolean().default(true),
       /** First image is the cover. */
       /** Each photo needs descriptive alt text (accessibility + SEO). */
       images: z.array(z.object({ image: image(), alt: z.string().min(3) })).min(1),

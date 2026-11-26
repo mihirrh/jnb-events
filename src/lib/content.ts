@@ -25,9 +25,19 @@ export async function getServices() {
   return all.sort((a, b) => a.data.order - b.data.order);
 }
 
-export async function getProjects() {
+export async function getAllProjects() {
   const all = await getCollection('projects');
   return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}
+
+/** Whether a project is marked for publication in the CMS. */
+export function isProjectPublished(project: CollectionEntry<'projects'>): boolean {
+  return project.data.published;
+}
+
+/** Published projects for public gallery listings, service pages and the sitemap. */
+export async function getProjects() {
+  return (await getAllProjects()).filter(isProjectPublished);
 }
 
 /** Categories that currently contain at least one project, in the canonical order. */

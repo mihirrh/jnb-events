@@ -1,7 +1,7 @@
 ---
 title: Modern Gold Aisle Mandap
 category: Mandaps & Stages
-summary: A luxury contemporary Asian wedding ceremony setup featuring a striking gold mirrored aisle runner, carved Ganesh pedestals, and a grand floral-lined mandap stage.
+summary: A ceremony arrangement centred on a reflective gold aisle runner, with floral borders and a warmly lit mandap at the far end.
 location: Leicestershire
 date: 2026-06-01
 featured: true
@@ -18,9 +18,9 @@ images:
     alt: Beautiful blush and deep purple floral arrangements lining a shimmering gold aisle runner for a luxury Hindu wedding ceremony in Leicestershire. Expert Asian event decorators in the UK featuring a grand floral mandap setup.
   - image: /src/assets/media/gallery/luxury_asian_wedding_ceremony.jpg
     alt: Symmetrical luxury Hindu wedding ceremony layout with a gold aisle runner, pristine white guest seating, and a magnificent floral mandap in Leicester. High-end Asian wedding styling, stage backdrops, and event production in the United Kingdom.
-seoDescription: Luxury Asian wedding ceremony setup in Leicestershire featuring a gold mirrored aisle runner, carved Ganesh statues, and a grand floral mandap.
+seoDescription: A gold mirrored aisle leads toward a floral mandap, framed by carved pedestals and pink-toned flowers in this Leicestershire ceremony setting.
 ---
 
-A breathtaking full-room transformation combining contemporary ceiling lighting with traditional carved Ganesh pillars and a dazzling gold aisle for a truly luxurious ceremony.
+The long reflective aisle is the defining detail in this ceremony setting. Low floral borders draw the eye toward the warmly lit mandap, while carved pedestals mark the approach and white guest seating keeps the route in view.
 
-Transform a modern blank-canvas venue with our stunning gold mirrored aisle runner and grand floral-lined mandap, perfect for a glamorous Asian wedding across Leicester, Leicestershire, and the Midlands.
+Gold surfaces, carved wood and pink, blush and cream flowers bring the individual elements together. The photographs show the aisle from several viewpoints, along with closer details of the floral styling and mandap.

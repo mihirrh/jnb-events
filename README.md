@@ -7,7 +7,7 @@ Static website for **JNB Events** (décor, DJ and mandaps - Leicester, covering 
 - Deploys to **Cloudflare Pages**
 - No paid services required
 
-> **Placeholder content (work in progress):** real event photography is being added as events come in, but generated images labelled "PLACEHOLDER IMAGE" still remain, and some project descriptions say they are samples. Replace them from the CMS (see below) before launch. No testimonials are published, no reviews/awards/years-in-business are claimed anywhere. Do not add invented credentials, insurance or risk-assessment claims.
+> **Photography in progress:** some project entries still use generated placeholder images. They are published as normal gallery pages; replace their photos through Pages CMS whenever real event photography is ready. No testimonials are published, no reviews/awards/years-in-business are claimed anywhere. Do not add invented credentials, insurance or risk-assessment claims.
 
 > **Documentation:** this README is the operating guide. `MASTER_PROMPT.md`, `PRD.md`, `WEBSITE_OVERVIEW.md` and the other setup notes are design/handover records; where they differ from this README or the code, **the code and this README win**.
 
@@ -29,7 +29,8 @@ npm run dev        # http://localhost:4321
 | `npm run preview` | Serves `dist/` locally |
 | `npm run check` | Type-checks Astro, TypeScript and content |
 | `npm run audit` | After a build: checks links, H1s, titles/descriptions, canonical/OG tags, JSON-LD, alt text, sitemap |
-| `npm run verify` | `check` + `build` + `audit` in one go (no browser needed, safe for CI) |
+| `npm run seo:verify` | Builds the site, runs the SEO audit, then serves the build locally to check route statuses, content types, sitemap, robots, canonicals and internal links |
+| `npm run verify` | `check` + `seo:verify` in one go (safe for CI; uses only a local HTTP server) |
 | `npm run check:layout` | After a build: opens every page in headless Chromium at 390 / 768 / 1024 / 1440 px and reports failed or hidden images, horizontal overflow, small tap targets, console errors and page height. Add `--shots` to save screenshots to `.scratch/shots/`, `--page=/about/` or `--vp=mobile` to narrow it. One-time setup: `npx playwright install chromium`. |
 | `npm run check:fallbacks` | After a build: renders every page with JavaScript off and with reduced motion, and fails if any image or text is hidden. Same Playwright setup as `check:layout`. |
 | `npm run check:quote` | After a build: drives the quote builder in headless Chromium (totals, discount and VAT switches, add/remove, a real PDF download checked for 4 pages) on a phone and a desktop viewport. |
@@ -133,7 +134,7 @@ Uploaded images go to `src/assets/media/` (subfolder per type: `hero`, `gallery`
    - **Event date** (newest first)
    - **Show on the homepage** - tick for the featured section
 3. Under **Photos**, add each photo: upload the file and write its **description (alt text)**, e.g. "Ivory and gold mandap with hanging lights". The **first photo is the cover**.
-4. Save. The project appears in `/gallery/`, in its category page, and (if featured) on the homepage.
+4. Leave **Published** ticked (the default) and save. The project appears in `/gallery/`, its category page, and (if featured) the homepage. Replace its photos whenever real event photography is ready; update the alt text to describe each new image.
 
 ### Add or edit a service
 
@@ -239,6 +240,7 @@ public/                     favicon, _headers (Cloudflare), IndexNow key file
 scripts/
   generate-placeholders.mjs Creates the placeholder images
   audit-dist.mjs            Post-build SEO/link/accessibility audit
+  seo-verify.mjs            HTTP-level checks against the built static site
 src/
   assets/media/             CMS-managed photos (optimised at build)
   content/                  CMS-managed text: settings, pages, services, projects, testimonials, areas
@@ -292,4 +294,4 @@ src/
 - **Brand motif:** `src/components/Motif.astro` redraws the logo's ogee mandap arch (and its lotus, in the `floral` variant) as a hairline. It is only a quiet echo of the logo and is used sparingly - currently the 404 page. Don't add it to photographs or headings.
 - **Photographs never hide.** Reveals use opacity, not `clip-path` (a clipped element has no area, so the observer never fires and the photo stays blank).
 - **Page length budgets** are enforced by `check:layout`: homepage 8.5 viewport heights, inner pages 6, project pages 7 (phones get 1.6x). Nothing is collapsed or hidden behind a click; pages are shortened by composition (three-across features, ruled lists, fewer plates).
-- Photos are generated placeholders until real photography is supplied through the CMS.
+- Some project photos are generated placeholders. Their pages are public; replace the photos through Pages CMS when real event photography is ready.

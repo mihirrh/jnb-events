@@ -1,16 +1,18 @@
 ---
 title: Sparkler Exit & Smoke
 category: Special Effects
-summary: Sample project - replace with real photos. Sparklers and low smoke for a dramatic exit.
+summary: A dramatic evening exit combining sparkler light with low-lying smoke.
 date: 2026-01-18
 featured: true
 images:
   - image: /src/assets/media/gallery/placeholder-sparklers-1.jpg
-    alt: Placeholder image - sparklers lighting up the night
+    alt: Sparklers creating bright points of light during an evening exit.
   - image: /src/assets/media/gallery/placeholder-sparklers-2.jpg
-    alt: Placeholder image - sparkler trails in portrait
+    alt: Vertical sparkler trails glowing against the evening sky.
   - image: /src/assets/media/gallery/placeholder-sparklers-3.jpg
-    alt: Placeholder image - low smoke effect
+    alt: Low-lying smoke creating a soft layer across the floor.
 ---
 
-This is placeholder content. Replace this text with a short description of the real project.
+Sparkler light and low-lying smoke combine to create a memorable evening exit. The bright trails provide a clear focal point, while the low haze adds atmosphere around the couple and guests.
+
+The effect should be planned around the venue's rules, available space and event schedule so the moment feels considered and comfortable for everyone present.

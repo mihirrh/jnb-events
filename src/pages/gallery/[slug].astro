@@ -6,13 +6,14 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import WhatsAppButton from '../../components/WhatsAppButton.astro';
 import Icon from '../../components/Icon.astro';
-import { getProjects, getServices, getSettings, slugify } from '../../lib/content';
+import { getAllProjects, getServices, getSettings, isProjectPublished, slugify } from '../../lib/content';
 import { breadcrumbs, imageGallery } from '../../lib/schema';
 import { getImage } from 'astro:assets';
 
 export async function getStaticPaths() {
-  const projects = await getProjects();
-  return projects.map((entry) => ({
+  const allProjects = await getAllProjects();
+  const projects = allProjects.filter(isProjectPublished);
+  return allProjects.map((entry) => ({
     params: { slug: entry.id },
     props: {
       entry,
@@ -23,6 +24,7 @@ export async function getStaticPaths() {
 
 const { entry, more } = Astro.props;
 const { data } = entry;
+const isPublished = isProjectPublished(entry);
 const { Content } = await render(entry);
 const settings = await getSettings();
 const site = Astro.site!.toString();
@@ -41,6 +43,7 @@ const ldImages = await Promise.all(data.images.slice(0, 6).map(async (im) => new
   description={data.seoDescription ?? data.summary}
   image={data.images[0].image}
   imageAlt={data.images[0].alt}
+  noindex={!isPublished}
   jsonLd={[
     imageGallery({ name: data.title, description: data.summary, url, images: ldImages }),
     breadcrumbs([

@@ -469,6 +469,7 @@ content:
       - { name: location, label: Area (optional, e.g. Leicestershire), type: string }
       - { name: date, label: Event date (used for ordering, newest first), type: date, required: true, options: { format: yyyy-MM-dd } }
       - { name: featured, label: Show on the homepage, type: boolean, default: false }
+      - { name: published, label: Published, type: boolean, default: true, description: "Keep checked to show this project in the public gallery. You can replace its photos whenever real event photography is ready." }
       - name: images
         label: Photos (the first is the cover)
         type: object

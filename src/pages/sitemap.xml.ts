@@ -13,7 +13,11 @@ export const GET: APIRoute = async ({ site }) => {
   const services = await getServices();
   const projects = await getProjects();
   const areas = await getAreas();
-  const categories = categoriesInUse(projects);
+  // Archive pages with fewer than two published projects are useful to visitors following a
+  // category filter but too thin to be submitted as independent search landing pages.
+  const categories = categoriesInUse(projects).filter(
+    (category) => projects.filter((project) => project.data.category === category).length >= 2,
+  );
 
   const urls: string[] = [
     baseUrl,
